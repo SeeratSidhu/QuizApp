@@ -9,7 +9,7 @@ const app = express();
 const morgan = require("morgan");
 
 // PG database client/connection setup
-const { Pool } = require("pg");
+const {Pool} = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
 db.connect();
@@ -20,7 +20,7 @@ db.connect();
 app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 
 app.use(
   "/styles",
@@ -54,6 +54,18 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+// Temporary routes
+
+app.get("/homepage", (req, res) => {
+  res.render("homepage");
+});
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+
+
+
+

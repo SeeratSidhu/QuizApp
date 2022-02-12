@@ -1,0 +1,75 @@
+// nav styles
+
+nav div span {
+  font-size: 50px;
+}
+
+nav {
+  background: aliceblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 120px;
+  padding: 1.5em;
+}
+
+nav div {
+  display: flex;
+  justify-content: space-between;
+}
+
+nav div ul {
+  display: flex;
+  list-style-type: none;
+}
+
+.ul-links li {
+  padding-right: 25px;
+}
+
+nav div ul li a {
+  font-size: 25px;
+  color: rgb(180, 67, 67);
+}
+
+nav a {
+  text-decoration: none;
+}
+
+.ul-buttons li {
+  padding-left: 25px;
+}
+
+nav button {
+  color: rgb(17, 0, 255);
+  padding: 10px 25px;
+}
+
+//
+main {
+  max-width: 90%;
+  margin: 0 auto;
+  border: 1px solid red;
+  background-color: rgb(255, 255, 195);
+  padding: 60px;
+}
+
+.quiz-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 100px;
+  border: 1px solid green;
+  margin-top: 30px;
+  padding: 30px;
+}
+
+.quiz-list-item span {
+  font-size: 27px;
+}
+
+.quiz-list-item button {
+  font-size: 23px;
+  padding: 10px 25px;
+}
