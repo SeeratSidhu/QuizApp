@@ -1,0 +1,15 @@
+
+.form-container{
+  margin: 2em 2em 2em;
+  width: 500px;
+  height: fit-content;
+
+}
+
+.all-options{
+  margin-top: 1em;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+
+}
