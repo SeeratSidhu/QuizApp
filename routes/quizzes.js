@@ -18,13 +18,15 @@ module.exports = (db) => {
       const dataArray = [];
       let index = 0;
       const optionsArray = [];
-      const questionID = data.rows[0].question_id;
-      
+      let questionID = data.rows[0].question_id;
+
       for (let row of data.rows) {
         if (questionID !== row.question_id) {
           questionID = row.question_id;
-          index = 1;
+          index++;
+          optionsArray.length = 0;
         }
+
         let question = {
           value: row.question_value,
           id: row.question_id
@@ -35,14 +37,15 @@ module.exports = (db) => {
           is_correct: row.is_correct
         }
         optionsArray.push(option);
-       dataArray[index] = {
-         question,
-         options: optionsArray
-       }
+
+        dataArray[index] = {
+          question,
+          options: [...optionsArray]
+        }
       }
 
-      console.log(dataArray);
       res.json(dataArray);
+      
     })
     .catch(err => {
       res
