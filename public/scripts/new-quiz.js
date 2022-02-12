@@ -94,21 +94,29 @@ const createQuiz = function(){
 
     //creates questions after a new quiz is made
     //need to pass in the generated quiz id
-    createQuestions();
+    createQuestions(id);
   })
 }
 
 const createQuestions = (id) => {
-
+  //id quiz id value
   //grabs all question-containers
   let questions = $(".question");
 
 
   //loop to grab all question names
   for(let question of questions){
-    let question_text = $(question).children(".question-holder").children(".question-name").val();
-    console.log(question_text);
-    console.log ("----make new questions for specific quiz")
+    const question_text = $(question).children(".question-holder").children(".question-name").val();
+    const question_id = Math.floor(Math.random() * 899999 + 100000);
+    const quiz_id = id;
+    
+    const questionObject = {
+      question_text,
+      question_id,
+      quiz_id
+    }
+
+    console.log ("question is ------" , questionObject);
 
 
     //grabs all options related to a specific question
@@ -116,20 +124,31 @@ const createQuestions = (id) => {
     const options = $(question).children(".all-options").children(".option-holder");
     
     for(let option of options){
-      let option_value = $(option).children(".option-value").val();
-      let is_correct = $(option).children(".check-correct").children(".is_correct").val();
+      const option_id = Math.floor(Math.random() * 899999 + 100000);
+      const option_value = $(option).children(".option-value").val();
+      const is_correct = $(option).children(".check-correct").children(".is_correct").val();
 
-      console.log({value: option_value, is_correct});
+      let optionObject = {
+        id: option_id,
+        question_id: question_id,
+        value: option_value,
+        is_correct
+      }
+
+      // console.log(optionObject);
+      createOptions(optionObject);
+
     }
   }
 }
 
-// const createOptions = (option) => {
+const createOptions = (option) => {
 
-//   $.post("/add-option", option)
-//   .catch(err => console.log(err.message))
+  $.post("/add-option", option)
+  .then(()=>{console.log("created a new option!")})
+  .catch(err => console.log(err.message))
 
 
-// }
+}
 
 
