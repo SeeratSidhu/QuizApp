@@ -4,6 +4,12 @@
   width: 500px;
   height: fit-content;
 
+  .question{
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 1em;
+  }
+
 }
 
 .all-options{
@@ -12,4 +18,10 @@
   grid-template-columns: auto auto;
   grid-template-rows: auto auto;
 
+}
+
+.option-holder{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
 }

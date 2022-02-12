@@ -19,43 +19,118 @@
   <div class="form-container">
     <h3>Add new quiz</h3>
 
-    <form class="new-quiz-form">
+    <form class="new-quiz-form" action="/new-quiz" method="POST">
       <div class="form-group">
         <label for="quiz-title">Quiz Title</label>
-        <input type="text" class="form-control quiz-title"  placeholder="Enter title">
+        <input type="text" class="form-control quiz-title"  placeholder="Enter title" name="quiz-title">
       </div>
         
       <div class=" form-group question">
         <div class="question-holder">
           <label>Question</label>
-          <input type="text" class="form-control"  placeholder="Enter question">
+          <input type="text" class="form-control"  placeholder="Enter question" name="question">
         </div>
 
         <div class="all-options">
           <div class="option-holder">
             <label >Answers 1</label>
-            <input type="text" class="answer-1">
+            <input type="text" name="option1">
+
+            <div class="check-correct">
+              <label >Fill in for correct answer</label>
+              <input type="checkbox" name="o1-is_correct">
+            </div>
           </div>
   
           <div class="option-holder">
             <label >Answers 2</label>
-            <input type="text" class="answer-1">
+            <input type="text" name="option2">
+
+            <div class="check-correct">
+              <label >Fill in for correct answer</label>
+              <input type="checkbox" name="o2-is_correct">
+            </div>
           </div>
   
           <div class="option-holder">
             <label >Answers 3</label>
-            <input type="text" class="answer-1">
+            <input type="text" name="option3">
+
+            <div class="check-correct">
+              <label >Fill in for correct answer</label>
+              <input type="checkbox" name="o3-is_correct">
+            </div>
           </div>
   
           <div class="option-holder">
             <label >Answers 4</label>
-            <input type="text" class="answer-1">
+            <input type="text" name="option4">
+
+            <div class="check-correct">
+              <label >Fill in for correct answer</label>
+              <input type="checkbox" name="o4-is_correct">
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class=" form-group question">
+        <div class="question-holder">
+          <label>Question</label>
+          <input type="text" class="form-control"  placeholder="Enter question" name="question">
+        </div>
+
+        <div class="all-options">
+          <div class="option-holder">
+            <label >Answers 1</label>
+            <input type="text" name="option1">
+
+            <div class="check-correct">
+              <label >Fill in for correct answer</label>
+              <input type="checkbox" name="o1-is_correct">
+            </div>
+          </div>
+  
+          <div class="option-holder">
+            <label >Answers 2</label>
+            <input type="text" name="option2">
+
+            <div class="check-correct">
+              <label >Fill in for correct answer</label>
+              <input type="checkbox" name="o2-is_correct">
+            </div>
+          </div>
+  
+          <div class="option-holder">
+            <label >Answers 3</label>
+            <input type="text" name="option3">
+
+            <div class="check-correct">
+              <label >Fill in for correct answer</label>
+              <input type="checkbox" name="o3-is_correct">
+            </div>
+          </div>
+  
+          <div class="option-holder">
+            <label >Answers 4</label>
+            <input type="text" name="option4">
+
+            <div class="check-correct">
+              <label >Fill in for correct answer</label>
+              <input type="checkbox" name="o4-is_correct">
+            </div>
           </div>
         </div>
       </div>
   
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
+
+
+
+    
   </div>
 
   

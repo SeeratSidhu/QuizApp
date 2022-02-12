@@ -56,6 +56,11 @@ app.get("/new-quiz", (req, res) => {
   res.render("new-quiz")
 })
 
+app.post("/new-quiz", (req, res) => {
+  console.log(req.body);
+  res.render("index");
+})
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
