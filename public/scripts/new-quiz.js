@@ -83,12 +83,14 @@ const renderQuestion = (value) => {
 
 const createQuiz = function(){
   //will need to dom tree traversal
+  const id = Math.floor(Math.random() * 899999 + 100000);
   const title = $(".quiz-title").val();
 
-  $.post("/add-quiz", {title})
+  $.post("/add-quiz", {id, title})
   .then(()=>{
     //will need to send back a generated quiz id
-    console.log('send title of the quiz')
+    console.log('sent title of the quiz')
+    console.log("quiz id is : ", id)
 
     //creates questions after a new quiz is made
     //need to pass in the generated quiz id
@@ -96,7 +98,7 @@ const createQuiz = function(){
   })
 }
 
-const createQuestions = () => {
+const createQuestions = (id) => {
 
   //grabs all question-containers
   let questions = $(".question");
@@ -122,7 +124,11 @@ const createQuestions = () => {
   }
 }
 
-// const createOptions = () => {
+// const createOptions = (option) => {
+
+//   $.post("/add-option", option)
+//   .catch(err => console.log(err.message))
+
 
 // }
 
