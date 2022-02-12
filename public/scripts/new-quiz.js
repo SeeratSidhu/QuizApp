@@ -4,11 +4,17 @@ $(()=>{
   
   $(".add-question-btn").on("click", function(event){
     event.preventDefault();
-    console.log("clicked!")
     
     $(renderQuestion(questionNumber)).insertBefore(this);
   })
   
+  $(".new-quiz-form").on("submit", function(event){
+    event.preventDefault();
+    console.log("submitted form")
+    console.log(questionNumber -1)
+
+    createQuiz();
+  })
   
   
   
@@ -74,4 +80,14 @@ const renderQuestion = (value) => {
   </div>`;
 
   return $questionTemplate;
+}
+
+const createQuiz = function(){
+  //will need to dom tree traversal
+  const title = $(".quiz-title").val();
+
+  $.post("/add-quiz", {title})
+  .done(()=>{
+    console.log('send title of the quiz')
+  })
 }
