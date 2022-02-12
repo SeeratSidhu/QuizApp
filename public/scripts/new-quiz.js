@@ -14,6 +14,8 @@ $(()=>{
     console.log(questionNumber -1)
 
     createQuiz();
+
+    createQuestions();
   })
   
   
@@ -33,47 +35,47 @@ const renderQuestion = (value) => {
     `<div class=" form-group question">
       <div class="question-holder">
         <label>Question ${value}</label>
-        <input type="text" class="form-control"  placeholder="Enter question" name="question">
+        <input type="text" class="form-control question-name"  placeholder="Enter question" name="question">
       </div>
 
       <div class="all-options">
         <div class="option-holder">
           <label >Answers 1</label>
-          <input type="text" name="question-${value}-option1">
+          <input type="text" name="option">
 
           <div class="check-correct">
             <label >Fill in for correct answer</label>
-            <input type="checkbox" name="o1-is_correct">
+            <input type="checkbox" name="is_correct">
           </div>
         </div>
 
         <div class="option-holder">
           <label >Answers 2</label>
-          <input type="text" name="question-${value}-option2">
+          <input type="text" name="option">
 
           <div class="check-correct">
             <label >Fill in for correct answer</label>
-            <input type="checkbox" name="o2-is_correct">
+            <input type="checkbox" name="is_correct">
           </div>
         </div>
 
         <div class="option-holder">
           <label >Answers 3</label>
-          <input type="text" name="question-${value}-option3">
+          <input type="text" name="option">
 
           <div class="check-correct">
             <label >Fill in for correct answer</label>
-            <input type="checkbox" name="o3-is_correct">
+            <input type="checkbox" name="is_correct">
           </div>
         </div>
 
         <div class="option-holder">
           <label >Answers 4</label>
-          <input type="text" name="question-${value}-option4">
+          <input type="text" name="option">
 
           <div class="check-correct">
             <label >Fill in for correct answer</label>
-            <input type="checkbox" name="o4-is_correct">
+            <input type="checkbox" name="is_correct">
           </div>
         </div>
       </div>
@@ -91,3 +93,18 @@ const createQuiz = function(){
     console.log('send title of the quiz')
   })
 }
+
+const createQuestions = () => {
+
+  //grabs all question-containers
+  let questions = $(".question");
+
+  //loop to grab all question names
+  for(let question of questions){
+    let question_text = $(question).children(".question-holder").children(".question-name").val();
+    console.log(question_text);
+    console.log ("----make new questions for specific quiz")
+  }
+}
+
+

@@ -56,20 +56,23 @@ app.get("/new-quiz", (req, res) => {
   res.render("new-quiz")
 })
 
+//currently not adding dynamically for different users
 app.post("/add-quiz", (req, res) => {
   console.log("recieved new quiz title: ", req.body.title);
 
-  const values = [req.body.title];
+  // const values = [req.body.title];
 
-  return db.query(`INSERT
-  INTO quizzes (id, owner_id, name)
-  VALUES (3, 10002, $1)
-  RETURNING *;
-  `,values)
-  .then(()=> {
-    console.log("successfully added a quiz")
-  })
-  .catch(err => console.log(err.msg))
+  // return db.query(`INSERT
+  // INTO quizzes (id, owner_id, name)
+  // VALUES (3, 10002, $1)
+  // RETURNING *;
+  // `,values)
+  // .then(()=> {
+  //   console.log("successfully added a quiz")
+  // })
+  // .catch(err => console.log(err.msg))
+
+  res.render("index");
 
 })
 
