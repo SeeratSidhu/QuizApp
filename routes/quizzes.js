@@ -11,9 +11,38 @@ module.exports = (db) => {
   })
 
   router.get("/:id", (req, res) => {
-    db.query(`SELECT * FROM questions WHERE quiz_id = $1`, [req.params.id])
+    db.query(`SELECT questions.value AS question_value, options.* FROM questions
+    JOIN options ON options.question_id = questions.id
+    WHERE quiz_id = $1`, [req.params.id])
     .then(data => {
-      res.json(data.rows);
+      const dataArray = [];
+      let index = 0;
+      const optionsArray = [];
+      const questionID = data.rows[0].question_id;
+      
+      for (let row of data.rows) {
+        if (questionID !== row.question_id) {
+          questionID = row.question_id;
+          index = 1;
+        }
+        let question = {
+          value: row.question_value,
+          id: row.question_id
+        }
+        let option = {
+          id: row.id,
+          value: row.value,
+          is_correct: row.is_correct
+        }
+        optionsArray.push(option);
+       dataArray[index] = {
+         question,
+         options: optionsArray
+       }
+      }
+
+      console.log(dataArray);
+      res.json(dataArray);
     })
     .catch(err => {
       res
