@@ -69,7 +69,7 @@ app.post("/add-quizzes", (req, res) => {
   `,values)
   .then((result)=> {
      console.log("new quiz ... ",result.rows[0]);
-     res.render("index");
+    res.send(result.rows);
   })
   .catch(err => console.log(err.msg))
   
@@ -86,7 +86,7 @@ app.post("/add-questions", (req,res) => {
   `, values)
   .then((result)=> {
     console.log("new question ... ",result.rows[0]);
-    res.render("index");
+    res.send(result.rows);
  })
  .catch(err => console.log(err.msg))
 
@@ -102,7 +102,7 @@ app.post("/add-options", (req,res) => {
   `, values)
   .then((result)=> {
     console.log("new option ... ",result.rows[0]);
-    res.render("index");
+    res.send(result.rows);
  })
  .catch(err => console.log(err.msg))
 

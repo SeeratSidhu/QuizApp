@@ -15,13 +15,15 @@ $(()=>{
     //fix this to use THIS keyword
     //simple check to see if there are any questions
     let numberOfQuestions = $(".new-quiz-form").children(".question").length;
-    console.log(numberOfQuestions)
+
     if(numberOfQuestions === 0){
       return alert("You must have question in your quiz!");
     }
 
     // creates quiz -> creates questions -> creates options
     createQuiz();
+
+
   })
   
   
@@ -97,8 +99,7 @@ const createQuiz = function(){
   $.post("/add-quizzes", {id, title})
   .then(()=>{
     //will need to send back a generated quiz id
-    console.log('sent title of the quiz')
-    console.log("quiz id is : ", id)
+    console.log("New quiz created!")
 
     //creates questions after a new quiz is made
     //need to pass in the generated quiz id
@@ -126,9 +127,9 @@ const createQuestions = (id) => {
       quiz_id
     }
 
-    console.log ("question is ------" , questionObject);
     $.post("/add-questions", questionObject)
     .then(()=>{
+      console.log("New question added!")
       //creates options for the current question
       createOptions(question, question_id);
     
@@ -159,8 +160,14 @@ const createOptions = (location, questionId) => {
     // console.log(optionObject);
     //update datebase with options
     $.post("/add-options", optionObject)
+    .then(()=>{
+      console.log("New option added!")
+    })
     .catch((err) => console.log(err))
   }
+
+  //temp redirect
+  window.location.replace("http://localhost:8080/")
 }
 
 
