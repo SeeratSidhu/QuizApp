@@ -6,6 +6,12 @@
 const hamburger = document.getElementById('hamburger');
 let navUl = document.getElementsByClassName('navSection');
 
+console.log(navUl);
+
 hamburger.addEventListener('click', () => {
-  navUl.classList.toggle('show');
+
+  for (let item of navUl) {
+    item.classList.toggle('show');
+  }
 })
+
