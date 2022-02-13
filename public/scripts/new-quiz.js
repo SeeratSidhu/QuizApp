@@ -102,7 +102,7 @@ const createQuiz = function(){
   //will need to dom tree traversal
   const title = $(".quiz-title").val();
 
-  $.post("/add-quizzes", {title})
+  $.post("/add/quizzes", {title})
   .then((data)=>{
     //will need to send back a generated quiz id
     console.log("New quiz created!")
@@ -132,7 +132,7 @@ const createQuestions = (id) => {
       quiz_id
     }
 
-    $.post("/add-questions", questionObject)
+    $.post("/add/questions", questionObject)
     .then((data)=>{
       console.log("New question added!")
       //creates options for the current question
@@ -164,7 +164,7 @@ const createOptions = (location, questionId) => {
   
     // console.log(optionObject);
     //update datebase with options
-    $.post("/add-options", optionObject)
+    $.post("/add/options", optionObject)
     .then(()=>{
       console.log("New option added!")
     })
