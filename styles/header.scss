@@ -21,6 +21,13 @@ nav div {
 nav div ul {
   display: flex;
   list-style-type: none;
+  align-items: center;
+}
+
+.logo {
+  font-family: "Permanent Marker", cursive;
+  font-size: 60px;
+  color: purple;
 }
 
 .hamburger {
@@ -57,46 +64,42 @@ nav button {
   padding: 10px 25px;
 }
 
-//
-main {
-  max-width: 90%;
-  margin: 0 auto;
-  border: 1px solid red;
-  background-color: rgb(255, 255, 195);
-  padding: 60px;
-}
-
-.quiz-list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  height: 100px;
-  border: 1px solid green;
-  margin-top: 30px;
-  padding: 30px;
-}
-
-.quiz-list-item span {
-  font-size: 27px;
-}
-
-.quiz-list-item button {
-  font-size: 23px;
-  padding: 10px 25px;
-}
-
 // Media Queries
 
 @media only screen and (max-width: 1024px) {
+  nav {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
   .navSection {
+    display: flex;
+    flex-direction: column;
     display: none;
+    width: 100%;
+  }
+
+  .nav-div {
+    display: flex;
+    width: 100%;
+    justify-content: right;
   }
 
   .navSection.show {
     display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-direction: column-reverse;
+    align-content: flex-end;
+  }
+
+  .top-div {
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
   }
   .hamburger {
     display: block;
+    justify-content: space-between;
   }
 }
