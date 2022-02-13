@@ -5,7 +5,7 @@ $(() => {
 const loadQuiz = () => {
   getQuizData()
   .then(data => {
-    renderQuestions(data);
+    renderQuestions(data, 3);
   });
 }
 
@@ -16,7 +16,6 @@ const getQuizData = () => {
     return data;
   });
 }
-
 const createQuestion = (questionObject) => {
   // let option = questionObject.options;
   // const $question = `<article class="question">
@@ -49,21 +48,43 @@ const createQuestion = (questionObject) => {
   return $question;
 };
 
-const renderQuestions = (quizArray) => {
+const renderQuestions = (quizArray, qNumber) => {
 
-  for (let question of quizArray) {
-    const $question =`
-    <div class="question">${question.question.value}</div>
-    <fieldset id="${question.question.id}"></fieldset>
+  if(qNumber >= quizArray.length) {
+    console.log("No more Questions!")
+    return;
+  }
+  let qItem = quizArray[qNumber].question.value;
+  let optionItems = quizArray[qNumber].options;
 
-    `;
-    $(".question-container").append($question);
+  const $question = `<form class="quiz-form">
+  <p class="question">${qItem}<p>
+  <ul class="radiogroup" role="radiogroup" aria-labelledby="question"></ul>
+  </form>`;
 
-    question.options.forEach((option) => {
-      let $option = `<label><input type= "radio" name="q${question.question.id}" value="${option.value}" />
+  console.log($question);
+  const options = optionItems.map((option, index) => {
+    return `<label for="${option.value}">
+      <input type="radio" id="option${option.id}" name="option" tabindex="${index}" value="${option.value}" aria-checked="false" required>
       ${option.value}
       </label>`
-      $(`#${question.question.id}`).append($option);
-    });
-  }
+  });
+  $(".quiz-container").append($question);
+  $(".radiogroup").append(options);
+
+  // for (let question of quizArray) {
+  //   const $question =`
+  //   <div class="question">${question.question.value}</div>
+  //   <fieldset id="${question.question.id}"></fieldset>
+
+  //   `;
+  //   $(".question-container").append($question);
+
+  //   question.options.forEach((option) => {
+  //     let $option = `<label><input type= "radio" name="q${question.question.id}" value="${option.value}" />
+  //     ${option.value}
+  //     </label>`
+  //     $(`#${question.question.id}`).append($option);
+  //   });
+  // }
 };
