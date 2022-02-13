@@ -9,7 +9,7 @@ const app = express();
 const morgan = require("morgan");
 
 // PG database client/connection setup
-const { Pool } = require("pg");
+const {Pool} = require("pg");
 const dbParams = require("./lib/db.js");
 const db = new Pool(dbParams);
 db.connect();
@@ -20,7 +20,7 @@ db.connect();
 app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({extended: true}));
 
 app.use(
   "/styles",
@@ -38,11 +38,13 @@ app.use(express.static("public"));
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const addRoutes = require("./routes/add")
+const quizzesRoutes = require("./routes/quizzes");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
+app.use("/api/quizzes", quizzesRoutes(db))
 app.use("/add", addRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
@@ -50,11 +52,26 @@ app.use("/add", addRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
+// app.get("/", (req, res) => {
+//   res.render("index");
+// });
+
+
 app.get("/", (req, res) => {
-  res.render("index");
+  db.query(
+    "SELECT id, name FROM quizzes;"
+  )
+    .then((result) => {
+      res.render("index", {
+        quizzes: result.rows
+      });
+    })
+    .catch((err) => {
+      console.log("homepage error:", err)
+    })
 });
 
-app.get("/new-quiz", (req, res) => {
+app.get("/add-quizzes", (req, res) => {
   res.render("new-quiz")
 })
 
@@ -62,3 +79,8 @@ app.get("/new-quiz", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+
+
+
+
