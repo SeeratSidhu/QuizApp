@@ -6,8 +6,10 @@ $(()=>{
   $(".add-question-btn").on("click", function(event){
     event.preventDefault();
     
+    //creates a question form
     $(renderQuestion()).insertBefore(this);
 
+    //add delete functionality to the question upon generation
     $(".delete-question").on("click", function(event){
       event.preventDefault();
       console.log("removed question!");
@@ -37,8 +39,7 @@ $(()=>{
 
 
 
-//tracks question number
-
+//returns question form template with a random coloured background
 const renderQuestion = () => {
 
   const $questionTemplate = 
@@ -98,13 +99,15 @@ const renderQuestion = () => {
 
 
 
+/* insert a new quiz into the database and
+returns quiz id value after new quiz is create */
+
 const createQuiz = function(){
   //will need to dom tree traversal
   const title = $(".quiz-title").val();
 
   $.post("/add/quizzes", {title})
   .then((data)=>{
-    //will need to send back a generated quiz id
     console.log("New quiz created!")
 
     //creates questions after a new quiz is made
@@ -115,14 +118,17 @@ const createQuiz = function(){
 
 
 
+/* Accepts a quiz_id value to be used to
+insert new questions for that specific quiz.
+Will return the corresponding question_id
+after insertation */
+
 const createQuestions = (id) => {
-  //id quiz id value
+
   //grabs all question-containers
   const questions = $(".question");
 
-
-
-  //loop to grab all question names
+  //loop to grab all question
   for(let question of questions){
     const question_text = $(question).children(".question-holder").children(".question-name").val();
     const quiz_id = id;
@@ -146,6 +152,9 @@ const createQuestions = (id) => {
 }
 
 
+
+/* Accepts a question_id value to be used to
+insert new question options for that specific quiz */
 
 const createOptions = (location, questionId) => {
   //grabs all options related to a specific question
