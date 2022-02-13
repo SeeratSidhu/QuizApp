@@ -57,7 +57,7 @@ app.get("/new-quiz", (req, res) => {
 })
 
 //currently not adding dynamically for different users
-app.post("/add-quiz", (req, res) => {
+app.post("/add-quizzes", (req, res) => {
   console.log("recieved new quiz title: ", req.body.title);
 
   const values = [req.body.id, req.body.title];
@@ -73,6 +73,38 @@ app.post("/add-quiz", (req, res) => {
   })
   .catch(err => console.log(err.msg))
   
+
+})
+
+app.post("/add-questions", (req,res) => {
+  const values = [req.body.question_id , req.body.quiz_id, req.body.question_text];
+
+  return db.query(`INSERT
+  INTO questions(id, quiz_id, value)
+  VALUES($1, $2, $3)
+  RETURNING *;
+  `, values)
+  .then((result)=> {
+    console.log("new question ... ",result.rows[0]);
+    res.render("index");
+ })
+ .catch(err => console.log(err.msg))
+
+})
+
+app.post("/add-options", (req,res) => {
+  const values = [req.body.id, req.body.question_id, req.body.value, req.body.is_correct]
+
+  return db.query(`INSERT
+  INTO options(id, question_id, value, is_correct)
+  VALUES($1, $2, $3, $4)
+  RETURNING *;
+  `, values)
+  .then((result)=> {
+    console.log("new option ... ",result.rows[0]);
+    res.render("index");
+ })
+ .catch(err => console.log(err.msg))
 
 })
 

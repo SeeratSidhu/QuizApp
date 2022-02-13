@@ -1,7 +1,8 @@
+
 $(()=>{
 
 
-  
+  //adds new question form
   $(".add-question-btn").on("click", function(event){
     event.preventDefault();
     
@@ -10,19 +11,24 @@ $(()=>{
   
   $(".new-quiz-form").on("submit", function(event){
     event.preventDefault();
-    console.log("-------submitted form---------")
 
+    //fix this to use THIS keyword
+    //simple check to see if there are any questions
+    let numberOfQuestions = $(".new-quiz-form").children(".question").length;
+    console.log(numberOfQuestions)
+    if(numberOfQuestions === 0){
+      return alert("You must have question in your quiz!");
+    }
+
+    // creates quiz -> creates questions -> creates options
     createQuiz();
   })
   
   
   
-  
-  
-  
-  
 });
 
+//tracks question number
 let questionNumber = 1;
 
 const renderQuestion = (value) => {
@@ -32,13 +38,13 @@ const renderQuestion = (value) => {
     `<div class=" form-group question">
       <div class="question-holder">
         <label>Question ${value}</label>
-        <input type="text" class="form-control question-name"  placeholder="Enter question" name="question">
+        <input type="text" class="form-control question-name"  placeholder="Enter question" name="question" required>
       </div>
 
       <div class="all-options">
         <div class="option-holder">
           <label >Answers 1</label>
-          <input type="text" name="option" class="option-value">
+          <input type="text" name="option" class="option-value" required>
 
           <div class="check-correct">
             <label >Fill in for correct answer</label>
@@ -48,7 +54,7 @@ const renderQuestion = (value) => {
 
         <div class="option-holder">
           <label >Answers 2</label>
-          <input type="text" name="option" class="option-value">
+          <input type="text" name="option" class="option-value" required>
 
           <div class="check-correct">
             <label >Fill in for correct answer</label>
@@ -58,7 +64,7 @@ const renderQuestion = (value) => {
 
         <div class="option-holder">
           <label >Answers 3</label>
-          <input type="text" name="option" class="option-value">
+          <input type="text" name="option" class="option-value" required>
 
           <div class="check-correct">
             <label >Fill in for correct answer</label>
@@ -68,7 +74,7 @@ const renderQuestion = (value) => {
 
         <div class="option-holder">
           <label >Answers 4</label>
-          <input type="text" name="option" class="option-value">
+          <input type="text" name="option" class="option-value" required>
 
           <div class="check-correct">
             <label >Fill in for correct answer</label>
@@ -81,12 +87,14 @@ const renderQuestion = (value) => {
   return $questionTemplate;
 }
 
+
+//client-side generated id key
 const createQuiz = function(){
   //will need to dom tree traversal
   const id = Math.floor(Math.random() * 899999 + 100000);
   const title = $(".quiz-title").val();
 
-  $.post("/add-quiz", {id, title})
+  $.post("/add-quizzes", {id, title})
   .then(()=>{
     //will need to send back a generated quiz id
     console.log('sent title of the quiz')
@@ -97,6 +105,8 @@ const createQuiz = function(){
     createQuestions(id);
   })
 }
+
+
 
 const createQuestions = (id) => {
   //id quiz id value
@@ -117,38 +127,40 @@ const createQuestions = (id) => {
     }
 
     console.log ("question is ------" , questionObject);
-
-
-    //grabs all options related to a specific question
-    //will need to pass in the question id
-    const options = $(question).children(".all-options").children(".option-holder");
+    $.post("/add-questions", questionObject)
+    .then(()=>{
+      //creates options for the current question
+      createOptions(question, question_id);
     
-    for(let option of options){
-      const option_id = Math.floor(Math.random() * 899999 + 100000);
-      const option_value = $(option).children(".option-value").val();
-      const is_correct = $(option).children(".check-correct").children(".is_correct").val();
-
-      let optionObject = {
-        id: option_id,
-        question_id: question_id,
-        value: option_value,
-        is_correct
-      }
-
-      // console.log(optionObject);
-      createOptions(optionObject);
-
-    }
+    })
+    .catch(err => console.log(err.message))
+    
+    
   }
 }
 
-const createOptions = (option) => {
-
-  $.post("/add-option", option)
-  .then(()=>{console.log("created a new option!")})
-  .catch(err => console.log(err.message))
-
-
+const createOptions = (location, questionId) => {
+  //grabs all options related to a specific question
+  //will need to pass in the question id
+  const options = $(location).children(".all-options").children(".option-holder");
+  
+  for(let option of options){
+    const option_id = Math.floor(Math.random() * 899999 + 100000);
+    const option_value = $(option).children(".option-value").val();
+    const is_correct = $(option).children(".check-correct").children(".is_correct").is(":checked");
+  
+    let optionObject = {
+      id: option_id,
+      question_id: questionId,
+      value: option_value,
+      is_correct
+    }
+  
+    // console.log(optionObject);
+    //update datebase with options
+    $.post("/add-options", optionObject)
+    .catch((err) => console.log(err))
+  }
 }
 
 
