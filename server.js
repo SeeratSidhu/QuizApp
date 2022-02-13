@@ -71,7 +71,7 @@ app.get("/", (req, res) => {
     })
 });
 
-app.get("/add-quizzes", (req, res) => {
+app.get("/create-quizzes", (req, res) => {
   res.render("new-quiz")
 })
 
