@@ -23,6 +23,18 @@ nav div ul {
   list-style-type: none;
 }
 
+.hamburger {
+  background: transparent;
+  border: none;
+  font-size: 50px;
+  cursor: pointer;
+  display: none;
+}
+
+.hamburger i:hover {
+  color: red;
+}
+
 .ul-links li {
   padding-right: 25px;
 }
@@ -72,4 +84,19 @@ main {
 .quiz-list-item button {
   font-size: 23px;
   padding: 10px 25px;
+}
+
+// Media Queries
+
+@media only screen and (max-width: 1024px) {
+  .navSection {
+    display: none;
+  }
+
+  .navSection.show {
+    display: flex;
+  }
+  .hamburger {
+    display: block;
+  }
 }
