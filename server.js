@@ -7,6 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const { generateRandomInteger } = require("./helpers/create-random-integer")
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -58,9 +59,9 @@ app.get("/new-quiz", (req, res) => {
 
 //currently not adding dynamically for different users
 app.post("/add-quizzes", (req, res) => {
-  console.log("recieved new quiz title: ", req.body.title);
-
-  const values = [req.body.id, req.body.title];
+  
+  const id = generateRandomInteger();
+  const values = [id, req.body.title];
 
   return db.query(`INSERT
   INTO quizzes (id, owner_id, name)
@@ -69,7 +70,7 @@ app.post("/add-quizzes", (req, res) => {
   `,values)
   .then((result)=> {
      console.log("new quiz ... ",result.rows[0]);
-    res.send(result.rows);
+    res.send(result.rows[0]);
   })
   .catch(err => console.log(err.msg))
   
@@ -77,7 +78,8 @@ app.post("/add-quizzes", (req, res) => {
 })
 
 app.post("/add-questions", (req,res) => {
-  const values = [req.body.question_id , req.body.quiz_id, req.body.question_text];
+  const question_id = generateRandomInteger();
+  const values = [question_id , req.body.quiz_id, req.body.question_text];
 
   return db.query(`INSERT
   INTO questions(id, quiz_id, value)
@@ -86,14 +88,15 @@ app.post("/add-questions", (req,res) => {
   `, values)
   .then((result)=> {
     console.log("new question ... ",result.rows[0]);
-    res.send(result.rows);
+    res.send(result.rows[0]);
  })
  .catch(err => console.log(err.msg))
 
 })
 
 app.post("/add-options", (req,res) => {
-  const values = [req.body.id, req.body.question_id, req.body.value, req.body.is_correct]
+  const option_id = generateRandomInteger()
+  const values = [option_id, req.body.question_id, req.body.value, req.body.is_correct]
 
   return db.query(`INSERT
   INTO options(id, question_id, value, is_correct)
@@ -102,7 +105,8 @@ app.post("/add-options", (req,res) => {
   `, values)
   .then((result)=> {
     console.log("new option ... ",result.rows[0]);
-    res.send(result.rows);
+    res.send(result.rows[0]);
+    // res.redirect("/");
  })
  .catch(err => console.log(err.msg))
 

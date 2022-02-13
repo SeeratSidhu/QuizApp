@@ -93,17 +93,16 @@ const renderQuestion = (value) => {
 //client-side generated id key
 const createQuiz = function(){
   //will need to dom tree traversal
-  const id = Math.floor(Math.random() * 899999 + 100000);
   const title = $(".quiz-title").val();
 
-  $.post("/add-quizzes", {id, title})
-  .then(()=>{
+  $.post("/add-quizzes", {title})
+  .then((data)=>{
     //will need to send back a generated quiz id
     console.log("New quiz created!")
 
     //creates questions after a new quiz is made
     //need to pass in the generated quiz id
-    createQuestions(id);
+    createQuestions(data.id);
   })
 }
 
@@ -118,20 +117,18 @@ const createQuestions = (id) => {
   //loop to grab all question names
   for(let question of questions){
     const question_text = $(question).children(".question-holder").children(".question-name").val();
-    const question_id = Math.floor(Math.random() * 899999 + 100000);
     const quiz_id = id;
     
     const questionObject = {
       question_text,
-      question_id,
       quiz_id
     }
 
     $.post("/add-questions", questionObject)
-    .then(()=>{
+    .then((data)=>{
       console.log("New question added!")
       //creates options for the current question
-      createOptions(question, question_id);
+      createOptions(question, data.id);
     
     })
     .catch(err => console.log(err.message))
@@ -146,12 +143,10 @@ const createOptions = (location, questionId) => {
   const options = $(location).children(".all-options").children(".option-holder");
   
   for(let option of options){
-    const option_id = Math.floor(Math.random() * 899999 + 100000);
     const option_value = $(option).children(".option-value").val();
     const is_correct = $(option).children(".check-correct").children(".is_correct").is(":checked");
   
     let optionObject = {
-      id: option_id,
       question_id: questionId,
       value: option_value,
       is_correct
@@ -166,8 +161,8 @@ const createOptions = (location, questionId) => {
     .catch((err) => console.log(err))
   }
 
-  //temp redirect
-  window.location.replace("http://localhost:8080/")
+  //redirect to home
+  window.location.href = "/";
 }
 
 
