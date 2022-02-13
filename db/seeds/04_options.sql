@@ -9,3 +9,9 @@ VALUES (5, 2, 'toaster', FALSE),
 (6, 2, 'It calls', FALSE),
 (7, 2, 'I ask myself that everyday...', TRUE),
 (8, 2, 'skip...', FALSE);
+
+INSERT INTO options (id, question_id, value , is_correct)
+VALUES (9, 3, 'toaster', FALSE),
+(10, 3, 'It has wings', TRUE),
+(11, 3, 'It swims', FALSE),
+(12, 3, 'skip...', FALSE);

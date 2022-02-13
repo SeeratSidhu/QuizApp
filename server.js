@@ -60,7 +60,9 @@ app.get("/homepage", (req, res) => {
   res.render("homepage");
 });
 
-
+app.get("/quizzes/:id", (req, res) => {
+  res.render("quiz");
+});
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
