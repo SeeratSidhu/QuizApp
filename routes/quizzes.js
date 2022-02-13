@@ -45,7 +45,6 @@ module.exports = (db) => {
       }
 
       res.json(dataArray);
-      
     })
     .catch(err => {
       res
