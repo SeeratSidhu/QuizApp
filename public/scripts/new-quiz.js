@@ -106,7 +106,7 @@ const createQuiz = function(){
   //will need to dom tree traversal
   const title = $(".quiz-title").val();
 
-  $.post("/add/quizzes", {title})
+  $.post("/create-quizzes", {title})
   .then((data)=>{
     console.log("New quiz created!")
 
@@ -138,11 +138,11 @@ const createQuestions = (id) => {
       quiz_id
     }
 
-    $.post("/add/questions", questionObject)
+    $.post(`/create-quizzes/${quiz_id}/questions`, questionObject)
     .then((data)=>{
       console.log("New question added!")
       //creates options for the current question
-      createOptions(question, data.id);
+      createOptions(question, data.id, data.quiz_id);
     
     })
     .catch(err => console.log(err.message))
@@ -156,7 +156,7 @@ const createQuestions = (id) => {
 /* Accepts a question_id value to be used to
 insert new question options for that specific quiz */
 
-const createOptions = (location, questionId) => {
+const createOptions = (location, questionId, quizId) => {
   //grabs all options related to a specific question
   //will need to pass in the question id
   const options = $(location).children(".all-options").children(".option-holder");
@@ -173,7 +173,7 @@ const createOptions = (location, questionId) => {
   
     // console.log(optionObject);
     //update datebase with options
-    $.post("/add/options", optionObject)
+    $.post(`/create-quizzes/${quizId}/${questionId}/options`, optionObject)
     .then(()=>{
       console.log("New option added!")
     })

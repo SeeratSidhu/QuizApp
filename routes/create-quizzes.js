@@ -5,8 +5,12 @@ const { generateRandomInteger } = require("../helpers/create-random-integer");
 
 module.exports = (db) => {
 
+  router.get("/", (req, res) => {
+    res.render("new-quiz")
+  })
+
   //adds quiz and returns quiz id
-  router.post("/quizzes", (req, res) => {
+  router.post("/", (req, res) => {
   
     const id = generateRandomInteger();
     const values = [id, req.body.title];
@@ -26,7 +30,7 @@ module.exports = (db) => {
 
 
   //add question and returns question id
-  router.post("/questions", (req,res) => {
+  router.post("/:quizId/questions", (req,res) => {
     const question_id = generateRandomInteger();
     const values = [question_id , req.body.quiz_id, req.body.question_text];
   
@@ -45,7 +49,7 @@ module.exports = (db) => {
 
 
   //adds options to a question
-  router.post("/options", (req,res) => {
+  router.post("/:quizId/:questionId/options", (req,res) => {
     const option_id = generateRandomInteger()
     const values = [option_id, req.body.question_id, req.body.value, req.body.is_correct]
   
