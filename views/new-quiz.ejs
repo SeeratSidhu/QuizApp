@@ -6,10 +6,8 @@
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-
   <link rel="stylesheet" href="/styles/new-quiz.css" type="text/css" />
 
-  
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/new-quiz.js"></script>
 </head>
@@ -17,17 +15,18 @@
 <body>
   
   <div class="form-container">
-    <h3>Add new quiz</h3>
-
+    
     <form class="new-quiz-form">
-      <div class="form-group">
+      <div class="form-group new-question">
+        <h3>Add new quiz</h3>
         <label for="quiz-title">Quiz Title</label>
         <input type="text" class="form-control quiz-title"  placeholder="Enter title" name="quiz-title">
       </div>
 
-      <button class="add-question-btn">new question</button>
+      <button type="button" class="btn btn-success add-question-btn">Add Question</button>
 
-      <button type="submit" class="btn btn-primary make-quiz-btn">Submit</button>
+
+      <button type="submit" class="btn btn-primary make-quiz-btn">Create A Quiz</button>
     </form>
 
 

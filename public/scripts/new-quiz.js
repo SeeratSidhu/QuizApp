@@ -6,7 +6,14 @@ $(()=>{
   $(".add-question-btn").on("click", function(event){
     event.preventDefault();
     
-    $(renderQuestion(questionNumber)).insertBefore(this);
+    $(renderQuestion()).insertBefore(this);
+
+    $(".delete-question").on("click", function(event){
+      event.preventDefault();
+      console.log("removed question!");
+      $(this).parent(".question").remove();
+   
+    })
   })
   
   $(".new-quiz-form").on("submit", function(event){
@@ -22,24 +29,24 @@ $(()=>{
 
     // creates quiz -> creates questions -> creates options
     createQuiz();
-
-
   })
   
   
   
 });
 
-//tracks question number
-let questionNumber = 1;
 
-const renderQuestion = (value) => {
-  questionNumber += 1;
+
+//tracks question number
+
+const renderQuestion = () => {
 
   const $questionTemplate = 
-    `<div class=" form-group question">
+    `<div class=" form-group question ${randomBackground()}">
+      <h3>Question</h3>
+      <button type="button" class="btn btn-danger delete-question">del</button>
+
       <div class="question-holder">
-        <label>Question ${value}</label>
         <input type="text" class="form-control question-name"  placeholder="Enter question" name="question" required>
       </div>
 
@@ -90,7 +97,7 @@ const renderQuestion = (value) => {
 }
 
 
-//client-side generated id key
+
 const createQuiz = function(){
   //will need to dom tree traversal
   const title = $(".quiz-title").val();
@@ -111,7 +118,8 @@ const createQuiz = function(){
 const createQuestions = (id) => {
   //id quiz id value
   //grabs all question-containers
-  let questions = $(".question");
+  const questions = $(".question");
+
 
 
   //loop to grab all question names
@@ -137,6 +145,8 @@ const createQuestions = (id) => {
   }
 }
 
+
+
 const createOptions = (location, questionId) => {
   //grabs all options related to a specific question
   //will need to pass in the question id
@@ -146,7 +156,7 @@ const createOptions = (location, questionId) => {
     const option_value = $(option).children(".option-value").val();
     const is_correct = $(option).children(".check-correct").children(".is_correct").is(":checked");
   
-    let optionObject = {
+    const optionObject = {
       question_id: questionId,
       value: option_value,
       is_correct
@@ -166,3 +176,12 @@ const createOptions = (location, questionId) => {
 }
 
 
+
+//adds a random colour class
+const randomBackground = () => {
+  let colourClasses = ["colour1", "colour2", "colour3", "colour4", "colour5"]
+
+  index = Math.floor(Math.random() * colourClasses.length)
+
+  return colourClasses[index];
+}

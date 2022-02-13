@@ -4,10 +4,25 @@
   width: 500px;
   height: fit-content;
 
+  .new-question{
+    border: 2px solid black;
+    border-radius: 15px;
+    padding: 1em;
+  }
+
   .question{
     border: 2px solid black;
     border-radius: 15px;
     padding: 1em;
+    position: relative;
+
+
+
+    .delete-question{
+      position: absolute;
+      top: 3%;
+      right: 3%;
+    }
   }
 
 }
@@ -24,4 +39,32 @@
   width: 90%;
   display: flex;
   flex-direction: column;
+}
+
+
+.add-question-btn{
+  display: block;
+  margin-bottom: 1em;
+}
+
+
+.colour1{
+  background-color: #faa0a0;
+}
+
+.colour2{
+  background-color: #f7e9a5;
+
+}
+.colour3{
+  background-color: #aaf8af;
+
+}
+.colour4{
+  background-color: #a7dcf5;
+
+}
+.colour5{
+  background-color: #d5a6f7;
+
 }
