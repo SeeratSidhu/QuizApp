@@ -82,12 +82,12 @@ const login = (req, res) => {
       console.log('successfully logged in user :', id);
       
       return res.send({
-        sucess: "200"
+        success: "200"
       });
     })
   })
   .catch(err => {
-    console.log(err.msg);
+   console.log(err);
   })
 
 }
