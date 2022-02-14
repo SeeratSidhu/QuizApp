@@ -1,0 +1,41 @@
+.container {
+  background-color: rgb(38, 128, 38);
+  height:90%;
+}
+
+.quiz-container {
+  background-color: white;
+  height: 80%;
+}
+
+.radiogroup {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .option {
+    padding: 7px;
+  }
+}
+
+.question {
+  text-align: center;
+  font-size: larger;
+  color: white;
+  background-color: black;
+  padding: 10px 0;
+}
+
+header{
+  height: 200px;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  h1, h3 {
+  color:white;
+  text-align: center;
+  }
+
+}

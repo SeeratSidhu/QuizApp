@@ -8,21 +8,24 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/quiz.css" type="text/css" />
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
-  <script type="text/javascript" src="/scripts/takeQuiz.js"></script>
+  <script type="text/javascript" src="/scripts/loadQuiz.js"></script>
 </head>
 
 <body>
-  <main>
-    <h3>Quiz</h3>
-    <section>
-      <div class="question">
-      </div>
-      <div></div>
-      </div>
-    </section>
+  <header>
+    <h1></h1>
+    <h3>Questions Left: <span id="pending"></span></h3>
+  </header>
+  <main class="container">
+   <section class="quiz-container">
+   </section>
+   <section class="answer-message"></section>
+   <section class="results"></section>
+   </section>
   </main>
 </body>
 
