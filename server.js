@@ -77,6 +77,16 @@ app.get("/", (req, res) => {
 });
 
 
+app.get("/login", (req, res) => {
+  res.render("login")
+})
+
+app.post("/login", (req, res) => {
+  // const email = req.body.email;
+  // const password = req.body.password;
+
+  res.redirect("/");
+})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
