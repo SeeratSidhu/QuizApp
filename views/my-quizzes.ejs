@@ -5,9 +5,10 @@
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <!-- <link rel="stylesheet" href="/styles/main.css" type="text/css" /> -->
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <link rel="stylesheet" href="/styles/header.css" />
+    <link rel="stylesheet" href="/styles/my-quizzes.css" />
 
     <!-- adding font styles -->
 
@@ -34,16 +35,20 @@
     <%- include('partials/_header') %>
 
     <main>
-      <h1>Take a Quiz!</h1>
-      <div class="quiz-container">
-        <% for(const quiz of quizzes){%>
+      <h1>My Quizzes</h1>
 
-        <div class="quiz-list-item quiz1">
-          <span><%= quiz.name%></span>
-          <a href="#"><button>Take Quiz!</button></a>
-        </div>
-
-        <% }%>
+      <div class="user-quiz user-quiz1">
+        <span>Some Quiz</span>
+        <a href="#"><button>Take Quiz!</button></a>
+      </div>
+      <div class="user-quiz user-quiz2">
+        <span>Some Quiz</span><a href="#"><button>Take Quiz!</button></a>
+      </div>
+      <div class="user-quiz user-quiz3">
+        <span>Some Quiz</span><a href="#"><button>Take Quiz!</button></a>
+      </div>
+      <div class="user-quiz user-quiz4">
+        <span>Some Quiz</span><a href="#"><button>Take Quiz!</button></a>
       </div>
     </main>
     <script src="./scripts/app.js"></script>

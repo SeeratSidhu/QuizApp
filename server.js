@@ -71,6 +71,10 @@ app.get("/", (req, res) => {
     })
 });
 
+app.get("/my-quizzes", (req, res) => {
+  res.render("my-quizzes");
+})
+
 
 
 app.listen(PORT, () => {
