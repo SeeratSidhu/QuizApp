@@ -78,8 +78,13 @@ app.get("/", (req, res) => {
 
 
 app.get("/login", (req, res) => {
-  res.render("login")
+  res.render("login");
 })
+
+app.get("/register", (req, res)=>{
+  res.render("register");
+})
+
 
 app.post("/login", (req, res) => {
   const email = req.body.email;
