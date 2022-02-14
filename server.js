@@ -7,7 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
 const cookieSession = require('cookie-session');
-// const { generateRandomInteger } = require("./helpers/create-random-integer"); 
+const { generateRandomInteger } = require("./helpers/create-random-integer"); 
 const app = express();
 
 // PG database client/connection setup
@@ -82,14 +82,20 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
+
+
 app.get("/register", (req, res)=>{
   res.render("register");
 });
+
+
 
 app.post("/register", (req, res) => {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
+
+  console.log(name, password)
 
   db.query(
     `SELECT email FROM users
@@ -101,19 +107,25 @@ app.post("/register", (req, res) => {
         error: "Email already exists!"
       });
     }
+  })
+  .catch(err => console.log(err.msg))
+
+  db.query(`
+  INSERT INTO users(id, email, name, password)
+  VALUES ($1, $2, $3, $4)
+  RETURNING *;
+  `, [generateRandomInteger(), email, name, password])
+  .then((result) => {
+    const id = result.rows[0].id;
+    req.session.user_id = id;
+    console.log('successfully logged in user :', id);
 
     return res.send({
       sucess: "200"
-    })
-    // return db.query(`
-    //   INSERT INTO users(id, email, name, password)
-    //   VALUES ($1, $2, $3, $4)
-    //   RETURNING *;
-    // `, [generateRandomInteger(), email, name, password])
-
+    });
   })
-  .catch(err => console.log(err.msg))
 });
+
 
 
 app.post("/login", (req, res) => {
@@ -148,6 +160,8 @@ app.post("/login", (req, res) => {
 
   })
 });
+
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

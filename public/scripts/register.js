@@ -8,7 +8,7 @@ $(()=>{
 //send email and password to server for verification
 const registerUser = function(event){
   event.preventDefault();
-    const name = $(this).children(".name-holder").children(".email").val();
+    const name = $(this).children(".name-holder").children(".name").val();
     const email = $(this).children(".email-holder").children(".email").val();
     const password = $(this).children(".password-holder").children(".password").val();
 
@@ -41,8 +41,7 @@ const checkError = (registerResult) => {
 
   //redirect
   if(registerResult.sucess){
-    // return window.location.href = "/";
-    console.log("okay!")
+    return window.location.href = "/";
   }
 
 }
