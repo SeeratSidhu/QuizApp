@@ -97,14 +97,10 @@ app.get("/register", (req, res)=>{
 
 
 
-//checks if email is unique
-//register new user, assigning a randomized id
-//creates a new cookie session
 app.post("/register", register)
 
 
 
-//check login credentials and returns an error or success response to client-side
 app.post("/login", login);
 
 

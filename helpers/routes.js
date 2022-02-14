@@ -4,7 +4,10 @@ const dbParams = require("../lib/db.js");
 const db = new Pool(dbParams);
 
 
-//register user function to be called in serverjs file
+
+//checks if email is unique
+//register new user, assigning a randomized id
+//creates a new cookie session
 const register = (req,res) => {
   const name = req.body.name;
   const email = req.body.email;
@@ -45,7 +48,7 @@ const register = (req,res) => {
 
 
 
-//login function to be passed into server.js
+//check login credentials and returns an error or success response to client-side
 const login = (req, res) => {
 
   const email = req.body.email;
