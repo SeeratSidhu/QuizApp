@@ -7,6 +7,10 @@ const { generateRandomInteger } = require("../helpers/create-random-integer");
 module.exports = (db) => {
 
   router.get("/", (req, res) => {
+    let session = req.session;
+    if(!session.user_id){
+      return res.redirect("/login");
+    }
     res.render("new-quiz");
   });
 

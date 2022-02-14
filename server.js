@@ -24,8 +24,8 @@ app.use(morgan("dev"));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({extended: true}));
 app.use(cookieSession({
-  secret: "random key for now",
-  maxAge: 60*2*1000 //two minutes - testing purposes (will use 24*60*60*1000 afterwards)
+  secret: "random string for now",
+  maxAge: 60*10*1000 //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
 }))
 
 app.use(
