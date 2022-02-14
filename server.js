@@ -7,6 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
 const cookieSession = require('cookie-session');
+// const { generateRandomInteger } = require("./helpers/create-random-integer"); 
 const app = express();
 
 // PG database client/connection setup
@@ -79,11 +80,40 @@ app.get("/", (req, res) => {
 
 app.get("/login", (req, res) => {
   res.render("login");
-})
+});
 
 app.get("/register", (req, res)=>{
   res.render("register");
-})
+});
+
+app.post("/register", (req, res) => {
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
+
+  db.query(
+    `SELECT email FROM users
+    WHERE email = $1`, [email]
+  )
+  .then((result) => {
+    if(result.rows.length){
+      return res.send({
+        error: "Email already exists!"
+      });
+    }
+
+    return res.send({
+      sucess: "200"
+    })
+    // return db.query(`
+    //   INSERT INTO users(id, email, name, password)
+    //   VALUES ($1, $2, $3, $4)
+    //   RETURNING *;
+    // `, [generateRandomInteger(), email, name, password])
+
+  })
+  .catch(err => console.log(err.msg))
+});
 
 
 app.post("/login", (req, res) => {
@@ -117,7 +147,7 @@ app.post("/login", (req, res) => {
     });
 
   })
-})
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
