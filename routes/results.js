@@ -12,7 +12,7 @@ module.exports = (db) => {
     db.query(`INSERT INTO results (id, quiz_id, owner_id, value)
     VALUES ($1, $2, $3, $4)`, [id, Number(quiz_id), user_id, Number(score)])
       .then(data => {
-        console.log(data);
+        res.sendStatus(201);
       })
       .catch(err => {
         res

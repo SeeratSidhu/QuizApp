@@ -186,6 +186,15 @@ app.post("/logout", (req, res) => {
 app.get("/quizzes/:id", (req, res) => {
   res.render("quiz");
 });
+
+//////////////////////
+
+app.get("/quizzes", (req, res) => {
+  if(req.session.user_id) {
+    return res.sendStatus(200);
+  }
+  return res.send(undefined);
+});
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
