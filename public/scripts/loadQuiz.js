@@ -1,7 +1,8 @@
 $(() => {
   loadQuiz();
   $("main").on("click", "#submit-button", checkQuestion);
-  $(".results").on("click", "#save-result-button", postResult)
+  $(".results").on("click", "#save-result-button", postResult);
+  getQuizName();
 });
 let currentQuestion = 0;
 let score = 0;
@@ -61,7 +62,7 @@ const nextQuestion = () => {
   setTimeout(() => {
     $(".answer-message").empty();
     loadQuiz();
-  }, 1000);
+  }, 100);
 }
 
 const correctAnswer = () => {
@@ -115,6 +116,16 @@ const postResult = function(event){
     quiz_id: 1
   }
   $.post("/api/results", data);
-  $(".results").hide();
+  $(".results").html(`<h1>Your score ${totalScore} has been saved!<h1>`);
 }
 
+const getQuizName = () => {
+  let pathname = window.location.pathname.split("/");
+  let quizID = pathname[pathname.length-1];
+  let route = pathname[pathname.length-2];
+  $.get(`/api/${route}`)
+  .then(data => {
+    const quizName = data.filter(quiz => quiz.id == quizID);
+    $("header h1").text(quizName[0].name);
+  })
+}
