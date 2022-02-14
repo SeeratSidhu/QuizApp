@@ -12,12 +12,14 @@
     </div>
     <div class="bottom-div nav-div">
       <ul class="ul-buttons navSection">
+        <% if (!user) { %>
         <li>
           <a href="/login"><button>Login</button></a>
         </li>
         <li>
           <a href="/register"><button>Register</button></a>
         </li>
+        <% } %>
       </ul>
     </div>
   </nav>

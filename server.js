@@ -7,7 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
 const cookieSession = require('cookie-session');
-const { generateRandomInteger } = require("./helpers/create-random-integer");
+const {generateRandomInteger} = require("./helpers/create-random-integer");
 const app = express();
 
 // PG database client/connection setup
@@ -25,7 +25,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({extended: true}));
 app.use(cookieSession({
   secret: "random string for now",
-  maxAge: 60*10*1000 //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
+  maxAge: 60 * 10 * 1000 //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
 }))
 
 app.use(
@@ -80,6 +80,14 @@ app.get("/", (req, res) => {
     })
 });
 
+
+
+
+
+
+
+
+
 app.get("/my-quizzes", (req, res) => {
   res.render("my-quizzes");
 })
@@ -92,7 +100,7 @@ app.get("/login", (req, res) => {
 
 
 
-app.get("/register", (req, res)=>{
+app.get("/register", (req, res) => {
   res.render("register");
 });
 
@@ -111,14 +119,14 @@ app.post("/register", (req, res) => {
     `SELECT email FROM users
     WHERE email = $1`, [email]
   )
-  .then((result) => {
-    if(result.rows.length){
-      return res.send({
-        error: "Email already exists!"
-      });
-    }
-  })
-  .catch(err => console.log(err.msg))
+    .then((result) => {
+      if (result.rows.length) {
+        return res.send({
+          error: "Email already exists!"
+        });
+      }
+    })
+    .catch(err => console.log(err.msg))
 
   //insert new user into database
   //creates new cookie session
@@ -127,16 +135,16 @@ app.post("/register", (req, res) => {
   VALUES ($1, $2, $3, $4)
   RETURNING *;
   `, [generateRandomInteger(), email, name, password])
-  .then((result) => {
-    const id = result.rows[0].id;
-    req.session.user_id = id;
-    // console.log('successfully logged in user :', id);
+    .then((result) => {
+      const id = result.rows[0].id;
+      req.session.user_id = id;
+      // console.log('successfully logged in user :', id);
 
-    return res.send({
-      sucess: "200"
-    });
-  })
-  .catch(err => console.log(err.msg));
+      return res.send({
+        sucess: "200"
+      });
+    })
+    .catch(err => console.log(err.msg));
 });
 
 
@@ -150,30 +158,30 @@ app.post("/login", (req, res) => {
     `SELECT * FROM users
     WHERE email = $1`, [email]
   )
-  .then((result) => {
-    if(!result.rows.length){
+    .then((result) => {
+      if (!result.rows.length) {
+        return res.send({
+          error: "email does not exist"
+        });
+      }
+
+      if (result.rows[0].password !== password) {
+        return res.send({
+          error: "incorrect password"
+        });
+      }
+
+      //if email and password are correct
+      //new session created and redirect
+      const id = result.rows[0].id;
+      req.session.user_id = id;
+      // console.log('successfully logged in user :', id);
+
       return res.send({
-        error: "email does not exist"
+        sucess: "200"
       });
-    }
 
-    if(result.rows[0].password !== password){
-      return res.send({
-        error: "incorrect password"
-      });
-    }
-
-    //if email and password are correct
-    //new session created and redirect
-    const id = result.rows[0].id;
-    req.session.user_id = id;
-    // console.log('successfully logged in user :', id);
-
-    return res.send({
-      sucess: "200"
-    });
-
-  })
+    })
 });
 
 
