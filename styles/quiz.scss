@@ -1,19 +1,41 @@
 .container {
-  border: 2px solid black;
+  background-color: rgb(38, 128, 38);
+  height:90%;
 }
 
-.question-container {
-  border: 2px solid red;
+.quiz-container {
+  background-color: white;
+  height: 80%;
+}
+
+.radiogroup {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .option {
+    padding: 7px;
+  }
 }
 
 .question {
-  border: 2px solid blue;
+  text-align: center;
+  font-size: larger;
+  color: white;
+  background-color: black;
+  padding: 10px 0;
 }
 
-.option {
-  border: 2px solid green;
-}
+header{
+  height: 200px;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-.option-container {
-  border: 2px solid black;
+  h1, h3 {
+  color:white;
+  text-align: center;
+  }
+
 }

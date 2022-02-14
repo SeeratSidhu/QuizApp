@@ -42,7 +42,7 @@ const renderQuestions = (quizArray, qNumber) => {
   </form>`;
 
   const options = optionItems.map((option, index) => {
-    return `<label for="${option.value}">
+    return `<label class="option" for="${option.value}">
       <input type="radio" id="option${option.id}" name="option" tabindex="${index}" value="${option.id}" aria-checked="false" required>
       ${option.value}
       </label>`
