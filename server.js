@@ -5,8 +5,9 @@ require("dotenv").config();
 const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
-const app = express();
 const morgan = require("morgan");
+const cookieSession = require('cookie-session');
+const app = express();
 
 // PG database client/connection setup
 const {Pool} = require("pg");
@@ -21,6 +22,10 @@ app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({extended: true}));
+app.use(cookieSession({
+  secret: "random key for now",
+  maxAge: 60*2*1000 //two minutes - testing purposes (will use 24*60*60*1000 afterwards)
+}))
 
 app.use(
   "/styles",
