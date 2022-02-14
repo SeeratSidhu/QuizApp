@@ -100,8 +100,6 @@ app.post("/register", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  console.log(name, password)
-
   //verify unique email
   db.query(
     `SELECT email FROM users
