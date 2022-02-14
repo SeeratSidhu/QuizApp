@@ -1,0 +1,33 @@
+
+.login-form-container{
+  margin: 1rem;
+  width: 400px;
+  height: fit-content;
+  border: 2px solid black;
+  border-radius: 15px;
+
+  h2{
+    margin: 1rem 1rem 0 1rem;
+  }
+
+  .login-form{
+    margin: 0.5rem 1rem 1rem 1rem;
+  }
+
+  .input{
+    width: 300px;
+  }
+
+
+}
+
+
+
+.login-error-message{
+  color: rgb(248, 56, 56);
+  font-style: italic;
+  font-style: bold;
+  margin-left: 10px;
+  display: none;
+}
+

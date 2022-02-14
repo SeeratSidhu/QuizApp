@@ -88,7 +88,6 @@ app.post("/login", (req, res) => {
   db.query(
     `SELECT * FROM users
     WHERE email = $1`, [email]
-
   )
   .then((result) => {
     if(!result.rows.length){
@@ -107,12 +106,12 @@ app.post("/login", (req, res) => {
     //new session created and redirect
     req.session.user_id = result.rows[0].id;
     console.log('successfully logged in user :', result.rows[0].id);
+    
     return res.send({
       sucess: "200"
     });
 
   })
-
 })
 
 app.listen(PORT, () => {

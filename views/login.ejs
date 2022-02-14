@@ -9,23 +9,27 @@
   <link rel="stylesheet" href="/styles/login.css" type="text/css" />
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/login.js"></script>
+
 </head>
 
 <body>
-  
-  <h2 style="margin: 1rem 1rem 0 1rem">Login</h2>
-  <form action="/login" method="POST" style="margin: 0.5rem 1rem 1rem 1rem;">
-    <div class="form-group">
-      <label for="email">Email address</label>
-      <input type="email" class="form-control" name="email"  placeholder="Enter Email" style="width: 300px; ">
-    </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" name="password" placeholder="Enter Password" style="width: 300px; ">
-    </div>
-    
-    <button type="submit" class="btn btn-primary">Login</button>
-  </form>
+  <div class="login-form-container">
+    <h2>Login</h2>
+    <form class="login-form">
+      <div class="form-group email-holder">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control email" name="email"  placeholder="Enter Email">
+      </div>
+      <div class="form-group password-holder">
+        <label for="password">Password</label>
+        <input type="password" class="form-control password" name="password" placeholder="Enter Password">
+        <span class="login-error-message">Error</span>      
+      </div>
+      
+      <button type="submit" class="btn btn-primary login-btn">Login</button>
+    </form>
+  </div>
   
 
   
