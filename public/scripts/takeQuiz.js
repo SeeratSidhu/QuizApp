@@ -61,7 +61,7 @@ const nextQuestion = () => {
   setTimeout(() => {
     $(".answer-message").empty();
     loadQuiz();
-  }, 200);
+  }, 1000);
 }
 
 const correctAnswer = () => {
