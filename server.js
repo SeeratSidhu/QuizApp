@@ -7,7 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
 const cookieSession = require('cookie-session');
-const { generateRandomInteger } = require("./helpers/create-random-integer"); 
+const { register, login } = require("./helpers/routes");
 const app = express();
 
 // PG database client/connection setup
@@ -45,6 +45,7 @@ const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const addRoutes = require("./routes/create-quizzes")
 const quizzesRoutes = require("./routes/quizzes");
+const req = require("express/lib/request");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -99,80 +100,12 @@ app.get("/register", (req, res)=>{
 //checks if email is unique
 //register new user, assigning a randomized id
 //creates a new cookie session
-app.post("/register", (req, res) => {
-  const name = req.body.name;
-  const email = req.body.email;
-  const password = req.body.password;
-
-  //verify unique email
-  db.query(
-    `SELECT email FROM users
-    WHERE email = $1`, [email]
-  )
-  .then((result) => {
-    if(result.rows.length){
-      return res.send({
-        error: "Email already exists!"
-      });
-    }    
-    // //insert new user into database
-    // //creates new cookie session
-
-    db.query(`
-    INSERT INTO users(id, email, name, password)
-    VALUES ($1, $2, $3, $4)
-    RETURNING *;
-    `, [generateRandomInteger(), email, name, password])
-    .then((result) => {
-      const id = result.rows[0].id;
-      req.session.user_id = id;
-      // console.log('successfully logged in user :', id);
-  
-      return res.send({
-        sucess: "200"
-      });
-    })
-
-  })
-  .catch(err => console.log(err.msg))
-});
+app.post("/register", register)
 
 
 
 //check login credentials and returns an error or success response to client-side
-app.post("/login", (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-
-  db.query(
-    `SELECT * FROM users
-    WHERE email = $1`, [email]
-  )
-  .then((result) => {
-    if(!result.rows.length){
-      return res.send({
-        error: "email does not exist"
-      });
-    }
-
-    if(result.rows[0].password !== password){
-      return res.send({
-        error: "incorrect password"
-      });
-    }
-
-    //if email and password are correct 
-    //new session created and redirect
-    const id = result.rows[0].id;
-    req.session.user_id = id;
-    // console.log('successfully logged in user :', id);
-    
-    return res.send({
-      sucess: "200"
-    });
-
-  })
-});
+app.post("/login", login);
 
 
 
@@ -180,6 +113,7 @@ app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
 });
+
 
 
 app.listen(PORT, () => {

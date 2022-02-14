@@ -3,7 +3,6 @@ const router  = express.Router();
 const { generateRandomInteger } = require("../helpers/create-random-integer");
 
 
-
 module.exports = (db) => {
 
   router.get("/", (req, res) => {
