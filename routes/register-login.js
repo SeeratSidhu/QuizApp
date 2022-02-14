@@ -2,6 +2,7 @@ const { generateRandomInteger } = require("../helpers/create-random-integer");
 const {Pool} = require("pg");
 const dbParams = require("../lib/db.js");
 const db = new Pool(dbParams);
+const bcrypt = require('bcrypt');
 
 
 
@@ -9,10 +10,7 @@ const db = new Pool(dbParams);
 //register new user, assigning a randomized id
 //creates a new cookie session
 const register = (req,res) => {
-  const name = req.body.name;
-  const email = req.body.email;
-  const password = req.body.password;
-
+  const { name, email, password } = req.body;
   //verify unique email
   db.query(
     `SELECT email FROM users
@@ -23,19 +21,23 @@ const register = (req,res) => {
       return res.send({
         error: "Email already exists!"
       });
-    }    
+    }
+    //hashes password    
     // //insert new user into database
     // //creates new cookie session
-    
-    db.query(`
-    INSERT INTO users(id, email, name, password)
-    VALUES ($1, $2, $3, $4)
-    RETURNING *;
-    `, [generateRandomInteger(), email, name, password])
+    bcrypt.hash(password, 10)
+    .then(hash => {
+      return db.query(`
+      INSERT INTO users(id, email, name, password)
+      VALUES ($1, $2, $3, $4)
+      RETURNING *;
+      `, [generateRandomInteger(), email, name, hash])
+
+    })
     .then((result) => {
       const id = result.rows[0].id;
       req.session.user_id = id;
-      // console.log('successfully logged in user :', id);
+      console.log('successfully logged in user :', id);
   
       return res.send({
         success: "200"
@@ -51,8 +53,7 @@ const register = (req,res) => {
 //check login credentials and returns an error or success response to client-side
 const login = (req, res) => {
 
-  const email = req.body.email;
-  const password = req.body.password;
+  const {email, password} = req.body;
 
   db.query(
     `SELECT * FROM users
@@ -65,22 +66,28 @@ const login = (req, res) => {
       });
     }
 
-    if(result.rows[0].password !== password){
+    bcrypt.compare(password, result.rows[0].password)
+    .then(checkResult => {
+      if(!checkResult){
+        return res.send({
+          error: "incorrect password"
+        });
+
+      }
+
+      //if email and password are correct 
+      //new session created and redirect
+      const id = result.rows[0].id;
+      req.session.user_id = id;
+      console.log('successfully logged in user :', id);
+      
       return res.send({
-        error: "incorrect password"
+        sucess: "200"
       });
-    }
-
-    //if email and password are correct 
-    //new session created and redirect
-    const id = result.rows[0].id;
-    req.session.user_id = id;
-    // console.log('successfully logged in user :', id);
-    
-    return res.send({
-      sucess: "200"
-    });
-
+    })
+  })
+  .catch(err => {
+    console.log(err.msg);
   })
 
 }
