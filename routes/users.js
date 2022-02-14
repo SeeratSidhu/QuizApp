@@ -29,7 +29,7 @@ const usersRoutes = express.Router();
 module.exports = (db) => {
   usersRoutes.get("/", (req, res) => {
     //the value of user will change later
-    const user = "req.session.user";
+    const user = req.session.user;
     db.query(
       "SELECT id, name FROM quizzes;"
     )

@@ -7,10 +7,10 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
 const cookieSession = require('cookie-session');
-feature/nav-login-and-register
+
 const {generateRandomInteger} = require("./helpers/create-random-integer");
 
-const { register, login } = require("./routes/register-login");
+const {register, login} = require("./routes/register-login");
 
 const app = express();
 
@@ -115,39 +115,8 @@ app.get("/register", (req, res) => {
 app.post("/register", register)
 
 
-  //verify unique email
-  db.query(
-    `SELECT email FROM users
-    WHERE email = $1`, [email]
-  )
-    .then((result) => {
-      if (result.rows.length) {
-        return res.send({
-          error: "Email already exists!"
-        });
-      }
-    
-    })
-    .catch(err => console.log(err.msg))
+//verify unique email
 
-  //insert new user into database
-  //creates new cookie session
-  db.query(`
-  INSERT INTO users(id, email, name, password)
-  VALUES ($1, $2, $3, $4)
-  RETURNING *;
-  `, [generateRandomInteger(), email, name, password])
-    .then((result) => {
-      const id = result.rows[0].id;
-      req.session.user_id = id;
-      // console.log('successfully logged in user :', id);
-
-      return res.send({
-        sucess: "200"
-      });
-    })
-    .catch(err => console.log(err.msg));
-});
 
 
 
@@ -203,7 +172,7 @@ app.get("/quizzes/:id", (req, res) => {
 });
 
 app.get("/quizzes", (req, res) => {
-  if(req.session.user_id) {
+  if (req.session.user_id) {
     return res.sendStatus(200);
   }
   return res.send(undefined);
