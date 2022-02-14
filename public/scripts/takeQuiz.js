@@ -114,9 +114,7 @@ const postResult = function(event){
     score: totalScore,
     quiz_id: 1
   }
-  $.post("/api/results", data)
-  .then(data => {
-    console.log(data);
-  })
+  $.post("/api/results", data);
+  $(".results").hide();
 }
 

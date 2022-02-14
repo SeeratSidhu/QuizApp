@@ -4,17 +4,18 @@ const router  = express.Router();
 module.exports = (db) => {
   router.post("/", (req, res) => {
     console.log(req.body);
-    res.sendStatus(201);
-    // db.query(`SELECT * FROM users;`)
-    //   .then(data => {
-    //     const users = data.rows;
-    //     res.json({ users });
-    //   })
-    //   .catch(err => {
-    //     res
-    //       .status(500)
-    //       .json({ error: err.message });
-    //   });
+    const { score, quiz_id } = req.body;
+    console.log(score, quiz_id);
+    db.query(`INSERT INTO results (id, quiz_id, owner_id, value)
+    VALUES ($1, $2, $3, $4)`, [5, Number(quiz_id), 10001, Number(score)])
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
   });
   return router;
 };
