@@ -2,7 +2,6 @@ $(() => {
   loadQuiz();
   $("main").on("click", "#submit-button", checkQuestion);
   $(".results").on("click", "#save-result-button", postResult);
-  getQuizName();
 });
 let currentQuestion = 0;
 let score = 0;
@@ -11,6 +10,7 @@ const loadQuiz = () => {
 
   getQuizData()
   .then(data => {
+    getQuizName();
     renderQuestions(data, currentQuestion);
     pendingQuestions(data);
 
