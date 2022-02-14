@@ -38,7 +38,7 @@ const register = (req,res) => {
       // console.log('successfully logged in user :', id);
   
       return res.send({
-        sucess: "200"
+        success: "200"
       });
     })
 

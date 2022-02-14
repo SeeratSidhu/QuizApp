@@ -40,7 +40,7 @@ const checkError = (registerResult) => {
   }
 
   //redirect
-  if (registerResult.sucess) {
+  if (registerResult.success) {
     return window.location.href = "/";
   }
 

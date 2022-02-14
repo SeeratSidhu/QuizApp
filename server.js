@@ -7,7 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
 const cookieSession = require('cookie-session');
-const { register, login } = require("./helpers/routes");
+const { register, login } = require("./routes/register-login");
 const app = express();
 
 // PG database client/connection setup
