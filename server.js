@@ -67,12 +67,14 @@ app.use("/create-quizzes", addRoutes(db));
 
 
 app.get("/", (req, res) => {
+  const user = "req.session.user";
   db.query(
     "SELECT id, name FROM quizzes;"
   )
     .then((result) => {
       res.render("index", {
-        quizzes: result.rows
+        quizzes: result.rows,
+        user: user
       });
     })
     .catch((err) => {
