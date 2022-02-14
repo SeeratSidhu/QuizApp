@@ -34,7 +34,7 @@ const checkError = (loginResult) => {
   }
 
   //redirect
-  if (loginResult.sucess) {
+  if (loginResult.success) {
     return window.location.href = "/";
   }
 

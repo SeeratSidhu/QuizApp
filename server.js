@@ -7,7 +7,11 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
 const cookieSession = require('cookie-session');
+feature/nav-login-and-register
 const {generateRandomInteger} = require("./helpers/create-random-integer");
+
+const { register, login } = require("./routes/register-login");
+
 const app = express();
 
 // PG database client/connection setup
@@ -108,13 +112,8 @@ app.get("/register", (req, res) => {
 
 
 
-//checks if email is unique
-//register new user, assigning a randomized id
-//creates a new cookie session
-app.post("/register", (req, res) => {
-  const name = req.body.name;
-  const email = req.body.email;
-  const password = req.body.password;
+app.post("/register", register)
+
 
   //verify unique email
   db.query(
@@ -127,6 +126,7 @@ app.post("/register", (req, res) => {
           error: "Email already exists!"
         });
       }
+    
     })
     .catch(err => console.log(err.msg))
 
@@ -188,6 +188,11 @@ app.post("/login", (req, res) => {
 
 
 
+app.post("/login", login);
+
+
+
+
 app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
@@ -195,6 +200,13 @@ app.post("/logout", (req, res) => {
 
 app.get("/quizzes/:id", (req, res) => {
   res.render("quiz");
+});
+
+app.get("/quizzes", (req, res) => {
+  if(req.session.user_id) {
+    return res.sendStatus(200);
+  }
+  return res.send(undefined);
 });
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

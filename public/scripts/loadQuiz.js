@@ -2,15 +2,16 @@ $(() => {
   loadQuiz();
   $("main").on("click", "#submit-button", checkQuestion);
   $(".results").on("click", "#save-result-button", postResult);
-  getQuizName();
 });
 let currentQuestion = 0;
 let score = 0;
+let quizID;
 
 const loadQuiz = () => {
 
   getQuizData()
   .then(data => {
+    getQuizName();
     renderQuestions(data, currentQuestion);
     pendingQuestions(data);
 
@@ -111,21 +112,38 @@ const pendingQuestions = (dataArray) => {
 const postResult = function(event){
   event.preventDefault();
   const totalScore = $(this).prev().children("#score").html();
-  const data = {
+  const resultData = {
     score: totalScore,
-    quiz_id: 1
+    quiz_id: quizID
   }
-  $.post("/api/results", data);
-  $(".results").html(`<h1>Your score ${totalScore} has been saved!<h1>`);
+  console.log("yes", resultData);
+  checkUserLogin().then(data => {
+    if(data) {
+
+      $.post("/api/results", resultData);
+      $(".results").html(`<p>Your score has been saved!</p>`);
+
+    } else {
+      $(".results").html(`<p>Please <a href="/login">Login</a> to save results!</p>`);
+    }
+
+  });
 }
 
 const getQuizName = () => {
   let pathname = window.location.pathname.split("/");
-  let quizID = pathname[pathname.length-1];
+  quizID = pathname[pathname.length-1];
   let route = pathname[pathname.length-2];
   $.get(`/api/${route}`)
   .then(data => {
     const quizName = data.filter(quiz => quiz.id == quizID);
     $("header h1").text(quizName[0].name);
   })
+}
+
+const checkUserLogin = () => {
+  return $.get("/quizzes")
+  .then(data => {
+    return data;
+  });
 }
