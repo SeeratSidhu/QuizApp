@@ -1,6 +1,7 @@
 $(() => {
   loadQuiz();
   $("main").on("click", "#submit-button", checkQuestion);
+  $(".results").on("click", "#save-result-button", postResult)
 });
 let currentQuestion = 0;
 let score = 0;
@@ -60,7 +61,7 @@ const nextQuestion = () => {
   setTimeout(() => {
     $(".answer-message").empty();
     loadQuiz();
-  }, 2000);
+  }, 200);
 }
 
 const correctAnswer = () => {
@@ -94,9 +95,28 @@ const checkQuestion = function(event) {
 }
 
 const displayResults = () => {
-  $(".results").html(`<h1>You Scored ${score} out of ${currentQuestion}</h1>`);
+  $("header h3").hide();
+  let resultsELement = `
+  <div >You scored <span id="score">${score}</span> out of ${currentQuestion}</div>
+  <button id="save-result-button">Save Result</button>
+ `;
+  $(".results").html(resultsELement);
 }
 
 const pendingQuestions = (dataArray) => {
   $("#pending").text(dataArray.length - currentQuestion + "/" + dataArray.length);
 }
+
+const postResult = function(event){
+  event.preventDefault();
+  const totalScore = $(this).prev().children("#score").html();
+  const data = {
+    score: totalScore,
+    quiz_id: 1
+  }
+  $.post("/api/results", data)
+  .then(data => {
+    console.log(data);
+  })
+}
+
