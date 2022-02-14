@@ -7,8 +7,8 @@ const { generateRandomInteger } = require("../helpers/create-random-integer");
 module.exports = (db) => {
 
   router.get("/", (req, res) => {
-    res.render("new-quiz")
-  })
+    res.render("new-quiz");
+  });
 
   //adds quiz and returns quiz id
   router.post("/", (req, res) => {
@@ -21,11 +21,11 @@ module.exports = (db) => {
     VALUES ($1, 10002, $2)
     RETURNING *;
     `,values)
-    .then((result)=> {
-       console.log("new quiz ... ",result.rows[0]);
-      res.send(result.rows[0]);
-    })
-    .catch(err => console.log(err.msg))
+      .then((result)=> {
+        console.log("new quiz ... ",result.rows[0]);
+        res.send(result.rows[0]);
+      })
+      .catch(err => console.log(err.msg));
     
   });
 
@@ -40,33 +40,33 @@ module.exports = (db) => {
     VALUES($1, $2, $3)
     RETURNING *;
     `, values)
-    .then((result)=> {
-      console.log("new question ... ",result.rows[0]);
-      res.send(result.rows[0]);
-   })
-   .catch(err => console.log(err.msg))
+      .then((result)=> {
+        console.log("new question ... ",result.rows[0]);
+        res.send(result.rows[0]);
+      })
+      .catch(err => console.log(err.msg));
   
   });
 
 
   //adds options to a question
   router.post("/:quizId/:questionId/options", (req,res) => {
-    const option_id = generateRandomInteger()
-    const values = [option_id, req.body.question_id, req.body.value, req.body.is_correct]
+    const option_id = generateRandomInteger();
+    const values = [option_id, req.body.question_id, req.body.value, req.body.is_correct];
   
     return db.query(`INSERT
     INTO options(id, question_id, value, is_correct)
     VALUES($1, $2, $3, $4)
     RETURNING *;
     `, values)
-    .then((result)=> {
-      console.log("new option ... ",result.rows[0]);
-      res.send(result.rows[0]);
+      .then((result)=> {
+        console.log("new option ... ",result.rows[0]);
+        res.send(result.rows[0]);
       // res.redirect("/");
-   })
-   .catch(err => console.log(err.msg))
+      })
+      .catch(err => console.log(err.msg));
   
-  })
+  });
 
 
   
