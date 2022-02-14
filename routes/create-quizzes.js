@@ -16,13 +16,15 @@ module.exports = (db) => {
 
   //adds quiz and returns quiz id
   router.post("/", (req, res) => {
-  
+    let session = req.session;
+    let userID = session.user_id;
+
     const id = generateRandomInteger();
-    const values = [id, req.body.title];
+    const values = [id, userID, req.body.title];
   
     return db.query(`INSERT
     INTO quizzes (id, owner_id, name)
-    VALUES ($1, 10002, $2)
+    VALUES ($1, $2, $3)
     RETURNING *;
     `,values)
       .then((result)=> {
