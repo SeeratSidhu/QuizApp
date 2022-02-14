@@ -27,21 +27,21 @@ const register = (req,res) => {
     // //insert new user into database
     // //creates new cookie session
 
-    db.query(`
+    return db.query(`
     INSERT INTO users(id, email, name, password)
     VALUES ($1, $2, $3, $4)
     RETURNING *;
     `, [generateRandomInteger(), email, name, password])
-    .then((result) => {
-      const id = result.rows[0].id;
-      req.session.user_id = id;
-      // console.log('successfully logged in user :', id);
-  
-      return res.send({
-        success: "200"
-      });
-    })
+    
+  })
+  .then((result) => {
+    const id = result.rows[0].id;
+    req.session.user_id = id;
+    // console.log('successfully logged in user :', id);
 
+    return res.send({
+      success: "200"
+    });
   })
   .catch(err => console.log(err.msg))
 }
