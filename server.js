@@ -63,6 +63,7 @@ app.use("/create-quizzes", addRoutes(db));
 // });
 
 
+
 app.get("/", (req, res) => {
   db.query(
     "SELECT id, name FROM quizzes;"
@@ -78,6 +79,7 @@ app.get("/", (req, res) => {
 });
 
 
+
 app.get("/login", (req, res) => {
   res.render("login");
 });
@@ -90,6 +92,9 @@ app.get("/register", (req, res)=>{
 
 
 
+//checks if email is unique
+//register new user, assigning a randomized id
+//creates a new cookie session
 app.post("/register", (req, res) => {
   const name = req.body.name;
   const email = req.body.email;
@@ -97,6 +102,7 @@ app.post("/register", (req, res) => {
 
   console.log(name, password)
 
+  //verify unique email
   db.query(
     `SELECT email FROM users
     WHERE email = $1`, [email]
@@ -110,6 +116,8 @@ app.post("/register", (req, res) => {
   })
   .catch(err => console.log(err.msg))
 
+  //insert new user into database
+  //creates new cookie session
   db.query(`
   INSERT INTO users(id, email, name, password)
   VALUES ($1, $2, $3, $4)
@@ -118,16 +126,18 @@ app.post("/register", (req, res) => {
   .then((result) => {
     const id = result.rows[0].id;
     req.session.user_id = id;
-    console.log('successfully logged in user :', id);
+    // console.log('successfully logged in user :', id);
 
     return res.send({
       sucess: "200"
     });
   })
+  .catch(err => console.log(err.msg));
 });
 
 
 
+//check login credentials and returns an error or success response to client-side
 app.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -151,8 +161,9 @@ app.post("/login", (req, res) => {
 
     //if email and password are correct 
     //new session created and redirect
-    req.session.user_id = result.rows[0].id;
-    console.log('successfully logged in user :', result.rows[0].id);
+    const id = result.rows[0].id;
+    req.session.user_id = id;
+    // console.log('successfully logged in user :', id);
     
     return res.send({
       sucess: "200"
