@@ -82,10 +82,37 @@ app.get("/login", (req, res) => {
 })
 
 app.post("/login", (req, res) => {
-  // const email = req.body.email;
-  // const password = req.body.password;
+  const email = req.body.email;
+  const password = req.body.password;
 
-  res.redirect("/");
+  db.query(
+    `SELECT * FROM users
+    WHERE email = $1`, [email]
+
+  )
+  .then((result) => {
+    if(!result.rows.length){
+      return res.send({
+        error: "email does not exist"
+      });
+    }
+
+    if(result.rows[0].password !== password){
+      return res.send({
+        error: "incorrect password"
+      });
+    }
+
+    //if email and password are correct 
+    //new session created and redirect
+    req.session.user_id = result.rows[0].id;
+    console.log('successfully logged in user :', result.rows[0].id);
+    return res.send({
+      sucess: "200"
+    });
+
+  })
+
 })
 
 app.listen(PORT, () => {
