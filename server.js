@@ -172,6 +172,12 @@ app.post("/login", (req, res) => {
 
 
 
+app.post("/logout", (req, res) => {
+  req.session = null;
+  res.redirect("/");
+});
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
