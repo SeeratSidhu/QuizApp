@@ -18,34 +18,36 @@ const register = (req,res) => {
   )
   .then((result) => {
     if(result.rows.length){
-      return res.send({
-        error: "Email already exists!"
-      });
+      throw "Email already exists!";
     }
     //hashes password    
     // //insert new user into database
     // //creates new cookie session
-    bcrypt.hash(password, 10)
-    .then(hash => {
-      return db.query(`
-      INSERT INTO users(id, email, name, password)
-      VALUES ($1, $2, $3, $4)
-      RETURNING *;
-      `, [generateRandomInteger(), email, name, hash])
-
-    })
-    .then((result) => {
-      const id = result.rows[0].id;
-      req.session.user_id = id;
-      console.log('successfully logged in user :', id);
-  
-      return res.send({
-        success: "200"
-      });
-    })
+    return bcrypt.hash(password, 10)
+  })
+  .then(hash => {
+    return db.query(`
+    INSERT INTO users(id, email, name, password)
+    VALUES ($1, $2, $3, $4)
+    RETURNING *;
+    `, [generateRandomInteger(), email, name, hash])
 
   })
-  .catch(err => console.log(err.msg))
+  .then((newUserObject) => {
+    const id = newUserObject.rows[0].id;
+    req.session.user_id = id;
+    console.log('successfully logged in user :', id);
+
+    return res.send({
+      success: "200"
+    });
+  })
+
+  .catch(err => {
+    return res.send({
+      error: err
+    });
+  })
 }
 
 
@@ -54,6 +56,7 @@ const register = (req,res) => {
 const login = (req, res) => {
 
   const {email, password} = req.body;
+  let data;
 
   db.query(
     `SELECT * FROM users
@@ -61,33 +64,30 @@ const login = (req, res) => {
   )
   .then((result) => {
     if(!result.rows.length){
-      return res.send({
-        error: "email does not exist"
-      });
+      // return res.send({
+      //   error: "email does not exist"
+      // });
+      throw "email does not exist";
+    }
+    data = result.rows[0];
+    return bcrypt.compare(password, result.rows[0].password)
+  })
+  .then(checkResult => {
+    if(!checkResult){
+      throw "inccorrect password";
     }
 
-    bcrypt.compare(password, result.rows[0].password)
-    .then(checkResult => {
-      if(!checkResult){
-        return res.send({
-          error: "incorrect password"
-        });
-
-      }
-
-      //if email and password are correct 
-      //new session created and redirect
-      const id = result.rows[0].id;
-      req.session.user_id = id;
-      console.log('successfully logged in user :', id);
-      
-      return res.send({
-        success: "200"
-      });
-    })
+    //if email and password are correct 
+    //new session created and redirect
+    const id = data.id;
+    req.session.user_id = id;
+    // console.log('successfully logged in user :', id);
+    return res.send({success: "200"});
   })
   .catch(err => {
-   console.log(err);
+   return res.send({
+     error: err
+   });
   })
 
 }
