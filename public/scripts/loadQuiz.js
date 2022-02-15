@@ -65,7 +65,7 @@ const nextQuestion = () => {
 }
 
 const correctAnswer = (element) => {
-  $(element).addClass("correct");
+  $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check icon"></i>`);
   score++;
   $("#next-btn").removeClass("hide");
 }

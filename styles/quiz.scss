@@ -50,6 +50,13 @@ body {
 
 .btn.correct {
   background-color: $correct-color;
+  position: relative;
+  .icon {
+    position: absolute;
+    border: 1px solid $correct-color;
+    left: -5px;
+    top: -5px;
+  }
 }
 
 .btn.wrong{
