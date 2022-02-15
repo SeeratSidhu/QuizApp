@@ -28,15 +28,17 @@ const usersRoutes = express.Router();
 
 module.exports = (db) => {
   usersRoutes.get("/", (req, res) => {
-    //the value of user will change later
     const user = req.session.user;
+    // const email = req.session.email;
     db.query(
       "SELECT id, name FROM quizzes;"
     )
       .then((result) => {
+
         res.render("index", {
           quizzes: result.rows,
-          user: user
+          user: user,
+          // email: email
         });
       })
       .catch((err) => {

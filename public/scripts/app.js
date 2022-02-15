@@ -6,7 +6,6 @@
 const hamburger = document.getElementById('hamburger');
 let navUl = document.getElementsByClassName('navSection');
 
-console.log(navUl);
 
 hamburger.addEventListener('click', () => {
 

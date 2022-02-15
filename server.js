@@ -71,7 +71,8 @@ app.use("/create-quizzes", addRoutes(db));
 
 
 app.get("/", (req, res) => {
-  const user = "req.session.user";
+  const user = req.session.user_id;
+  console.log(user)
   db.query(
     "SELECT id, name FROM quizzes;"
   )
@@ -146,7 +147,9 @@ app.post("/login", (req, res) => {
       //new session created and redirect
       const id = result.rows[0].id;
       req.session.user_id = id;
-      // console.log('successfully logged in user :', id);
+      console.log('successfully logged in user :', id);
+
+
 
       return res.send({
         sucess: "200"

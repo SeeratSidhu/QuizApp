@@ -20,7 +20,10 @@
           <a href="/register"><button>Register</button></a>
         </li>
         <% } else { %>
-        <a href="#"><button>Logout</button></a>
+        <a class="nav-link disabled">Logged In As <%= %> ! </a>
+        <form action="/logout" method="POST">
+          <button type="submit">Logout</button>
+        </form>
         <% } %>
       </ul>
     </div>
