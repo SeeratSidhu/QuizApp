@@ -6,13 +6,7 @@ $(()=>{
   
     $(".unlist-btn").on("click", hideUnlistBtn);
 
-    $(".del-btn").on("click", (event) => {
-      event.preventDefault();
-
-      if(confirm("are you sure?")){
-        console.log("deleted")
-      }
-    })
+    $(".del-btn").on("click", deleteBtn)
 
   })
 
@@ -87,8 +81,15 @@ const hideListBtn = function(event){
   const $unlist = $(this).parent(".list-holder").siblings(".unlist-holder").children(".unlist-btn");
   const id = $(this).closest(".quiz-actions").siblings(".quiz-title").children(".quiz-id").text();
 
+  $.ajax({
+    url: `/quizzes/${id}`,
+    type: 'PUT',
+    success: () => {
+      $(this).hide();
+      return $unlist.show();
+    }
+  })
 
-  $unlist.show();
 };
 
 
@@ -99,6 +100,30 @@ const hideUnlistBtn = function(event){
   console.log(id)
 
 
-  $list.show();
+  $.ajax({
+    url: `/quizzes/${id}`,
+    type: 'PUT',
+    success: () => {
+      $(this).hide();
+      return $list.show();
+    }
+  })
 };
 
+
+const deleteBtn = function(event){
+  event.preventDefault();
+  const id = $(this).closest(".quiz-actions").siblings(".quiz-title").children(".quiz-id").text();
+
+  if(confirm("are you sure?")){
+    $.ajax({
+      url: `quizzes/${id}`,
+      type: 'DELETE',
+      success: () => {
+        console.log('deleted')
+      }
+    })
+  }
+
+
+}

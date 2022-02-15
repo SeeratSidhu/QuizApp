@@ -152,6 +152,36 @@ app.get("/my-quiz", (req, res) => {
 });
 
 
+app.put("/quizzes/:id", (req, res) => {
+  const sessionId = req.session.user_id;
+  const quizId = req.params.id;
+
+  db.query(`
+  SELECT owner_id 
+  FROM quizzes
+  WHERE id = $1;
+  `,[quizId])
+  .then(result => {
+    if(result.rows[0].owner_id !== sessionId){
+      throw `Not your quiz to unlist!`
+    }
+
+    return db.query(`
+    UPDATE quizzes
+    SET is_active = NOT is_active
+    WHERE owner_id = $1 AND id = $2
+    RETURNING *;
+    `,[sessionId, quizId])
+  })
+  .then(()=>{
+    console.log("Updated")
+    res.send("ok")
+  })
+  .catch(err => console.log(err))
+  
+})
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
