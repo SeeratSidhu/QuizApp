@@ -51,8 +51,8 @@ const resultsRoutes = require("./routes/results");
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
-app.use("/api/quizzes", quizzesRoutes(db))
-app.use("/api/results", resultsRoutes(db))
+app.use("/api/quizzes", quizzesRoutes(db));
+app.use("/results", resultsRoutes(db));
 app.use("/create-quizzes", addRoutes(db));
 // Note: mount other resources here, using the same pattern above
 

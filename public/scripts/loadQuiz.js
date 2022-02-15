@@ -120,7 +120,7 @@ const postResult = function(event){
   checkUserLogin().then(data => {
     if(data) {
 
-      $.post("/api/results", resultData);
+      $.post("/results", resultData);
       $(".results").html(`<p>Your score has been saved!</p>`);
 
     } else {

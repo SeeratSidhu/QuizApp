@@ -20,5 +20,26 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+  router.get("/", (req, res) => {
+    const user_id = req.session.user_id;
+    if(!user_id) {
+      return res.send("Please login to check results");
+    }
+    const queryString = `SELECT * FROM results WHERE owner_id = $1`;
+    const values = [Number(user_id)];
+    db.query(queryString, values)
+    .then(data => {
+      if(data.rows.length === 0) {
+        return res.send("No results to show");
+      }
+      res.render("results", {results: data.rows});
+    })
+    .catch(err => {
+      console.log("Error: ", err.message);
+    });
+
+
+  });
   return router;
 };

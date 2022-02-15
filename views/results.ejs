@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/new-quiz.css" type="text/css" />
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+</head>
+
+<body>
+
+  <%- include('partials/_header') %>
+  <main>
+    <h3>My Results</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Share URL</th>
+          <th scope="col">Score</th>
+          <th scope="col">Retake Quiz</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const result of results) { %>
+          <tr>
+            <td>
+              <a href="/results/<%=result.id %>">Link to Result</a>
+            </td>
+            <td><%= result.value %></td>
+            <td>
+              <a href="/quizzes/<%=result.quiz_id %>">Take Quiz</a>
+            </td>
+            <td>
+              <form method="POST" action="">
+                <button type="submit" class="btn btn-outline-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </main>
+
+  </div>
+
+
+</body>
+</html>
