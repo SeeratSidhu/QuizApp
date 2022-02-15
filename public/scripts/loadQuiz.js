@@ -1,6 +1,7 @@
 $(() => {
   loadQuiz();
-  $("main").on("click", "#next-btn", checkQuestion);
+  $(".quiz-container").on("click", ".btn", checkQuestion)
+  $("main").on("click", "#next-btn", nextQuestion);
   $(".results").on("click", "#save-result-button", postResult);
 });
 let currentQuestion = 0;
@@ -14,6 +15,7 @@ const loadQuiz = () => {
     getQuizName();
     renderQuestions(data, currentQuestion);
     pendingQuestions(data);
+    $("#next-btn").addClass("hide");
 
   });
 }
@@ -59,36 +61,35 @@ const nextQuestion = () => {
   setTimeout(() => {
     $(".answer-message").empty();
     loadQuiz();
-  }, 1500);
+  }, 1550);
 }
 
-const correctAnswer = () => {
-  $(".answer-message").text("🥳Correct Answer! woohooo!");
+const correctAnswer = (element) => {
+  $(element).addClass("correct");
   score++;
-  nextQuestion();
+  $("#next-btn").removeClass("hide");
 }
 
-const wrongAnswer = (answer) => {
- $(".answer-message").text(`😭 Wrong Answer!! Correct Answer is ${answer}`);
- nextQuestion();
+const wrongAnswer = (element) => {
+ $(element).addClass("wrong");
+//  nextQuestion();
 
 }
 
 const checkQuestion = function(event) {
   event.preventDefault();
-  const selectedOption = $("input[name=option]:checked").val();
-
+  const selectedOption = $(this).text();
   getQuizData()
   .then(data => {
 
     let allOptions = data[currentQuestion].options;
     const correctOption = allOptions.find(option => option.is_correct)
 
-    if(correctOption.id === Number(selectedOption)) {
-      correctAnswer();
+    if(correctOption.value === selectedOption) {
+      correctAnswer($(this));
       return;
     }
-    return wrongAnswer(correctOption.value);
+    return wrongAnswer($(this));
   })
 }
 
