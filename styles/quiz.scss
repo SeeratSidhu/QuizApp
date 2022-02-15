@@ -1,3 +1,7 @@
+$primary-color: rgb(23, 90, 146);
+$correct-color: rgb(36, 163, 36);
+$wrong-color: rgba(190, 32, 32, 0.877);
+
 *, *::before, *::after{
   box-sizing: border-box;
 }
@@ -9,8 +13,64 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: lighten($primary-color, 40%);
   // justify-content: center;
   // align-items: center;
 }
 
+.btn {
+  background-color: $primary-color;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid navy;
+  border-radius: 4px;
+}
 
+.container {
+  width: 800px;
+  max-width: 80%;
+  background-color: white;
+  border: none;
+  box-shadow: 0 0 10px 2px;
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-container {
+  display: flex;
+  flex-direction: column;
+}
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(2);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.btn.correct {
+  background-color: $correct-color;
+}
+
+.btn.wrong{
+  background-color: $wrong-color;
+}
+
+.next-btn {
+  width: 100px;
+  background-color: lighten($primary-color, 20%);
+
+}
+.next-btn:hover {
+
+    border: 2px solid $primary-color;
+    font-size: larger;
+
+}
+.control-button {
+  display: flex;
+  justify-content: center;
+}
+.hide {
+  display: none;
+}

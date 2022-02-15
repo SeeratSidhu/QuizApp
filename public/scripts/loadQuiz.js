@@ -43,7 +43,7 @@ const renderQuestions = (quizArray, qNumber) => {
   `;
 
   const options = optionItems.map((option, index) => {
-    return `<button class="btn">${option.value}</button>`
+    return `<button id="option${option.id}" class="btn">${option.value}</button>`
   });
 
   $(".quiz-container").append($question);
