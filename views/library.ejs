@@ -13,12 +13,44 @@
   crossorigin="anonymous"
   referrerpolicy="no-referrer"
 />
+  <link rel="stylesheet" href="/styles/header.css" />
+
 
 </head>
 
 <body>
   <%- include('partials/_header') %>
 
+  <div class="library">
+    
+    <div class="library-quizzes">
+
+      <div class="quiz-template">
+        <div class="quiz-primary-nav">
+          <div class="quiz-title">
+            <h3>Some generic title</h3>
+          </div>
+          <div class="quiz-actions">
+            <i class="fa-solid fa-eye"></i>
+            <i class="fa-solid fa-trash"></i>
+          </div>
+        </div>
+
+        <div class="quiz-secondary-nav">
+          <p>created on</p>
+          <p>number of plays</p>
+          <button type="button" class="btn btn-primary">Edit</button>
+          <button type="button" class="btn btn-success">play</button>
+
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+  </div>
 
   
 </body>
