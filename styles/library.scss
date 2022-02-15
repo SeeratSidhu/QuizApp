@@ -14,6 +14,7 @@
       border: 1px solid black;
       border-radius: 10px;
       overflow: hidden;
+      margin: 1em auto 0.5em auto;
     }
   }
 
@@ -94,8 +95,18 @@
   }
 }
 
+.quiz-title{
+  h3{
+    margin-right: 10px;
+  }
+
+  p{
+    margin: 0;
+    font-size: 0.8em;
+  }
+}
+
 .quiz-actions button{
-  margin-left: 0.5em;
   padding: 0;
   border: none;
   cursor: pointer;
@@ -109,12 +120,8 @@
 
 i{
   font-size: 1.3em;
-  color: rgb(85, 81, 81)
-
-}
-
-.list-btn{
-  display: none;
+  color: rgb(85, 81, 81);
+  margin-left: 0.5em;
 }
 
 .quiz-actions button:focus{
@@ -122,11 +129,16 @@ i{
 }
 
 
+.list-btn{
+  margin-left: 0.5em;
+  display: none;
+}
+
 .unlist-btn:hover, .list-btn:hover{
   color: rgb(7, 6, 6)
 }
 
-.play-btn:hover{
+.del-btn:hover{
   color: rgb(230, 38, 38);
 }
 

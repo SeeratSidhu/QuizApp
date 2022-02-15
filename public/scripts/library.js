@@ -1,6 +1,20 @@
 $(()=>{
-  renderLibrary();
+  const start = renderLibrary();
 
+  start.then(()=>{
+    $(".list-btn").on("click", hideListBtn);
+  
+    $(".unlist-btn").on("click", hideUnlistBtn);
+
+    $(".del-btn").on("click", (event) => {
+      event.preventDefault();
+
+      if(confirm("are you sure?")){
+        console.log("deleted")
+      }
+    })
+
+  })
 
 
 
@@ -8,7 +22,7 @@ $(()=>{
 });
 
 const renderLibrary = () => {
-  $.get("/library")
+  return $.get("/library")
   .then(results => {
     for(let result of results){
       const $quiz = renderQuizTemplate(result);
@@ -33,16 +47,19 @@ const renderQuizTemplate = (quizObject) => {
     <div class="quiz-primary-nav">
       <div class="quiz-title">
         <h3>${quizObject.name}</h3>
+        <p>
+        (# <p class="quiz-id">${quizObject.id}</p>)
+        </p>
       </div>
       <div class="quiz-actions">
-        <button>
+        <button class="unlist-holder">
           <i class="fa-solid fa-eye-slash unlist-btn"></i>
         </button>
-        <button>
+        <button class="list-holder">
           <i class="fa-solid fa-eye list-btn"></i>
         </button>
-        <button>
-          <i class="fa-solid fa-trash play-btn"></i>
+        <button class="del-holder">
+          <i class="fa-solid fa-trash del-btn"></i>
         </button>
       </div>
     </div>
@@ -61,4 +78,27 @@ const renderQuizTemplate = (quizObject) => {
   `
   return $quizTemplate;
 }
+
+
+
+const hideListBtn = function(event){
+  event.preventDefault();
+  $(this).hide();
+  const $unlist = $(this).parent(".list-holder").siblings(".unlist-holder").children(".unlist-btn");
+  const id = $(this).closest(".quiz-actions").siblings(".quiz-title").children(".quiz-id").text();
+
+
+  $unlist.show();
+};
+
+
+const hideUnlistBtn = function(event){
+  event.preventDefault();
+  const $list = $(this).parent(".unlist-holder").siblings(".list-holder").children(".list-btn")
+  const id = $(this).closest(".quiz-actions").siblings(".quiz-title").children(".quiz-id").text();
+  console.log(id)
+
+
+  $list.show();
+};
 
