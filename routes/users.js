@@ -29,7 +29,8 @@ const usersRoutes = express.Router();
 module.exports = (db) => {
   usersRoutes.get("/", (req, res) => {
     const user = req.session.user;
-    // const email = req.session.email;
+
+
     db.query(
       "SELECT id, name FROM quizzes;"
     )
@@ -38,7 +39,7 @@ module.exports = (db) => {
         res.render("index", {
           quizzes: result.rows,
           user: user,
-          // email: email
+          email: email
         });
       })
       .catch((err) => {
