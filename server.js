@@ -50,6 +50,7 @@ const widgetsRoutes = require("./routes/widgets");
 const addRoutes = require("./routes/create-quizzes")
 const quizzesRoutes = require("./routes/quizzes");
 const resultsRoutes = require("./routes/results");
+const library = require("./routes/library");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -58,6 +59,7 @@ app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/quizzes", quizzesRoutes(db))
 app.use("/api/results", resultsRoutes(db))
 app.use("/create-quizzes", addRoutes(db));
+app.use("/library", library(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -139,14 +141,6 @@ app.get("/quizzes", (req, res) => {
   return res.send(undefined);
 });
 
-
-app.get("/library", (req, res) => {
-  if(!req.session.user_id){
-    return res.redirect("/")
-  }
-
-  return res.render("library", {user: req.session.user_id});
-})
 
 
 app.listen(PORT, () => {
