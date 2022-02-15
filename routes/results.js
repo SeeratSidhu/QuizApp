@@ -47,7 +47,18 @@ module.exports = (db) => {
     const values = [Number(result_id)];
     db.query(queryString, values)
     .then((data) => {
-      console.log(data.rows);
+      let result = data.rows[0];
+      res.render("result-page", {
+        quizName: result.quiz_name,
+        quizId: result.quiz_id,
+        score: result.value,
+        userId: result.owner_id,
+        totalQuestions: result.num_of_questions,
+        quizAge: result.created_at
+      })
+    })
+    .catch(err => {
+      console.log("Error: ", err.message);
     })
   });
   return router;
