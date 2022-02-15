@@ -74,7 +74,8 @@ app.get("/", (req, res) => {
   const user = req.session.user_id;
   console.log(user)
   db.query(
-    "SELECT id, name FROM quizzes;"
+    `SELECT id, name FROM quizzes
+    WHERE is_active = true;`
   )
     .then((result) => {
       res.render("index", {
@@ -116,47 +117,7 @@ app.get("/register", (req, res) => {
 app.post("/register", register)
 
 
-//verify unique email
 
-
-
-
-//check login credentials and returns an error or success response to client-side
-app.post("/login", (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-
-  db.query(
-    `SELECT * FROM users
-    WHERE email = $1`, [email]
-  )
-    .then((result) => {
-      if (!result.rows.length) {
-        return res.send({
-          error: "email does not exist"
-        });
-      }
-
-      if (result.rows[0].password !== password) {
-        return res.send({
-          error: "incorrect password"
-        });
-      }
-
-      //if email and password are correct
-      //new session created and redirect
-      const id = result.rows[0].id;
-      req.session.user_id = id;
-      console.log('successfully logged in user :', id);
-
-
-
-      return res.send({
-        sucess: "200"
-      });
-
-    })
-});
 
 
 
