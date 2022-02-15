@@ -75,16 +75,17 @@ app.get("/", (req, res) => {
 
   console.log("userrr", user);
 
+
   let userCondition = ";";
 
   if (user) {
-    userCondition = ` AND owner_id = ${user.id};`;
+    userCondition = ` AND owner_id = ${user};`;
   }
 
   db.query(
     `SELECT id,name FROM quizzes
     WHERE is_active = true
-    AND owner_id ` + userCondition
+     ` + userCondition
   )
     .then((result) => {
       console.log(result.rows);
