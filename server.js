@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
-const cookieSession = require('cookie-session');
+const cookieSession = require("cookie-session");
 
 const {generateRandomInteger} = require("./helpers/create-random-integer");
 
@@ -27,10 +27,12 @@ app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({extended: true}));
-app.use(cookieSession({
-  secret: "random string for now",
-  maxAge: 60 * 10 * 1000 //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
-}))
+app.use(
+  cookieSession({
+    secret: "random string for now",
+    maxAge: 60 * 10 * 1000, //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
+  })
+);
 
 app.use(
   "/styles",
@@ -47,7 +49,7 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
-const addRoutes = require("./routes/create-quizzes")
+const addRoutes = require("./routes/create-quizzes");
 const quizzesRoutes = require("./routes/quizzes");
 const resultsRoutes = require("./routes/results");
 
@@ -55,8 +57,8 @@ const resultsRoutes = require("./routes/results");
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
-app.use("/api/quizzes", quizzesRoutes(db))
-app.use("/api/results", resultsRoutes(db))
+app.use("/api/quizzes", quizzesRoutes(db));
+app.use("/api/results", resultsRoutes(db));
 app.use("/create-quizzes", addRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
@@ -68,63 +70,49 @@ app.use("/create-quizzes", addRoutes(db));
 //   res.render("index");
 // });
 
-
-
 app.get("/", (req, res) => {
   const user = req.session.user_id;
-  console.log(user)
+
+  console.log("userrr", user);
+
+  let userCondition = ";";
+
+  if (user) {
+    userCondition = ` AND owner_id = ${user.id};`;
+  }
+
   db.query(
-    `SELECT id, name FROM quizzes
-    WHERE is_active = true;`
+    `SELECT id,name FROM quizzes
+    WHERE is_active = true
+    AND owner_id ` + userCondition
   )
     .then((result) => {
+      console.log(result.rows);
       res.render("index", {
         quizzes: result.rows,
-        user: user
+        user: user,
       });
     })
     .catch((err) => {
-      console.log("homepage error:", err)
-    })
+      console.log("homepage error:", err);
+    });
 });
-
-
-
-
-
-
-
-
 
 app.get("/my-quizzes", (req, res) => {
   res.render("my-quizzes");
-})
-
-
+});
 
 app.get("/login", (req, res) => {
   res.render("login");
 });
 
-
-
 app.get("/register", (req, res) => {
   res.render("register");
 });
 
-
-
-app.post("/register", register)
-
-
-
-
-
+app.post("/register", register);
 
 app.post("/login", login);
-
-
-
 
 app.post("/logout", (req, res) => {
   req.session = null;
@@ -144,8 +132,3 @@ app.get("/quizzes", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-
-
-
-
-
