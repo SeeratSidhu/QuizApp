@@ -78,6 +78,7 @@ const wrongAnswer = (element) => {
 
 const checkQuestion = function(event) {
   event.preventDefault();
+  $(".btn").css({filter:"none"});
   const selectedOption = $(this).text();
   getQuizData()
   .then(data => {
