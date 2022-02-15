@@ -182,6 +182,34 @@ app.put("/quizzes/:id", (req, res) => {
 })
 
 
+app.delete("/quizzes/:id", (req, res) => {
+  const sessionId = req.session.user_id;
+  const quizId = req.params.id;
+
+  db.query(`
+  SELECT owner_id 
+  FROM quizzes
+  WHERE id = $1;
+  `,[quizId])
+  .then(result => {
+    if(result.rows[0].owner_id !== sessionId){
+      throw `Not your quiz to delete!`
+    }
+
+    return db.query(`
+    DELETE FROM quizzes
+    WHERE owner_id = $1 AND id = $2
+    RETURNING *;
+    `,[sessionId, quizId])
+  })
+  .then(()=>{
+    console.log("Deleted")
+    res.send("ok")
+  })
+  .catch(err => console.log(err))
+})
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

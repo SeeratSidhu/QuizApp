@@ -114,6 +114,7 @@ const hideUnlistBtn = function(event){
 const deleteBtn = function(event){
   event.preventDefault();
   const id = $(this).closest(".quiz-actions").siblings(".quiz-title").children(".quiz-id").text();
+  const $quiz = $(this).closest(".quiz-template")
 
   if(confirm("are you sure?")){
     $.ajax({
@@ -121,6 +122,7 @@ const deleteBtn = function(event){
       type: 'DELETE',
       success: () => {
         console.log('deleted')
+        $quiz.remove();
       }
     })
   }
