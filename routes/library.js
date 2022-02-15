@@ -4,19 +4,34 @@ const router  = express.Router();
 
 module.exports = (db) => {
 
-  router.get("/", (req, res) => {
-    let session = req.session;
-    if(!session.user_id){
-      return res.redirect("/login");
-    }
-    res.render("library", {user: session.user_id});
-  });
 
-  //adds quiz and returns quiz id
-  // router.post("/", (req, res) => {
+  //move to quizzes later - quizzes:id
+  router.get("/", (req, res) => {
+    let sessionID = req.session.user_id;
+    if(!sessionID){
+      return res.redirect("/");
+    }
+    
+    db.query(`
+    SELECT quizzes.*, count(questions.id) as number_of_questions
+    FROM quizzes
+    JOIN questions ON questions.quiz_id = quizzes.id
+    WHERE quizzes.owner_id = $1
+    GROUP BY quizzes.id
+    ORDER BY created_at DESC;
+    `, [sessionID])
+    .then((result)=>{
+      console.log(result.rows);
+      return res.send(result.rows);
+    })
+    .catch(err => {
+      console.log(err.msg);
+      return res.redirect("/");
+    })
+
 
     
-  // });
+  })
 
   return router;
 

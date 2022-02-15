@@ -143,6 +143,15 @@ app.get("/quizzes", (req, res) => {
 
 
 
+app.get("/my-quiz", (req, res) => {
+  let session = req.session;
+  if(!session.user_id){
+    return res.redirect("/login");
+  }
+  res.render("library", {user: session.user_id});
+});
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
