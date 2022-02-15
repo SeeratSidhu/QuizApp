@@ -21,3 +21,25 @@ VALUES (13, 4, 'toaster', FALSE),
 (14, 4, 'A table', TRUE),
 (15, 4, 'key-value', FALSE),
 (16, 4, 'skip...', FALSE);
+
+
+
+-- adding public quiz
+
+INSERT INTO options (id, question_id, value , is_correct)
+VALUES (17, 5, 'A', FALSE),
+(18, 5, 'B', TRUE),
+(19, 5, 'C', FALSE),
+(20, 5, 'D', FALSE);
+
+INSERT INTO options (id, question_id, value , is_correct)
+VALUES (21, 6, 'A', FALSE),
+(22, 6, 'B', TRUE),
+(23, 6, 'C', FALSE),
+(24, 6, 'D', FALSE);
+
+INSERT INTO options (id, question_id, value , is_correct)
+VALUES (25, 7, 'A', FALSE),
+(26, 7, 'B', TRUE),
+(27, 7, 'C', FALSE),
+(28, 7, 'D', FALSE);
