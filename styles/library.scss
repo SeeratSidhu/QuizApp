@@ -1,0 +1,132 @@
+.library{
+  margin: 3em;
+
+  .library-quizzes{
+    border: 1px solid black;
+    margin: 2em;
+    padding: 1em;
+    max-width: 1100px;
+    background-color: grey;
+
+    .quiz-template{
+      display: flex;
+      width: 100%;
+      border: 1px solid black;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+  }
+
+}
+
+.quiz-picture{
+  width: 20%;
+  position: relative;
+  background-color: white;
+
+
+  .number-of-questions{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 3px;
+    width: 40%;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    overflow: hidden;
+    background-color: #a8a8a883;
+  
+    p{
+      font-size: 0.8em;
+      margin: auto;
+    }
+  }
+}
+
+
+.quiz-information{
+  height: 130px;
+  width: 80%;
+  max-width: 1100px;
+
+  .quiz-primary-nav{
+    display: flex;
+    justify-content: space-between;
+    height: 60%;
+    background: #F2F2F2;
+    padding: 1em;
+
+    .quiz-title{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 5em;
+    }
+
+    .quiz-actions{
+      margin-left: 1em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .quiz-secondary-nav{
+    height: 40%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 0.3em;
+    background-color: greenyellow;
+
+
+    p{
+      margin: auto 0.5em auto;
+    }
+
+    button{
+      margin: auto 0.2em auto;
+
+    }
+  }
+}
+
+.quiz-actions button{
+  margin-left: 0.5em;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.quiz-secondary-nav button{
+  padding: 1px 15px 1px 15px;
+  font-size: 1.3em;
+}
+
+
+i{
+  font-size: 1.3em;
+  color: rgb(85, 81, 81)
+
+}
+
+.list-btn{
+  display: none;
+}
+
+.quiz-actions button:focus{
+  outline: none;
+}
+
+
+.unlist-btn:hover, .list-btn:hover{
+  color: rgb(7, 6, 6)
+}
+
+.play-btn:hover{
+  color: rgb(230, 38, 38);
+}
+

@@ -14,6 +14,7 @@
   referrerpolicy="no-referrer"
 />
   <link rel="stylesheet" href="/styles/header.css" />
+  <link rel="stylesheet" href="/styles/library.css" />
 
 
 </head>
@@ -24,23 +25,41 @@
   <div class="library">
     
     <div class="library-quizzes">
-
+      
       <div class="quiz-template">
-        <div class="quiz-primary-nav">
-          <div class="quiz-title">
-            <h3>Some generic title</h3>
+        
+        <div class="quiz-picture">
+          <div class="number-of-questions">
+            <p>5 questions</p>
           </div>
-          <div class="quiz-actions">
-            <i class="fa-solid fa-eye"></i>
-            <i class="fa-solid fa-trash"></i>
-          </div>
+  
         </div>
 
-        <div class="quiz-secondary-nav">
-          <p>created on</p>
-          <p>number of plays</p>
-          <button type="button" class="btn btn-primary">Edit</button>
-          <button type="button" class="btn btn-success">play</button>
+        <div class="quiz-information">
+          <div class="quiz-primary-nav">
+            <div class="quiz-title">
+              <h3>Some generic title</h3>
+            </div>
+            <div class="quiz-actions">
+              <button>
+                <i class="fa-solid fa-eye-slash unlist-btn"></i>
+              </button>
+              <button>
+                <i class="fa-solid fa-eye list-btn"></i>
+              </button>
+              <button>
+                <i class="fa-solid fa-trash play-btn"></i>
+              </button>
+            </div>
+          </div>
+  
+          <div class="quiz-secondary-nav">
+            <p>Created on January 1st 2022</p>
+            <p>7 plays!</p>
+            <button type="button" class="btn btn-primary">Edit</button>
+            <button type="button" class="btn btn-success">Play</button>
+  
+          </div>
 
         </div>
 
