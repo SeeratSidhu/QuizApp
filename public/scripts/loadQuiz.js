@@ -65,13 +65,13 @@ const nextQuestion = () => {
 }
 
 const correctAnswer = (element) => {
-  $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check icon"></i>`);
+  $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check fa-2x icon"></i>`);
   score++;
   $("#next-btn").removeClass("hide");
 }
 
 const wrongAnswer = (element) => {
- $(element).addClass("wrong");
+ $(element).addClass("wrong").prepend(`<i class="fa-solid fa-circle-xmark fa-2x icon"></i>`);
 //  nextQuestion();
 
 }
