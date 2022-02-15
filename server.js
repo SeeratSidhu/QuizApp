@@ -138,6 +138,17 @@ app.get("/quizzes", (req, res) => {
   }
   return res.send(undefined);
 });
+
+
+app.get("/library", (req, res) => {
+  if(!req.session.user_id){
+    return res.redirect("/")
+  }
+
+  return res.render("library", {user: req.session.user_id});
+})
+
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
