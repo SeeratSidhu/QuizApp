@@ -1,6 +1,6 @@
 $(() => {
   loadQuiz();
-  $("main").on("click", "#submit-button", checkQuestion);
+  $("main").on("click", "#next-btn", checkQuestion);
   $(".results").on("click", "#save-result-button", postResult);
 });
 let currentQuestion = 0;
@@ -37,21 +37,17 @@ const renderQuestions = (quizArray, qNumber) => {
   let qItem = quizArray[qNumber].question.value;
   let optionItems = quizArray[qNumber].options;
 
-  const $question = `<form class="quiz-form">
-  <p class="question">${qItem}<p>
-  <ul class="radiogroup" role="radiogroup" aria-labelledby="question"></ul>
-  </form>`;
+  const $question = `
+  <div class="question">${qItem}</div>
+  <div id="option-buttons" class="btn-grid"></div>
+  `;
 
   const options = optionItems.map((option, index) => {
-    return `<label class="option" for="${option.value}">
-      <input type="radio" id="option${option.id}" name="option" tabindex="${index}" value="${option.id}" aria-checked="false" required>
-      ${option.value}
-      </label>`
+    return `<button class="btn">${option.value}</button>`
   });
 
-  let button = `<button type="submit" id="submit-button">${qNumber === quizArray.length - 1 ? `Check Score` : `Next`}</button>`;
   $(".quiz-container").append($question);
-  $(".radiogroup").append(options, button);
+  $("#option-buttons").append(options);
 };
 
 // const toggleQuestion = () => {
