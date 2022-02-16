@@ -13,9 +13,11 @@ module.exports = (db) => {
     }
     
     db.query(`
-    SELECT quizzes.*, count(questions.id) as number_of_questions
+    SELECT quizzes.id, quizzes.owner_id, is_active, quizzes.name, TO_CHAR(created_at, 'YYYY/MM/DD') as created_at, 
+    count(DISTINCT questions.id) as number_of_questions, count(results.id) as number_of_plays
     FROM quizzes
     JOIN questions ON questions.quiz_id = quizzes.id
+    JOIN results ON quizzes.id = results.quiz_id
     WHERE quizzes.owner_id = $1
     GROUP BY quizzes.id
     ORDER BY created_at DESC;

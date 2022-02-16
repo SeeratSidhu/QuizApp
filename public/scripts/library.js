@@ -37,7 +37,7 @@ const renderQuizTemplate = (quizObject) => {
         
   <div class="quiz-picture">
     <div class="number-of-questions">
-      <p>${quizObject.number_of_questions} questions</p>
+      <p>${quizObject.number_of_questions} question(s)</p>
     </div>
 
   </div>
@@ -65,7 +65,7 @@ const renderQuizTemplate = (quizObject) => {
 
     <div class="quiz-secondary-nav">
       <p>Created on ${quizObject.created_at}</p>
-      <p>7 plays!</p>
+      <p>${quizObject.number_of_plays} play(s)!</p>
       <button type="button" class="btn btn-primary">Edit</button>
       <button type="button" class="btn btn-success">Play</button>
 
