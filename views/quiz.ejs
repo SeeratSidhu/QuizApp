@@ -25,20 +25,21 @@
 
 <body>
   <%- include('partials/_header') %>
-  <header class="quiz-header">
-    <h1></h1>
-    <h3>Questions Left: <span id="pending"></span></h3>
-  </header>
-  <main class="container">
-   <section class="quiz-container">
-   </section>
-   <section class="control-button">
-    <button id="next-btn" class="next-btn btn">Next</button>
-   </section>
-   <section class="answer-message"></section>
-   <section class="results"></section>
-   </section>
-  </main>
+    <header class="quiz-header">
+      <h1></h1>
+      <div id="outer-div">
+        <div id="inner-div"></div>
+      </div>
+    </header>
+    <main class="container">
+     <section class="quiz-container">
+     </section>
+     <section class="control-button">
+      <button id="next-btn" class="next-btn btn">Next</button>
+     </section>
+     <section class="answer-message"></section>
+     <section class="results"></section>
+     </section>
 </body>
 
 </html>

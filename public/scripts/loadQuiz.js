@@ -33,6 +33,7 @@ const renderQuestions = (quizArray, qNumber) => {
   $(".quiz-container").empty();
   if(qNumber >= quizArray.length) {
     console.log("No more Questions!");
+    $("#outer-div").addClass("hide");
     displayResults();
     return;
   }
@@ -104,11 +105,15 @@ const displayResults = () => {
 }
 
 const pendingQuestions = (dataArray) => {
-  $("#pending").text(dataArray.length - currentQuestion + "/" + dataArray.length);
+  const quizLength = dataArray.length;
+  const docWidth = $(document).width();
+  const percentCompleted = docWidth*((currentQuestion)/quizLength);
+  $("#inner-div").animate({"width": percentCompleted});
 }
 
 const postResult = function(event){
   event.preventDefault();
+
   const totalScore = $(this).prev().children("#score").html();
   const resultData = {
     score: totalScore,
