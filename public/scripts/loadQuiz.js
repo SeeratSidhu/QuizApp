@@ -1,5 +1,7 @@
 $(() => {
   loadQuiz();
+  getQuizName();
+  $("#next-btn").addClass("hide");
   $(".quiz-container").on("click", ".btn", checkQuestion)
   $("main").on("click", "#next-btn", nextQuestion);
   $(".results").on("click", "#save-result-button", postResult);
@@ -12,11 +14,8 @@ const loadQuiz = () => {
 
   getQuizData()
   .then(data => {
-    getQuizName();
     renderQuestions(data, currentQuestion);
     pendingQuestions(data);
-    $("#next-btn").addClass("hide");
-
   });
 }
 
@@ -33,7 +32,7 @@ const renderQuestions = (quizArray, qNumber) => {
   $(".quiz-container").empty();
   if(qNumber >= quizArray.length) {
     console.log("No more Questions!");
-    $("#outer-div").addClass("hide");
+    // $("#outer-div").addClass("hide");
     displayResults();
     return;
   }
@@ -64,7 +63,7 @@ const nextQuestion = () => {
 const correctAnswer = (element) => {
   $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check fa-2x icon"></i>`);
   score++;
-  //disables all neighbouring buttons 
+  //disables all neighbouring buttons
   $(element).siblings(".btn").prop("disabled", true);
 
   $("#next-btn").removeClass("hide");
@@ -105,14 +104,13 @@ const displayResults = () => {
   <div>You scored <span id="score">${score}</span>/${currentQuestion}</div>
   <button id="save-result-button" class="btn">Save Result</button>
  `;
-  // $(".container").css({"background-color": "#00ebb0",
-  //   "background-image": 'url("https://www.transparenttextures.com/patterns/diagmonds.png")'});
+  $("#next-btn").addClass("hide");
   $(".results").html(resultsELement);
 }
 
 const pendingQuestions = (dataArray) => {
   const quizLength = dataArray.length;
-  const docWidth = $(document).width();
+  const docWidth = $("#outer-div").width();
   const percentCompleted = docWidth*((currentQuestion)/quizLength);
   $("#inner-div").animate({"width": percentCompleted});
 }
@@ -130,7 +128,8 @@ const postResult = function(event){
     if(data) {
 
       $.post("/results", resultData);
-      $(".results").html(`<p>Your score has been saved! Take another <a href="/">Quiz</a>!</p>`);
+      $(".results").html(`<p>Your score has been saved! Redirecting...`);
+      window.location.href = "http://localhost:8080/results";
 
     } else {
       $(".results").html(`<p>Please <a href="/login">Login</a> to save results!</p>`);
