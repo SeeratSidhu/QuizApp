@@ -95,7 +95,8 @@ const hideListBtn = function(event){
     type: 'PUT',
     success: () => {
       $(this).addClass("hidden");
-      return $unlist.removeClass("hidden");
+      $unlist.removeClass("hidden");
+      $unlist.show();
     }
   })
 
@@ -114,7 +115,8 @@ const hideUnlistBtn = function(event){
     type: 'PUT',
     success: () => {
       $(this).addClass("hidden");
-      return $list.removeClass("hidden");
+      $list.removeClass("hidden");
+      $list.show();
     }
   })
 };
