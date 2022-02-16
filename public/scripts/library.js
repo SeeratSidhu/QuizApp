@@ -33,13 +33,14 @@ const renderQuizTemplate = (quizObject) => {
   //hides button dependent on the active state of the quiz
   const listClass = quizObject.is_active ? "hidden" : "";
   const unlistClass = quizObject.is_active ? "" : "hidden";
-
+  const $picture = generatePicture();
+  
 
   const $quizTemplate = `
   <div class="quiz-template">
         
   <div class="quiz-picture">
-    <img class="picture" src="https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__480.jpg" alt="quiz profile picture">
+    ${$picture}
     <div class="number-of-questions">
       <p>${quizObject.number_of_questions} question(s)</p>
     </div>
@@ -164,4 +165,21 @@ const playBtn = function(event){
   event.preventDefault();
   const id = $(this).closest(".quiz-template").children(".quiz-information").children('.quiz-primary-nav').children(".quiz-title").children(".quiz-id").text();
   window.location.href = `http://localhost:8080/quizzes/${id}`;
+}
+
+//returns a random picture link
+const generatePicture = () => {
+  const pictureLinks = [
+    `https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__480.jpg" alt="quiz profile picture`,
+    `https://images.unsplash.com/photo-1507290439931-a861b5a38200?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zmxvd2VyJTIwYmxvb218ZW58MHx8MHx8&w=1000&q=80`,
+    `https://media.istockphoto.com/vectors/math-equations-written-on-a-blackboard-vector-id1219382595?k=20&m=1219382595&s=612x612&w=0&h=c6Sl7WmSHRzGBN7ZQmClLIhcv55vjStOPKc-GrpBseU=`,
+    `https://www.incimages.com/uploaded_files/image/1920x1080/getty_485008244_105123.jpg`,
+    `https://scopeblog.stanford.edu/wp-content/uploads/2021/03/Scope-Dean-Music.jpg`,
+    `https://blogs.uoregon.edu/rreidaad250/files/2014/05/art-auction-10e3hqz.jpg`
+  ]
+
+  const randomIndex = Math.floor(Math.random() * pictureLinks.length);
+  console.log(randomIndex)
+
+  return `<img class="picture" src="${pictureLinks[randomIndex]}" alt="quiz profile picture"></img>`
 }
