@@ -36,24 +36,24 @@
     <main>
       <% if(user) { %>
 
-      <h1>User quizzes</h1>
+      <h1>My Quizzes</h1>
       <div class="quiz-container">
         <% for(const quiz of myQuizzes) { %>
 
         <div class="quiz-list-item quiz1">
           <span><%= quiz.name%></span>
-          <a href="/quizzes/<%= quiz.id %>"><button>Take Quiz!</button></a>
+          <a href="/quizzes/<%= quiz.id %>"><button>PLAY</button></a>
         </div>
         <% } %>
       </div>
       <% } %>
 
-      <h1>public quizzes</h1>
+      <h1>Take a Quiz</h1>
       <div class="quiz-container">
         <% for(const quiz of quizzes){%>
         <div class="quiz-list-item quiz1">
           <span><%= quiz.name%></span>
-          <a href="/quizzes/<%= quiz.id %>"><button>Take Quiz!</button></a>
+          <a href="/quizzes/<%= quiz.id %>"><button>PLAY</button></a>
         </div>
         <%}%>
       </div>
