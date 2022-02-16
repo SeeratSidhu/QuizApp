@@ -62,7 +62,7 @@ const nextQuestion = () => {
   setTimeout(() => {
     $(".answer-message").empty();
     loadQuiz();
-  }, 1550);
+  }, 300);
 }
 
 const correctAnswer = (element) => {
@@ -127,7 +127,7 @@ const postResult = function(event){
     if(data) {
 
       $.post("/results", resultData);
-      $(".results").html(`<p>Your score has been saved!</p>`);
+      $(".results").html(`<p>Your score has been saved! Take another <a href="/">Quiz</a>!</p>`);
 
     } else {
       $(".results").html(`<p>Please <a href="/login">Login</a> to save results!</p>`);
