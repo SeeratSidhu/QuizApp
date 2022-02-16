@@ -5,7 +5,8 @@ nav div span {
 }
 
 nav {
-  background: aliceblue;
+  margin-bottom: 200px;
+  background: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,8 +27,8 @@ nav div ul {
 
 .logo {
   font-family: "Permanent Marker", cursive;
-  font-size: 60px;
-  color: purple;
+  font-size: 70px;
+  color: rgb(255, 255, 255);
 }
 
 .hamburger {
@@ -37,9 +38,12 @@ nav div ul {
   cursor: pointer;
   display: none;
 }
+.hamburger:hover {
+  background-color: transparent;
+}
 
 .hamburger i:hover {
-  color: red;
+  color: rgb(169, 245, 249);
 }
 
 .ul-links li {
@@ -48,7 +52,11 @@ nav div ul {
 
 nav div ul li a {
   font-size: 25px;
-  color: rgb(180, 67, 67);
+  color: #f7f7e9;
+}
+nav div ul li a:hover {
+  font-size: 25px;
+  color: rgb(169, 245, 249);
 }
 
 nav a {
@@ -60,16 +68,39 @@ nav a {
 }
 
 nav button {
-  color: rgb(17, 0, 255);
   padding: 10px 25px;
+  border: 3px solid white;
+  background-color: transparent;
+  border-radius: 10px;
+  color: #fff;
+}
+
+nav button:hover {
+  background-color: rgba(169, 245, 249, 0.5);
+}
+
+.logout-button {
+  font-size: 25px;
 }
 
 // Media Queries
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1250px) {
   nav {
     flex-wrap: wrap;
     justify-content: space-between;
+  }
+
+  nav button {
+    border: none;
+    border-radius: none;
+    padding: 0;
+    padding-right: 25px;
+  }
+
+  nav button:hover {
+    background-color: transparent;
+    color: rgb(169, 245, 249);
   }
 
   .navSection {
@@ -91,6 +122,7 @@ nav button {
     align-items: flex-end;
     flex-direction: column-reverse;
     align-content: flex-end;
+    margin: 0;
   }
 
   .top-div {

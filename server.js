@@ -111,11 +111,13 @@ app.get("/my-quizzes", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.render("login");
+  const user = req.session.user_id;
+  res.render("login", {user});
 });
 
 app.get("/register", (req, res) => {
-  res.render("register");
+  const user = req.session.user_id;
+  res.render("register", {user});
 });
 
 app.post("/register", register);
@@ -128,7 +130,8 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/quizzes/:id", (req, res) => {
-  res.render("quiz");
+  const user = req.session.user_id;
+  res.render("quiz", {user});
 });
 
 app.get("/quizzes", (req, res) => {
@@ -142,7 +145,7 @@ app.get("/quizzes", (req, res) => {
 
 app.get("/library", (req, res) => {
   let session = req.session;
-  if(!session.user_id){
+  if (!session.user_id) {
     return res.redirect("/login");
   }
   res.render("library", {user: session.user_id});
@@ -157,24 +160,24 @@ app.put("/quizzes/:id", (req, res) => {
   SELECT owner_id
   FROM quizzes
   WHERE id = $1;
-  `,[quizId])
-  .then(result => {
-    if(result.rows[0].owner_id !== sessionId){
-      throw `Not your quiz to unlist!`
-    }
+  `, [quizId])
+    .then(result => {
+      if (result.rows[0].owner_id !== sessionId) {
+        throw `Not your quiz to unlist!`
+      }
 
-    return db.query(`
+      return db.query(`
     UPDATE quizzes
     SET is_active = NOT is_active
     WHERE owner_id = $1 AND id = $2
     RETURNING *;
-    `,[sessionId, quizId])
-  })
-  .then(()=>{
-    console.log("Updated")
-    res.send("ok")
-  })
-  .catch(err => console.log(err))
+    `, [sessionId, quizId])
+    })
+    .then(() => {
+      console.log("Updated")
+      res.send("ok")
+    })
+    .catch(err => console.log(err))
 
 })
 
@@ -187,23 +190,23 @@ app.delete("/quizzes/:id", (req, res) => {
   SELECT owner_id
   FROM quizzes
   WHERE id = $1;
-  `,[quizId])
-  .then(result => {
-    if(result.rows[0].owner_id !== sessionId){
-      throw `Not your quiz to delete!`
-    }
+  `, [quizId])
+    .then(result => {
+      if (result.rows[0].owner_id !== sessionId) {
+        throw `Not your quiz to delete!`
+      }
 
-    return db.query(`
+      return db.query(`
     DELETE FROM quizzes
     WHERE owner_id = $1 AND id = $2
     RETURNING *;
-    `,[sessionId, quizId])
-  })
-  .then(()=>{
-    console.log("Deleted")
-    res.send("ok")
-  })
-  .catch(err => console.log(err))
+    `, [sessionId, quizId])
+    })
+    .then(() => {
+      console.log("Deleted")
+      res.send("ok")
+    })
+    .catch(err => console.log(err))
 })
 
 

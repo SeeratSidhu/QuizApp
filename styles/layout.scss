@@ -1,7 +1,18 @@
 // See: https://sass-lang.com/
 
-body,
-html {
+body {
+  height: 100%;
   margin: 0;
-  // background-color: black;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+html {
+  background: #505c6d;
+  background: linear-gradient(
+    rgba(80, 92, 109, 1) 10%,
+    rgb(126, 127, 130) 20%,
+    rgb(247, 247, 233) 100%
+  );
+  margin: 0;
+  height: 100%;
 }

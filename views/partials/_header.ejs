@@ -1,7 +1,7 @@
 <header>
   <nav>
     <div class="top-div nav-div">
-      <span class="logo">Quiz App</span>
+      <a class="logo" href="/">Quiz App</a>
       <button class="hamburger" id="hamburger">
         <i class="fa-solid fa-bars"></i>
       </button>
@@ -21,9 +21,9 @@
           <a href="/register"><button>Register</button></a>
         </li>
         <% } else { %>
-        <a class="nav-link disabled">Logged In As <%= %> ! </a>
+
         <form action="/logout" method="POST">
-          <button type="submit">Logout</button>
+          <button class="logout-button" type="submit">Logout</button>
         </form>
         <% } %>
       </ul>
