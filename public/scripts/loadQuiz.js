@@ -45,17 +45,13 @@ const renderQuestions = (quizArray, qNumber) => {
   <div id="option-buttons" class="btn-grid"></div>
   `;
 
-  const options = optionItems.map((option, index) => {
+  const $options = optionItems.map((option, index) => {
     return `<button id="option${option.id}" class="btn">${option.value}</button>`
   });
 
   $(".quiz-container").append($question);
-  $("#option-buttons").append(options);
+  $("#option-buttons").append($options);
 };
-
-// const toggleQuestion = () => {
-
-// }
 
 const nextQuestion = () => {
   currentQuestion++;
@@ -68,12 +64,19 @@ const nextQuestion = () => {
 const correctAnswer = (element) => {
   $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check fa-2x icon"></i>`);
   score++;
+  //disables all neighbouring buttons 
+  $(element).siblings(".btn").prop("disabled", true);
+
   $("#next-btn").removeClass("hide");
 }
 
 const wrongAnswer = (element) => {
  $(element).addClass("wrong").prepend(`<i class="fa-solid fa-circle-xmark fa-2x icon"></i>`);
-//  nextQuestion();
+
+ //disables all neighbouring buttons
+ $(element).siblings(".btn").prop("disabled", true);
+
+ $("#next-btn").removeClass("hide");
 
 }
 
