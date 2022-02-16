@@ -79,18 +79,23 @@ app.get("/", (req, res) => {
   let userCondition = ";";
 
   if (user) {
-    userCondition = ` AND owner_id = ${user};`;
+    userCondition = ` AND owner_id = ${user} OR owner_id IS NULL;`;
+  } else {
+    userCondition = ` AND owner_id IS NULL ;`
   }
 
   db.query(
-    `SELECT id,name FROM quizzes
+    `SELECT id, name, owner_id FROM quizzes
     WHERE is_active = true
      ` + userCondition
   )
     .then((result) => {
       console.log(result.rows);
       res.render("index", {
-        quizzes: result.rows,
+        quizzes: result.rows.filter(quiz => !quiz.owner_id),
+        myQuizzes: result.rows.filter((quiz) => {
+          return quiz.owner_id;
+        }),
         user: user,
       });
     })
