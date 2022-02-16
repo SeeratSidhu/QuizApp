@@ -131,7 +131,6 @@ i{
 
 .list-btn{
   margin-left: 0.5em;
-  display: none;
 }
 
 .unlist-btn:hover, .list-btn:hover{
@@ -142,3 +141,7 @@ i{
   color: rgb(230, 38, 38);
 }
 
+
+.hidden{
+  display: none;
+}

@@ -27,6 +27,11 @@ const renderLibrary = () => {
 }
 
 const renderQuizTemplate = (quizObject) => {
+
+  const listClass = quizObject.is_active ? "hidden" : "";
+  const unlistClass = quizObject.is_active ? "" : "hidden";
+
+
   const $quizTemplate = `
   <div class="quiz-template">
         
@@ -47,10 +52,10 @@ const renderQuizTemplate = (quizObject) => {
       </div>
       <div class="quiz-actions">
         <button class="unlist-holder">
-          <i class="fa-solid fa-eye-slash unlist-btn"></i>
+          <i class="fa-solid fa-eye-slash unlist-btn ${unlistClass}"></i>
         </button>
         <button class="list-holder">
-          <i class="fa-solid fa-eye list-btn"></i>
+          <i class="fa-solid fa-eye list-btn ${listClass}"></i>
         </button>
         <button class="del-holder">
           <i class="fa-solid fa-trash del-btn"></i>
@@ -85,8 +90,8 @@ const hideListBtn = function(event){
     url: `/quizzes/${id}`,
     type: 'PUT',
     success: () => {
-      $(this).hide();
-      return $unlist.show();
+      $(this).addClass("hidden");
+      return $unlist.removeClass("hidden");
     }
   })
 
@@ -104,8 +109,8 @@ const hideUnlistBtn = function(event){
     url: `/quizzes/${id}`,
     type: 'PUT',
     success: () => {
-      $(this).hide();
-      return $list.show();
+      $(this).addClass("hidden");
+      return $list.removeClass("hidden");
     }
   })
 };
