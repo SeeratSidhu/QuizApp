@@ -6,5 +6,4 @@ INSERT INTO users (id, name, email, password)
 VALUES (10002, 'Kira', 'kira@hendon.com', 'password');
 
 
--- adding a public quiz
-
+-- adding public table data
