@@ -17,10 +17,10 @@ module.exports = (db) => {
     count(DISTINCT questions.id) as number_of_questions, count(results.id) as number_of_plays
     FROM quizzes
     JOIN questions ON questions.quiz_id = quizzes.id
-    JOIN results ON quizzes.id = results.quiz_id
+    LEFT JOIN results ON quizzes.id = results.quiz_id
     WHERE quizzes.owner_id = $1
     GROUP BY quizzes.id
-    ORDER BY created_at DESC;
+    ORDER BY created_at DESC, number_of_plays DESC;
     `, [sessionID])
     .then((result)=>{
       console.log(result.rows);

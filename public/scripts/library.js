@@ -6,7 +6,11 @@ $(()=>{
   
     $(".unlist-btn").on("click", hideUnlistBtn);
 
-    $(".del-btn").on("click", deleteBtn)
+    $(".del-btn").on("click", deleteBtn);
+
+    $(".share-btn").on("click", shareBtn);
+
+    $(".play-btn").on("click", playBtn);
 
   })
 
@@ -66,8 +70,8 @@ const renderQuizTemplate = (quizObject) => {
     <div class="quiz-secondary-nav">
       <p>Created on ${quizObject.created_at}</p>
       <p>${quizObject.number_of_plays} play(s)!</p>
-      <button type="button" class="btn btn-primary">Edit</button>
-      <button type="button" class="btn btn-success">Play</button>
+      <button type="button" class="btn btn-primary share-btn">Share</button>
+      <button type="button" class="btn btn-success play-btn">Play</button>
 
     </div>
 
@@ -133,4 +137,19 @@ const deleteBtn = function(event){
   }
 
 
+}
+
+
+const shareBtn = function(event){
+  event.preventDefault();
+  const id = $(this).closest(".quiz-template").children(".quiz-information").children('.quiz-primary-nav').children(".quiz-title").children(".quiz-id").text();
+  navigator.clipboard.writeText(`http://localhost:8080/quizzes/${id}`);
+  alert(`Copied quiz link: http://localhost:8080/quizzes/${id}`);
+
+}
+
+const playBtn = function(event){
+  event.preventDefault();
+  const id = $(this).closest(".quiz-template").children(".quiz-information").children('.quiz-primary-nav').children(".quiz-title").children(".quiz-id").text();
+  window.location.href = `http://localhost:8080/quizzes/${id}`;
 }
