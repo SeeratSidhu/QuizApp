@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
-const cookieSession = require('cookie-session');
+const cookieSession = require("cookie-session");
 
 const {generateRandomInteger} = require("./helpers/create-random-integer");
 
@@ -27,10 +27,19 @@ app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({extended: true}));
+<<<<<<< HEAD
 app.use(cookieSession({
   secret: "random string for now",
   maxAge: 60 * 10 * 100000 //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
 }))
+=======
+app.use(
+  cookieSession({
+    secret: "random string for now",
+    maxAge: 60 * 10 * 1000, //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
+  })
+);
+>>>>>>> master
 
 app.use(
   "/styles",
@@ -47,7 +56,7 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
-const addRoutes = require("./routes/create-quizzes")
+const addRoutes = require("./routes/create-quizzes");
 const quizzesRoutes = require("./routes/quizzes");
 const resultsRoutes = require("./routes/results");
 const library = require("./routes/library");
@@ -56,8 +65,8 @@ const library = require("./routes/library");
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
-app.use("/api/quizzes", quizzesRoutes(db))
-app.use("/api/results", resultsRoutes(db))
+app.use("/api/quizzes", quizzesRoutes(db));
+app.use("/api/results", resultsRoutes(db));
 app.use("/create-quizzes", addRoutes(db));
 app.use("/api/library", library(db));
 // Note: mount other resources here, using the same pattern above
@@ -70,60 +79,64 @@ app.use("/api/library", library(db));
 //   res.render("index");
 // });
 
-
-
 app.get("/", (req, res) => {
   const user = req.session.user_id;
-  console.log(user)
+
+  console.log("userrr", user);
+
+
+  let userCondition = ";";
+
+  if (user) {
+    userCondition = ` AND owner_id = ${user} OR owner_id IS NULL;`;
+  } else {
+    userCondition = ` AND owner_id IS NULL ;`
+  }
+
   db.query(
-    "SELECT id, name FROM quizzes;"
+    `SELECT id, name, owner_id FROM quizzes
+    WHERE is_active = true
+     ` + userCondition
   )
     .then((result) => {
+      console.log(result.rows);
       res.render("index", {
-        quizzes: result.rows,
-        user: user
+        quizzes: result.rows.filter(quiz => !quiz.owner_id),
+        myQuizzes: result.rows.filter((quiz) => {
+          return quiz.owner_id;
+        }),
+        user: user,
       });
     })
     .catch((err) => {
-      console.log("homepage error:", err)
-    })
+      console.log("homepage error:", err);
+    });
 });
-
-
-
-
-
-
-
-
 
 app.get("/my-quizzes", (req, res) => {
   res.render("my-quizzes");
-})
-
-
+});
 
 app.get("/login", (req, res) => {
   res.render("login");
 });
 
-
-
 app.get("/register", (req, res) => {
   res.render("register");
 });
 
+<<<<<<< HEAD
 
 
 app.post("/register", register)
 
 
 
+=======
+app.post("/register", register);
+>>>>>>> master
 
 app.post("/login", login);
-
-
-
 
 app.post("/logout", (req, res) => {
   req.session = null;
@@ -213,8 +226,3 @@ app.delete("/quizzes/:id", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-
-
-
-
-
