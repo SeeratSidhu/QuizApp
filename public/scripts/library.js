@@ -1,26 +1,22 @@
 $(()=>{
+
   const start = renderLibrary();
 
   start.then(()=>{
-    $(".list-btn").on("click", hideListBtn);
-  
-    $(".unlist-btn").on("click", hideUnlistBtn);
-
+    $(".list-btn").on("click", unlistQuiz);
+    $(".unlist-btn").on("click", listQuiz);
     $(".del-btn").on("click", deleteBtn);
-
     $(".share-btn").on("click", shareBtn);
-
     $(".play-btn").on("click", playBtn);
-
   })
-
-
-
 
 });
 
+
+//grabs all quizzes that are associated with the current logged user and
+//renders them to the dom
 const renderLibrary = () => {
-  return $.get("/library")
+  return $.get("/api/library")
   .then(results => {
     for(let result of results){
       const $quiz = renderQuizTemplate(result);
@@ -30,8 +26,11 @@ const renderLibrary = () => {
   .catch(err => console.log(err.msg));
 }
 
+
+//dynamically creates a dom element containing singular quiz information
 const renderQuizTemplate = (quizObject) => {
 
+  //hides button dependent on the active state of the quiz
   const listClass = quizObject.is_active ? "hidden" : "";
   const unlistClass = quizObject.is_active ? "" : "hidden";
 
@@ -40,6 +39,7 @@ const renderQuizTemplate = (quizObject) => {
   <div class="quiz-template">
         
   <div class="quiz-picture">
+    <img class="picture" src="https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__480.jpg" alt="quiz profile picture">
     <div class="number-of-questions">
       <p>${quizObject.number_of_questions} question(s)</p>
     </div>
@@ -84,7 +84,9 @@ const renderQuizTemplate = (quizObject) => {
 
 
 
-const hideListBtn = function(event){
+//change the state of the quiz
+//hides the list button and shows the unlist button
+const unlistQuiz = function(event){
   event.preventDefault();
   $(this).hide();
   const $unlist = $(this).parent(".list-holder").siblings(".unlist-holder").children(".unlist-btn");
@@ -103,7 +105,10 @@ const hideListBtn = function(event){
 };
 
 
-const hideUnlistBtn = function(event){
+
+//change the state of the quiz
+//hides the list button and shows the unlist button
+const listQuiz = function(event){
   event.preventDefault();
   const $list = $(this).parent(".unlist-holder").siblings(".list-holder").children(".list-btn")
   const id = $(this).closest(".quiz-actions").siblings(".quiz-title").children(".quiz-id").text();
@@ -122,6 +127,8 @@ const hideUnlistBtn = function(event){
 };
 
 
+
+//deletes quiz data from the database and from the front-end
 const deleteBtn = function(event){
   event.preventDefault();
   const id = $(this).closest(".quiz-actions").siblings(".quiz-title").children(".quiz-id").text();
@@ -142,6 +149,7 @@ const deleteBtn = function(event){
 }
 
 
+//copies quiz link onto clipboard
 const shareBtn = function(event){
   event.preventDefault();
   const id = $(this).closest(".quiz-template").children(".quiz-information").children('.quiz-primary-nav').children(".quiz-title").children(".quiz-id").text();
@@ -150,6 +158,8 @@ const shareBtn = function(event){
 
 }
 
+
+//redirects user to the quiz
 const playBtn = function(event){
   event.preventDefault();
   const id = $(this).closest(".quiz-template").children(".quiz-information").children('.quiz-primary-nav').children(".quiz-title").children(".quiz-id").text();

@@ -59,7 +59,7 @@ app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/quizzes", quizzesRoutes(db))
 app.use("/api/results", resultsRoutes(db))
 app.use("/create-quizzes", addRoutes(db));
-app.use("/library", library(db));
+app.use("/api/library", library(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -143,7 +143,7 @@ app.get("/quizzes", (req, res) => {
 
 
 
-app.get("/my-quiz", (req, res) => {
+app.get("/library", (req, res) => {
   let session = req.session;
   if(!session.user_id){
     return res.redirect("/login");
