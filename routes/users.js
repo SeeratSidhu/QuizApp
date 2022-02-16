@@ -6,20 +6,45 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+// const router = express.Router();
+const usersRoutes = express.Router();
+
+// module.exports = (db) => {
+//   router.get("/", (req, res) => {
+//     db.query(`SELECT * FROM users;`)
+//       .then(data => {
+//         const users = data.rows;
+//         res.json({ users });
+//       })
+//       .catch(err => {
+//         res
+//           .status(500)
+//           .json({ error: err.message });
+//       });
+//   });
+//   return router;
+// };
+
 
 module.exports = (db) => {
-  router.get("/", (req, res) => {
-    db.query(`SELECT * FROM users;`)
-      .then(data => {
-        const users = data.rows;
-        res.json({ users });
+  usersRoutes.get("/", (req, res) => {
+    const user = req.session.user;
+
+
+    db.query(
+      "SELECT id, name FROM quizzes;"
+    )
+      .then((result) => {
+
+        res.render("index", {
+          quizzes: result.rows,
+          user: user,
+          email: email
+        });
       })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+      .catch((err) => {
+        console.log("homepage error:", err)
+      })
   });
-  return router;
-};
+  return usersRoutes;
+}

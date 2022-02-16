@@ -6,8 +6,12 @@ const PORT = process.env.PORT || 8080;
 const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
-const cookieSession = require('cookie-session');
-const { register, login } = require("./routes/register-login");
+const cookieSession = require("cookie-session");
+
+const {generateRandomInteger} = require("./helpers/create-random-integer");
+
+const {register, login} = require("./routes/register-login");
+
 const app = express();
 
 // PG database client/connection setup
@@ -23,10 +27,12 @@ app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({extended: true}));
-app.use(cookieSession({
-  secret: "random string for now",
-  maxAge: 60*10*1000 //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
-}))
+app.use(
+  cookieSession({
+    secret: "random string for now",
+    maxAge: 60 * 10 * 1000, //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
+  })
+);
 
 app.use(
   "/styles",
@@ -43,9 +49,10 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
-const addRoutes = require("./routes/create-quizzes")
+const addRoutes = require("./routes/create-quizzes");
 const quizzesRoutes = require("./routes/quizzes");
 const resultsRoutes = require("./routes/results");
+const library = require("./routes/library");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -54,6 +61,7 @@ app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/quizzes", quizzesRoutes(db));
 app.use("/results", resultsRoutes(db));
 app.use("/create-quizzes", addRoutes(db));
+app.use("/api/library", library(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -64,47 +72,55 @@ app.use("/create-quizzes", addRoutes(db));
 //   res.render("index");
 // });
 
-
-
 app.get("/", (req, res) => {
+  const user = req.session.user_id;
+
+  console.log("userrr", user);
+
+
+  let userCondition = ";";
+
+  if (user) {
+    userCondition = ` AND owner_id = ${user} OR owner_id IS NULL;`;
+  } else {
+    userCondition = ` AND owner_id IS NULL ;`
+  }
+
   db.query(
-    "SELECT id, name FROM quizzes;"
+    `SELECT id, name, owner_id FROM quizzes
+    WHERE is_active = true
+     ` + userCondition
   )
     .then((result) => {
+      console.log(result.rows);
       res.render("index", {
-        quizzes: result.rows
+        quizzes: result.rows.filter(quiz => !quiz.owner_id),
+        myQuizzes: result.rows.filter((quiz) => {
+          return quiz.owner_id;
+        }),
+        user: user,
       });
     })
     .catch((err) => {
-      console.log("homepage error:", err)
-    })
+      console.log("homepage error:", err);
+    });
 });
 
 app.get("/my-quizzes", (req, res) => {
   res.render("my-quizzes");
-})
-
-
+});
 
 app.get("/login", (req, res) => {
   res.render("login");
 });
 
-
-
-app.get("/register", (req, res)=>{
+app.get("/register", (req, res) => {
   res.render("register");
 });
 
-
-
-app.post("/register", register)
-
-
+app.post("/register", register);
 
 app.post("/login", login);
-
-
 
 app.post("/logout", (req, res) => {
   req.session = null;
@@ -116,16 +132,81 @@ app.get("/quizzes/:id", (req, res) => {
 });
 
 app.get("/quizzes", (req, res) => {
-  if(req.session.user_id) {
+  if (req.session.user_id) {
     return res.sendStatus(200);
   }
   return res.send(undefined);
 });
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+
+
+
+app.get("/library", (req, res) => {
+  let session = req.session;
+  if(!session.user_id){
+    return res.redirect("/login");
+  }
+  res.render("library", {user: session.user_id});
 });
 
 
+app.put("/quizzes/:id", (req, res) => {
+  const sessionId = req.session.user_id;
+  const quizId = req.params.id;
+
+  db.query(`
+  SELECT owner_id
+  FROM quizzes
+  WHERE id = $1;
+  `,[quizId])
+  .then(result => {
+    if(result.rows[0].owner_id !== sessionId){
+      throw `Not your quiz to unlist!`
+    }
+
+    return db.query(`
+    UPDATE quizzes
+    SET is_active = NOT is_active
+    WHERE owner_id = $1 AND id = $2
+    RETURNING *;
+    `,[sessionId, quizId])
+  })
+  .then(()=>{
+    console.log("Updated")
+    res.send("ok")
+  })
+  .catch(err => console.log(err))
+
+})
 
 
+app.delete("/quizzes/:id", (req, res) => {
+  const sessionId = req.session.user_id;
+  const quizId = req.params.id;
 
+  db.query(`
+  SELECT owner_id
+  FROM quizzes
+  WHERE id = $1;
+  `,[quizId])
+  .then(result => {
+    if(result.rows[0].owner_id !== sessionId){
+      throw `Not your quiz to delete!`
+    }
+
+    return db.query(`
+    DELETE FROM quizzes
+    WHERE owner_id = $1 AND id = $2
+    RETURNING *;
+    `,[sessionId, quizId])
+  })
+  .then(()=>{
+    console.log("Deleted")
+    res.send("ok")
+  })
+  .catch(err => console.log(err))
+})
+
+
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`);
+});

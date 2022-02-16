@@ -13,12 +13,19 @@
     </div>
     <div class="bottom-div nav-div">
       <ul class="ul-buttons navSection">
+        <% if (!user) { %>
         <li>
           <a href="/login"><button>Login</button></a>
         </li>
         <li>
           <a href="/register"><button>Register</button></a>
         </li>
+        <% } else { %>
+        <a class="nav-link disabled">Logged In As <%= %> ! </a>
+        <form action="/logout" method="POST">
+          <button type="submit">Logout</button>
+        </form>
+        <% } %>
       </ul>
     </div>
   </nav>
