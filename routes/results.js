@@ -62,6 +62,17 @@ module.exports = (db) => {
     })
   });
 
-  // router.post("/:id", (req, res)
+  router.post("/:id/delete", (req, res) => {
+    const resultId = req.params.id;
+    console.log("clikced!", resultId)
+    const queryString = `DELETE FROM results WHERE id = $1`;
+    db.query(queryString,[Number(resultId)])
+    .then(data => {
+      console.log("DELETED!");
+      res.redirect("/results");
+    })
+    .catch(err => console.log("Error: ", err.message));
+  });
+
   return router;
 };
