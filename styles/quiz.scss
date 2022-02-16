@@ -13,13 +13,14 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: lighten($primary-color, 40%);
-  // justify-content: center;
-  // align-items: center;
+  // background-color: lighten($primary-color, 40%);
+  background-color: #00ebb0;
+  background-image: url("https://www.transparenttextures.com/patterns/diagmonds.png");
 }
 
 .quiz-header {
   margin-bottom: 20px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -115,3 +116,20 @@ body {
 .hide {
   display: none;
 }
+
+.results {
+  font-weight: bolder;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  div {
+    font-size: xx-large;
+    margin: 20px 0;
+  }
+  button {
+    font-size: larger;
+  }
+}
+
+

@@ -96,11 +96,14 @@ const checkQuestion = function(event) {
 }
 
 const displayResults = () => {
-  $("header h3").hide();
+  const quizName = $("header h1").text();
   let resultsELement = `
-  <div >You scored <span id="score">${score}</span> out of ${currentQuestion}</div>
-  <button id="save-result-button">Save Result</button>
+  <h1>${quizName}</h1>
+  <div>You scored <span id="score">${score}</span>/${currentQuestion}</div>
+  <button id="save-result-button" class="btn">Save Result</button>
  `;
+  // $(".container").css({"background-color": "#00ebb0",
+  //   "background-image": 'url("https://www.transparenttextures.com/patterns/diagmonds.png")'});
   $(".results").html(resultsELement);
 }
 
