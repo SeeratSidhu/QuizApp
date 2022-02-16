@@ -1,6 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 const { generateRandomInteger } = require("../helpers/create-random-integer");
+const timeago = require('timeago.js');
 
 module.exports = (db) => {
   router.post("/", (req, res) => {
@@ -26,14 +27,15 @@ module.exports = (db) => {
     if(!user_id) {
       return res.send("Please login to check results");
     }
-    const queryString = `SELECT * FROM results WHERE owner_id = $1`;
+    const queryString = `SELECT quizzes.name, results.* FROM results JOIN quizzes ON quizzes.id = results.quiz_id WHERE results.owner_id = $1`;
     const values = [Number(user_id)];
     db.query(queryString, values)
     .then(data => {
       if(data.rows.length === 0) {
         return res.send("No results to show");
       }
-      res.render("results", {results: data.rows});
+
+      res.render("results", {results: data.rows, timeago});
     })
     .catch(err => {
       console.log("Error: ", err.message);
@@ -54,7 +56,8 @@ module.exports = (db) => {
         score: result.value,
         userId: result.owner_id,
         totalQuestions: result.num_of_questions,
-        quizAge: result.created_at
+        quizAge: result.created_at,
+        timeago
       })
     })
     .catch(err => {
