@@ -25,17 +25,17 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     const user_id = req.session.user_id;
     if(!user_id) {
-      return res.send("Please login to check results");
+      return res.render("results", {result: false});
     }
     const queryString = `SELECT quizzes.name, results.* FROM results JOIN quizzes ON quizzes.id = results.quiz_id WHERE results.owner_id = $1`;
     const values = [Number(user_id)];
     db.query(queryString, values)
     .then(data => {
       if(data.rows.length === 0) {
-        return res.send("No results to show");
+        return res.render("results", {result: false});
       }
 
-      res.render("results", {results: data.rows, timeago});
+      res.render("results", {results: data.rows, result: true, timeago});
     })
     .catch(err => {
       console.log("Error: ", err.message);
