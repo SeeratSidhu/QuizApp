@@ -65,9 +65,10 @@
           <span><%= quiz.name%></span>
           <a href="/quizzes/<%= quiz.id %>"><button>PLAY</button></a>
         </div>
+
         <% } %>
       </div>
-      <% } else { %>
+      <% } %>
 
       <h1>Take a Quiz</h1>
       <div class="quiz-container">
@@ -76,9 +77,9 @@
           <span><%= quiz.name%></span>
           <a href="/quizzes/<%= quiz.id %>"><button>PLAY</button></a>
         </div>
+
         <%}%>
       </div>
-      <% } %>
     </main>
     <script src="./scripts/app.js"></script>
   </body>
