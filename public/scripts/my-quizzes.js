@@ -1,10 +1,10 @@
-$(()=>{
+$(() => {
 
   const start = renderLibrary();
 
-  start.then(()=>{
+  start.then(() => {
     //only attaches button  listeners if a quiz is rendered
-    if(checkQuizzesExist()){
+    if (checkQuizzesExist()) {
       $(".list-btn").on("click", unlistQuiz);
       $(".unlist-btn").on("click", listQuiz);
       $(".del-btn").on("click", deleteBtn);
@@ -21,20 +21,20 @@ $(()=>{
 //renders them to the dom
 const renderLibrary = () => {
   return $.get("/api/library")
-  .then(results => {
+    .then(results => {
 
 
-    if(results.length === 0){
-      let createQuizDiv = createNewQuizLink();
-      return $(createQuizDiv).insertBefore($(".library"));
-    }
+      if (results.length === 0) {
+        let createQuizDiv = createNewQuizLink();
+        return $(createQuizDiv).insertBefore($(".library"));
+      }
 
-    for(let result of results){
-      const $quiz = renderQuizTemplate(result);
-      $(".library-quizzes").append($quiz);
-    }
-  })
-  .catch(err => console.log(err.msg));
+      for (let result of results) {
+        const $quiz = renderQuizTemplate(result);
+        $(".library-quizzes").append($quiz);
+      }
+    })
+    .catch(err => console.log(err.msg));
 }
 
 
@@ -45,11 +45,11 @@ const renderQuizTemplate = (quizObject) => {
   const listClass = quizObject.is_active ? "hidden" : "";
   const unlistClass = quizObject.is_active ? "" : "hidden";
   const $picture = generatePicture();
-  
+
 
   const $quizTemplate = `
   <div class="quiz-template">
-        
+
   <div class="quiz-picture">
     ${$picture}
     <div class="number-of-questions">
@@ -98,7 +98,7 @@ const renderQuizTemplate = (quizObject) => {
 
 //change the state of the quiz
 //hides the list button and shows the unlist button
-const unlistQuiz = function(event){
+const unlistQuiz = function(event) {
   event.preventDefault();
   $(this).hide();
   const $unlist = $(this).parent(".list-holder").siblings(".unlist-holder").children(".unlist-btn");
@@ -120,7 +120,7 @@ const unlistQuiz = function(event){
 
 //change the state of the quiz
 //hides the list button and shows the unlist button
-const listQuiz = function(event){
+const listQuiz = function(event) {
   event.preventDefault();
   const $list = $(this).parent(".unlist-holder").siblings(".list-holder").children(".list-btn")
   const id = $(this).closest(".quiz-actions").siblings(".quiz-title").children(".quiz-id").text();
@@ -139,12 +139,12 @@ const listQuiz = function(event){
 
 
 //deletes quiz data from the database and from the front-end
-const deleteBtn = function(event){
+const deleteBtn = function(event) {
   event.preventDefault();
   const id = $(this).closest(".quiz-actions").siblings(".quiz-title").children(".quiz-id").text();
   const $quiz = $(this).closest(".quiz-template")
 
-  if(confirm("are you sure?")){
+  if (confirm("are you sure?")) {
     $.ajax({
       url: `quizzes/${id}`,
       type: 'DELETE',
@@ -152,7 +152,7 @@ const deleteBtn = function(event){
         $quiz.remove();
 
         //create quiz button is rendered when there no user made quizzes left
-        if(!checkQuizzesExist()){
+        if (!checkQuizzesExist()) {
           let createQuizDiv = createNewQuizLink();
           return $(createQuizDiv).insertBefore($(".library"));
         }
@@ -164,7 +164,7 @@ const deleteBtn = function(event){
 
 
 //copies quiz link onto clipboard
-const shareBtn = function(event){
+const shareBtn = function(event) {
   event.preventDefault();
   const id = $(this).closest(".quiz-template").children(".quiz-information").children('.quiz-primary-nav').children(".quiz-title").children(".quiz-id").text();
   navigator.clipboard.writeText(`http://localhost:8080/quizzes/${id}`);
@@ -174,7 +174,7 @@ const shareBtn = function(event){
 
 
 //redirects user to the quiz
-const playBtn = function(event){
+const playBtn = function(event) {
   event.preventDefault();
   const id = $(this).closest(".quiz-template").children(".quiz-information").children('.quiz-primary-nav').children(".quiz-title").children(".quiz-id").text();
   window.location.href = `http://localhost:8080/quizzes/${id}`;
