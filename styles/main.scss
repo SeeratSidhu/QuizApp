@@ -27,7 +27,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   background-color: lightgrey;
-  height: 100px;
+  height: 200px;
   border: 2px solid #ffffff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
@@ -70,4 +70,20 @@ h1 {
   60% {
     transform: translate3d(1px, 0, 0);
   }
+}
+
+.picture {
+  padding: 10px;
+  border-radius: 20px;
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+  background-color: lightgray;
+}
+
+.quiz-picture {
+  width: 20%;
+  min-width: 220px;
+  position: relative;
+  background-color: lightgray;
 }
