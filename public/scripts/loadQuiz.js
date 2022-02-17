@@ -122,8 +122,7 @@ const postResult = function(event){
     if(data) {
 
       $.post("/results", resultData);
-      $(".results").html(`<p>Your score has been saved! Redirecting...`);
-      window.location.href= "http://localhost:8080/results";
+      $(".results").html(`<p>Saved! Check out your <a href="/results">results</a> or take a new <a href="/">quiz</a>!`);
 
     } else {
       $(".results").html(`<p>Please <a href="/login">Login</a> to save results!</p>`);
