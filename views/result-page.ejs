@@ -14,31 +14,37 @@
      href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
      rel="stylesheet"
    />
+   <!-- stylesheets -->
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/header.css" />
   <link rel="stylesheet" href="/styles/results.css" />
+
   <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
 </head>
 
 <body>
+  <%- include('partials/_header') %>
+  <main id="main-contanier">
+    <div class="card" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title"><%= quizName %></h5>
+      </div>
 
-  <div class="card" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title"><%= quizName %></h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Score: <%= score%></li>
+        <li class="list-group-item">Total Questions: <%= totalQuestions%></5></li>
+        <li class="list-group-item">This quiz was taken <%= timeago.format(quizAge) %></li>
+      </ul>
+      
+      <div class="card-body">
+        <a href="/quizzes/<%=quizId%>" class="card-link">Take Quiz</a>
+        <a href="/" class="card-link">Check all Quizzes</a>
+      </div>
+    </div>
 
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Score: <%= score%></li>
-      <li class="list-group-item">Total Questions: <%= totalQuestions%></5></li>
-      <li class="list-group-item">This quiz was taken <%= timeago.format(quizAge) %></li>
-    </ul>
-    <div class="card-body">
-      <a href="/quizzes/<%=quizId%>" class="card-link">Take Quiz</a>
-      <a href="/" class="card-link">Check all Quizzes</a>
-    </div>
-  </div>
+  </main>
 </body>
 
 </html>

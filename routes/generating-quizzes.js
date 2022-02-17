@@ -3,13 +3,16 @@ const router = express.Router();
 
 module.exports = (db) => {
 
+  //get all quizzes from db
   router.get("/", (req, res) => {
     db.query(`SELECT * FROM quizzes`)
     .then(data => {
       res.json(data.rows);
     })
-  })
+  });
 
+
+  //get quiz by quiz_id
   router.get("/:id", (req, res) => {
     db.query(`SELECT questions.value AS question_value, options.* FROM questions
     JOIN options ON options.question_id = questions.id
@@ -51,7 +54,7 @@ module.exports = (db) => {
         .status(500)
         .json({ error: err.message });
     });
-  })
+  });
 
   return router;
 }

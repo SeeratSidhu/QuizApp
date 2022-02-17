@@ -4,6 +4,7 @@ const {generateRandomInteger} = require("../helpers/create-random-integer");
 const timeago = require('timeago.js');
 
 module.exports = (db) => {
+  // save results to db
   router.post("/", (req, res) => {
 
     const {score, quiz_id} = req.body;
@@ -22,13 +23,16 @@ module.exports = (db) => {
       });
   });
 
+  //Get results for the logged in user
   router.get("/", (req, res) => {
+
     const user_id = req.session.user_id;
     if(!user_id) {
       return res.render("results", {result: false, user: user_id});
     }
     const queryString = `SELECT quizzes.name, results.* FROM results JOIN quizzes ON quizzes.id = results.quiz_id WHERE results.owner_id = $1`;
     const values = [Number(user_id)];
+
     db.query(queryString, values)
     .then(data => {
       if(data.rows.length === 0) {
@@ -43,10 +47,13 @@ module.exports = (db) => {
 
   });
 
+  //show results on the shared link
   router.get("/:id", (req, res) => {
+
     const result_id = req.params.id;
     const queryString = `SELECT quizzes.id AS quiz_id, quizzes.name AS quiz_name, COUNT(questions.id) AS num_of_questions, quizzes.created_at, results.value, results.owner_id FROM questions JOIN quizzes ON quizzes.id = questions.quiz_id JOIN results ON results.quiz_id = quizzes.id WHERE results.id = $1 GROUP BY quizzes.id, results.value, results.owner_id;`
     const values = [Number(result_id)];
+
     db.query(queryString, values)
       .then((data) => {
         let result = data.rows[0];
@@ -57,18 +64,21 @@ module.exports = (db) => {
           userId: result.owner_id,
           totalQuestions: result.num_of_questions,
           quizAge: result.created_at,
-          timeago
+          timeago,
+          user: false
         })
       })
       .catch(err => {
         console.log("Error: ", err.message);
-      })
+      });
   });
 
   router.post("/:id/delete", (req, res) => {
+
     const resultId = req.params.id;
     console.log("clikced!", resultId)
     const queryString = `DELETE FROM results WHERE id = $1`;
+
     db.query(queryString, [Number(resultId)])
       .then(data => {
         console.log("DELETED!");
