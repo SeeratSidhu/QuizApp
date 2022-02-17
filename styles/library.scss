@@ -121,7 +121,11 @@ body {
 
 .quiz-title {
   h3 {
-    margin-right: 10px;
+    max-width: 350px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 30px;
     color: #090c9b;
   }
 
