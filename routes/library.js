@@ -5,7 +5,7 @@ const router = express.Router();
 module.exports = (db) => {
 
 
-  //move to quizzes later - quizzes:id
+  //grabs all user created quizes along with the number of plays and number of questions
   router.get("/", (req, res) => {
     let sessionID = req.session.user_id;
     if (!sessionID) {

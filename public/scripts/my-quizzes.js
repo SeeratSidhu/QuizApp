@@ -3,11 +3,15 @@ $(()=>{
   const start = renderLibrary();
 
   start.then(()=>{
-    $(".list-btn").on("click", unlistQuiz);
-    $(".unlist-btn").on("click", listQuiz);
-    $(".del-btn").on("click", deleteBtn);
-    $(".share-btn").on("click", shareBtn);
-    $(".play-btn").on("click", playBtn);
+    //only attaches button  listeners if a quiz is rendered
+    if($(".quiz-template").length){
+      $(".list-btn").on("click", unlistQuiz);
+      $(".unlist-btn").on("click", listQuiz);
+      $(".del-btn").on("click", deleteBtn);
+      $(".share-btn").on("click", shareBtn);
+      $(".play-btn").on("click", playBtn);
+    }
+
   })
 
 });
@@ -145,7 +149,7 @@ const deleteBtn = function(event){
       url: `quizzes/${id}`,
       type: 'DELETE',
       success: () => {
-        console.log('deleted')
+        // console.log('deleted')
         $quiz.remove();
       }
     })
