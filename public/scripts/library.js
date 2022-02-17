@@ -18,6 +18,13 @@ $(()=>{
 const renderLibrary = () => {
   return $.get("/api/library")
   .then(results => {
+
+
+    if(results.length === 0){
+      let createQuizDiv = createNewQuizLink();
+      return $(createQuizDiv).insertBefore($(".library"));
+    }
+
     for(let result of results){
       const $quiz = renderQuizTemplate(result);
       $(".library-quizzes").append($quiz);
@@ -113,8 +120,6 @@ const listQuiz = function(event){
   event.preventDefault();
   const $list = $(this).parent(".unlist-holder").siblings(".list-holder").children(".list-btn")
   const id = $(this).closest(".quiz-actions").siblings(".quiz-title").children(".quiz-id").text();
-  console.log(id)
-
 
   $.ajax({
     url: `/quizzes/${id}`,
@@ -179,7 +184,15 @@ const generatePicture = () => {
   ]
 
   const randomIndex = Math.floor(Math.random() * pictureLinks.length);
-  console.log(randomIndex)
-
   return `<img class="picture" src="${pictureLinks[randomIndex]}" alt="quiz profile picture"></img>`
+}
+
+
+//renders a new quiz button
+const createNewQuizLink = () => {
+  const $createNewQuiz = `<div class="no-quizzes-div">
+  <a class="create-quiz-link" href="/create-quizzes">Click here to make your first quiz!</a>
+</div>`;
+
+  return $createNewQuiz;
 }
