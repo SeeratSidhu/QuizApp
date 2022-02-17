@@ -82,6 +82,7 @@ const checkQuestion = function(event) {
     const correctOption = allOptions.find(option => option.is_correct)
     const correctOptionId = correctOption.id;
     const correctElement = $(`#option${correctOptionId}`);
+    $(this).addClass("selected");
     if(correctOption.value === selectedOption) {
       score++;
       revealAnswer($(this));

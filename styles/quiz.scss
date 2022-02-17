@@ -134,6 +134,9 @@ header {
   display: none;
 }
 
+.selected {
+  box-shadow: 0 0 5px 5px grey;
+}
 .results {
   font-weight: bolder;
   display: flex;
