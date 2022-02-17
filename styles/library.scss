@@ -11,7 +11,7 @@ body {
 
     .quiz-template {
       display: flex;
-      width: 80%;
+      width: 85%;
       max-height: 150px;
       border: 2px solid white;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
@@ -71,13 +71,12 @@ body {
     justify-content: space-between;
     height: 60%;
     background: lightgrey;
-    padding: 1em;
+    padding: 1em 1em 1em 0;
 
     .quiz-title {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-left: 5em;
     }
 
     .quiz-actions {
@@ -114,8 +113,9 @@ body {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    margin-right: 30px;
+    margin-right: 10px;
     color: #090c9b;
+    font-size: 1.3em;
   }
 
   p {
@@ -193,4 +193,85 @@ i {
   60% {
     transform: translate3d(1px, 0, 0);
   }
+}
+
+@media only screen and (max-width: 1250px) {
+
+  .library{
+    margin: 0;
+    
+    .library-quizzes{
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+      gap: 1.4em;
+    }
+  }
+
+  .quiz-template{
+    flex-direction: column;
+    max-width: 300px;
+    min-width: 300px;
+    min-height: 470px;
+    
+    .quiz-picture{
+      height: 200px;
+      max-height: 200px;
+      width: auto;
+    }
+
+    .quiz-information{
+      width: 100%;
+      max-height: 300px;
+      height: 250px;
+    }
+
+    .quiz-primary-nav{
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+      padding: 0;
+      width: 100%;
+      height: 70px;
+
+      .quiz-title{
+        padding: 0;
+        width: 100%;
+      }
+    }
+
+    .quiz-secondary-nav{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      height: 200px;
+
+      button{
+        margin: 0.5em 0.25em 0.5em 0.25em;
+      }
+    }
+  }
+
+
+
+  .quiz-title h3{
+    max-width: 180px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 1.1em;
+    margin-left: 20px;
+  }
+
+  .number-of-questions{
+    bottom: 30%;
+    right: 10%;
+  }
+
+
+
+  .quiz-actions{
+    margin-right: 1em;
+  }
+
+
 }

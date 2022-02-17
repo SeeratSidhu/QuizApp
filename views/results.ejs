@@ -3,12 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
    <!-- adding google font styles -->
-   <link rel="preconnect" href="https://fonts.googleapis.com" />
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
    <link
      href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
      rel="stylesheet"
@@ -40,13 +39,14 @@
       referrerpolicy="no-referrer"
     ></script>
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/results.js"></script>
 
 </head>
 
 <body>
   <%- include('partials/_header') %>
-  <main>
+  <main id="main-container">
     <% if(!result) { %>
     <div id="alert-none" class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>No results to show! Please <a href="/login">login</a> or complete a <a href="/">quiz</a>!</strong>
