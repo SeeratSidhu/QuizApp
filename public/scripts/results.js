@@ -1,5 +1,4 @@
 $(() => {
-
   $("#alert-copy").hide();
   $(".card-body").on("click", "#share-link", function(event) {
     event.preventDefault();

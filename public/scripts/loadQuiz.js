@@ -63,10 +63,9 @@ const nextQuestion = () => {
 }
 
 const revealAnswer = (element) => {
-  $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check fa-3x icon"></i>`);
-  score++;
+  $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check fa-2x icon"></i>`);
   //disables all neighbouring buttons
-  $(element).siblings(".btn").addClass("wrong").prepend(`<i class="fa-solid fa-circle-xmark fa-3x icon"></i>`).prop("disabled", true);
+  $(element).siblings(".btn").addClass("wrong").prepend(`<i class="fa-solid fa-circle-xmark fa-2x icon"></i>`).prop("disabled", true);
 
   $("#next-btn").removeClass("hide");
 }
@@ -84,6 +83,7 @@ const checkQuestion = function(event) {
     const correctOptionId = correctOption.id;
     const correctElement = $(`#option${correctOptionId}`);
     if(correctOption.value === selectedOption) {
+      score++;
       revealAnswer($(this));
       return;
     }
@@ -123,7 +123,7 @@ const postResult = function(event){
 
       $.post("/results", resultData);
       $(".results").html(`<p>Your score has been saved! Redirecting...`);
-      window.location.href = "http://localhost:8080/results";
+      window.location.href= "http://localhost:8080/results";
 
     } else {
       $(".results").html(`<p>Please <a href="/login">Login</a> to save results!</p>`);
