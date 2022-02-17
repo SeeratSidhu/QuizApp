@@ -1,7 +1,4 @@
 $(() => {
-  if($("#alert-none").is(":visible")) {
-    $("#lert-none").hide();
-  };
 
   $("#alert-copy").hide();
   $(".card-body").on("click", "#share-link", function(event) {

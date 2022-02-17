@@ -54,30 +54,23 @@ const renderQuestions = (quizArray, qNumber) => {
 
 const nextQuestion = () => {
   currentQuestion++;
-  setTimeout(() => {
-    $(".answer-message").empty();
+  $("#option-buttons").hide(600, function() {
     loadQuiz();
-  }, 300);
+  });
+  // setTimeout(() => {
+  //   loadQuiz();
+  // }, 300);
 }
 
-const correctAnswer = (element) => {
+const revealAnswer = (element) => {
   $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check fa-2x icon"></i>`);
   score++;
   //disables all neighbouring buttons
-  $(element).siblings(".btn").prop("disabled", true);
+  $(element).siblings(".btn").addClass("wrong").prepend(`<i class="fa-solid fa-circle-xmark fa-2x icon"></i>`).prop("disabled", true);
 
   $("#next-btn").removeClass("hide");
 }
 
-const wrongAnswer = (element) => {
- $(element).addClass("wrong").prepend(`<i class="fa-solid fa-circle-xmark fa-2x icon"></i>`);
-
- //disables all neighbouring buttons
- $(element).siblings(".btn").prop("disabled", true);
-
- $("#next-btn").removeClass("hide");
-
-}
 
 const checkQuestion = function(event) {
   event.preventDefault();
@@ -88,12 +81,13 @@ const checkQuestion = function(event) {
 
     let allOptions = data[currentQuestion].options;
     const correctOption = allOptions.find(option => option.is_correct)
-
+    const correctOptionId = correctOption.id;
+    const correctElement = $(`#option${correctOptionId}`);
     if(correctOption.value === selectedOption) {
-      correctAnswer($(this));
+      revealAnswer($(this));
       return;
     }
-    return wrongAnswer($(this));
+    return revealAnswer(correctElement);
   })
 }
 
