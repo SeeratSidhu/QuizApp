@@ -1,16 +1,5 @@
 body {
-  height: 100%;
-  margin: 0;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background: #505c6d;
-  background: linear-gradient(
-    rgba(80, 92, 109, 1) 10%,
-    rgb(126, 127, 130) 20%,
-    rgb(247, 247, 233) 100%
-  );
-  margin: 0;
-  height: 100%;
+  background: transparent;
 }
 
 .library {
@@ -56,7 +45,7 @@ body {
     align-items: center;
     margin: 0;
     padding: 3px;
-    width: 40%;
+    width: 50%;
     border-radius: 10px;
     position: absolute;
     bottom: 10%;
@@ -65,7 +54,7 @@ body {
     background-color: #4d4a4aab;
 
     p {
-      font-size: 0.8em;
+      font-size: 0.7em;
       margin: auto;
       color: #fbfff1;
     }

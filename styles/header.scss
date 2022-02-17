@@ -17,6 +17,7 @@
 
 .header h1 {
   font-size: 60px;
+  font-weight: 500;
 }
 
 .header i {
@@ -130,9 +131,23 @@ nav div ul {
   font-size: 50px;
   cursor: pointer;
   display: none;
+  outline: none;
 }
 .hamburger:hover {
   background-color: transparent;
+}
+
+.hamburger i {
+  color: white;
+  border: none;
+  font-size: 50px;
+  border: none;
+  outline: none;
+}
+
+.hambuger button {
+  border: none;
+  outline: none;
 }
 
 .hamburger i:hover {
@@ -150,6 +165,7 @@ nav div ul li a {
 nav div ul li a:hover {
   font-size: 25px;
   color: rgb(169, 245, 249);
+  text-decoration: none;
 }
 
 nav a {

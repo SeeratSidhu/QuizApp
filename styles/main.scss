@@ -1,4 +1,8 @@
 //index.ejs styles
+* {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+}
 
 main {
   max-width: 90%;
@@ -22,7 +26,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  background-color: lightgrey;
   height: 100px;
   border: 2px solid #ffffff;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

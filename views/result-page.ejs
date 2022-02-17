@@ -7,12 +7,18 @@
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
    <!-- adding google font styles -->
-   <link rel="preconnect" href="https://fonts.googleapis.com" />
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
    <link
      href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
      rel="stylesheet"
+   />
+
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+   <link
+   href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&display=swap"
+   rel="stylesheet"
    />
    <!-- stylesheets -->
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
@@ -37,14 +43,14 @@
         <li class="list-group-item">Total Questions: <%= totalQuestions%></5></li>
         <li class="list-group-item">This quiz was taken <%= timeago.format(quizAge) %></li>
       </ul>
-      
+
       <div class="card-body">
         <a href="/quizzes/<%=quizId%>" class="card-link">Take Quiz</a>
         <a href="/" class="card-link">Check all Quizzes</a>
       </div>
     </div>
-
   </main>
+  <script src="./scripts/app.js"></script>
 </body>
 
 </html>

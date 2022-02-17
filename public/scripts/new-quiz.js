@@ -1,43 +1,12 @@
 
 $(()=>{
 
+  //event listener for add question button
+  $(".add-question-btn").on("click", addQuestionButton);
 
-  //adds new question form
-  $(".add-question-btn").on("click", function(event) {
-    event.preventDefault();
-    
-    //creates a question form
-    $(renderQuestion()).insertBefore($(this).parent(".general-form-buttons"));
+  //event listener for quiz submit button
+  $(".new-quiz-form").on("submit", createQuizButton);
 
-    //add delete functionality to the question upon generation
-    $(".delete-question").on("click", function(event) {
-      event.preventDefault();
-      console.log("removed question!");
-      $(this).parent(".question").remove();
-   
-    });
-
-  });
-  
-  $(".new-quiz-form").on("submit", function(event) {
-    event.preventDefault();
-
-    //fix this to use THIS keyword
-    //simple check to see if there are any questions
-    let numberOfQuestions = $(".new-quiz-form").children(".question").length;
-
-    if (numberOfQuestions === 0) {
-      return alert("You must have question in your quiz!");
-    }
-
-    // creates quiz -> creates questions -> creates options
-    createQuiz();
-  });
-
-
-  
-  
-  
 });
 
 
@@ -193,6 +162,42 @@ const createOptions = (location, questionId, quizId) => {
 
 
 
+//add question button function
+const addQuestionButton = function(event){
+  event.preventDefault();
+    
+  //creates a question form
+  $(renderQuestion()).insertBefore($(this).parent(".general-form-buttons"));
+
+  //add delete functionality to the question upon generation
+  $(".delete-question").on("click", function(event) {
+    event.preventDefault();
+    console.log("removed question!");
+    $(this).parent(".question").remove();
+ 
+  });
+
+};
+
+
+
+const createQuizButton = function(event){
+  event.preventDefault();
+
+  //fix this to use THIS keyword
+  //simple check to see if there are any questions
+  let numberOfQuestions = $(".new-quiz-form").children(".question").length;
+
+  if (numberOfQuestions === 0) {
+    return alert("You must have question in your quiz!");
+  }
+
+  // creates quiz -> creates questions -> creates options
+  createQuiz();
+};
+
+
+
 //adds a random colour class
 const randomBackground = () => {
   const colourClasses = ["colour1", "colour2", "colour3", "colour4", "colour5"];
@@ -201,3 +206,5 @@ const randomBackground = () => {
 
   return colourClasses[index];
 };
+
+
