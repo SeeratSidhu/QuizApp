@@ -50,7 +50,8 @@ app.use(express.static("public"));
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
 const addRoutes = require("./routes/create-quizzes");
-const quizzesRoutes = require("./routes/quizzes");
+const generatingQuizRoutes = require("./routes/generating-quizzes");
+const quizzesRoutes = require("./routes/quizzes")
 const resultsRoutes = require("./routes/results");
 const library = require("./routes/library");
 
@@ -58,19 +59,23 @@ const library = require("./routes/library");
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
-app.use("/api/quizzes", quizzesRoutes(db));
+app.use("/api/quizzes", generatingQuizRoutes(db));
+app.use("/api/library", library(db));
 app.use("/results", resultsRoutes(db));
 app.use("/create-quizzes", addRoutes(db));
-app.use("/api/library", library(db));
+app.use("/quizzes", quizzesRoutes(db))
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-// app.get("/", (req, res) => {
-//   res.render("index");
-// });
+
+
+  /*------------------------*/
+ /*     GET ROUTES         */
+/*------------------------*/
+
 
 app.get("/", (req, res) => {
   const user = req.session.user_id;
@@ -106,108 +111,51 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get("/my-quizzes", (req, res) => {
-  res.render("my-quizzes");
-});
 
 app.get("/login", (req, res) => {
   const user = req.session.user_id;
   res.render("login", {user});
 });
 
+
 app.get("/register", (req, res) => {
   const user = req.session.user_id;
   res.render("register", {user});
 });
 
+
+app.get("/my-quizzes", (req, res) => {
+  let session = req.session;
+  if (!session.user_id) {
+    return res.redirect("/login");
+  }
+  res.render("my-quizzes", {user: session.user_id});
+});
+
+
+app.get("/*", (req, res) => {
+  res.redirect("/");
+})
+
+
+
+  /*------------------------*/
+ /*     POST ROUTES        */
+/*------------------------*/
+
+
+
 app.post("/register", register);
 
+
 app.post("/login", login);
+
 
 app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
 });
 
-app.get("/quizzes/:id", (req, res) => {
-  const user = req.session.user_id;
-  res.render("quiz", {user});
-});
-
-app.get("/quizzes", (req, res) => {
-  if (req.session.user_id) {
-    return res.sendStatus(200);
-  }
-  return res.send(undefined);
-});
-
-
-
-app.get("/library", (req, res) => {
-  let session = req.session;
-  if (!session.user_id) {
-    return res.redirect("/login");
-  }
-  res.render("library", {user: session.user_id});
-});
-
-
-app.put("/quizzes/:id", (req, res) => {
-  const sessionId = req.session.user_id;
-  const quizId = req.params.id;
-
-  db.query(`
-  SELECT owner_id
-  FROM quizzes
-  WHERE id = $1;
-  `, [quizId])
-    .then(result => {
-      if (result.rows[0].owner_id !== sessionId) {
-        throw `Not your quiz to unlist!`
-      }
-
-      return db.query(`
-    UPDATE quizzes
-    SET is_active = NOT is_active
-    WHERE owner_id = $1 AND id = $2
-    RETURNING *;
-    `, [sessionId, quizId])
-    })
-    .then(() => {
-      console.log("Updated")
-      res.send("ok")
-    })
-    .catch(err => console.log(err))
-
-})
-
-
-app.delete("/quizzes/:id", (req, res) => {
-  const sessionId = req.session.user_id;
-  const quizId = req.params.id;
-
-  db.query(`
-  SELECT owner_id
-  FROM quizzes
-  WHERE id = $1;
-  `, [quizId])
-    .then(result => {
-      if (result.rows[0].owner_id !== sessionId) {
-        throw `Not your quiz to delete!`
-      }
-
-      return db.query(`
-    DELETE FROM quizzes
-    WHERE owner_id = $1 AND id = $2
-    RETURNING *;
-    `, [sessionId, quizId])
-    })
-    .then(() => {
-      console.log("Deleted")
-      res.send("ok")
-    })
-    .catch(err => console.log(err))
-})
 
 
 app.listen(PORT, () => {
