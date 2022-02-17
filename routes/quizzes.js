@@ -3,55 +3,79 @@ const router = express.Router();
 
 module.exports = (db) => {
 
+
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM quizzes`)
-    .then(data => {
-      res.json(data.rows);
-    })
-  })
+    if (req.session.user_id) {
+      return res.sendStatus(200);
+    }
+    return res.send(undefined);
+  });
+
 
   router.get("/:id", (req, res) => {
-    db.query(`SELECT questions.value AS question_value, options.* FROM questions
-    JOIN options ON options.question_id = questions.id
-    WHERE quiz_id = $1`, [req.params.id])
-    .then(data => {
-      const dataArray = [];
-      let index = 0;
-      const optionsArray = [];
-      let questionID = data.rows[0].question_id;
+    const user = req.session.user_id;
+    res.render("quiz", {user});
+  });
+  
 
-      for (let row of data.rows) {
-        if (questionID !== row.question_id) {
-          questionID = row.question_id;
-          index++;
-          optionsArray.length = 0;
+  router.put("/:id", (req, res) => {
+    const sessionId = req.session.user_id;
+    const quizId = req.params.id;
+  
+    db.query(`
+    SELECT owner_id
+    FROM quizzes
+    WHERE id = $1;
+    `, [quizId])
+      .then(result => {
+        if (result.rows[0].owner_id !== sessionId) {
+          throw `Not your quiz to unlist!`
         }
-
-        let question = {
-          value: row.question_value,
-          id: row.question_id
+  
+        return db.query(`
+      UPDATE quizzes
+      SET is_active = NOT is_active
+      WHERE owner_id = $1 AND id = $2
+      RETURNING *;
+      `, [sessionId, quizId])
+      })
+      .then(() => {
+        console.log("Updated")
+        res.send("ok")
+      })
+      .catch(err => console.log(err))
+  });
+  
+  
+  router.delete("/:id", (req, res) => {
+    const sessionId = req.session.user_id;
+    const quizId = req.params.id;
+  
+    db.query(`
+    SELECT owner_id
+    FROM quizzes
+    WHERE id = $1;
+    `, [quizId])
+      .then(result => {
+        if (result.rows[0].owner_id !== sessionId) {
+          throw `Not your quiz to delete!`
         }
-        let option = {
-          id: row.id,
-          value: row.value,
-          is_correct: row.is_correct
-        }
-        optionsArray.push(option);
-
-        dataArray[index] = {
-          question,
-          options: [...optionsArray]
-        }
-      }
-
-      res.json(dataArray);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
-  })
+  
+        return db.query(`
+      DELETE FROM quizzes
+      WHERE owner_id = $1 AND id = $2
+      RETURNING *;
+      `, [sessionId, quizId])
+      })
+      .then(() => {
+        console.log("Deleted")
+        res.send("ok")
+      })
+      .catch(err => console.log(err))
+  });
+  
+  
 
   return router;
+
 }

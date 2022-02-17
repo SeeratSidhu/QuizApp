@@ -1,17 +1,24 @@
-*, *::before, *::after{
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
-body {
-  background: #505c6d;
+html {
+  // background: #505c6d;
   background: linear-gradient(
     rgba(80, 92, 109, 1) 10%,
     rgb(126, 127, 130) 20%,
-    rgb(247, 247, 233) 100%
+    rgb(247, 247, 233) 100
   );
+}
+
+body {
+  background-color: transparent;
+
   justify-content: center;
   align-items: center;
 }
-main{
+main {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,8 +28,7 @@ main{
   width: 50%;
   margin: 10px 0;
   border: 2px solid white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 10px;
   overflow: hidden;
   background-color: transparent;
@@ -32,7 +38,6 @@ main{
   display: flex;
   flex-direction: column;
   text-align: center;
-
 }
 
 .button-container {
