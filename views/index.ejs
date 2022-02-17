@@ -62,6 +62,10 @@
         <% for(const quiz of myQuizzes) { %>
 
         <div class="quiz-list-item quiz1">
+          <div class="quiz-picture">
+
+            <img class="picture" src="https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__480.jpg" alt="quiz profile picture" alt="quiz profile picture"></img>
+          </div>
           <span><%= quiz.name%></span>
           <a href="/quizzes/<%= quiz.id %>"><button>PLAY</button></a>
         </div>
@@ -74,6 +78,10 @@
       <div class="quiz-container">
         <% for(const quiz of quizzes){%>
         <div class="quiz-list-item quiz1">
+          <div class="quiz-picture">
+
+            <img class="picture" src="https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__480.jpg" alt="quiz profile picture" alt="quiz profile picture"></img>
+          </div>
           <span><%= quiz.name%></span>
           <a href="/quizzes/<%= quiz.id %>"><button>PLAY</button></a>
         </div>
