@@ -17,20 +17,19 @@ body {
   margin: 3em;
 
   .library-quizzes {
-    margin: 2em;
     padding: 1em;
-    max-width: 1100px;
+    width: 100%;
 
     .quiz-template {
       display: flex;
-      width: 100%;
-      min-height: 140px;
+      width: 80%;
+      max-height: 150px;
       border: 2px solid white;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
       border-radius: 10px;
       overflow: hidden;
-      margin: 1em auto 0.5em auto;
+      margin: 2em auto 1em auto;
       background-color: lightgray;
     }
   }
@@ -38,6 +37,7 @@ body {
 
 .quiz-picture {
   width: 20%;
+  min-width: 220px;
   position: relative;
   background-color: lightgray;
 
@@ -45,8 +45,8 @@ body {
     padding: 10px;
     border-radius: 20px;
     overflow: hidden;
-    height: auto;
     width: 100%;
+    height: auto;
     background-color: lightgray;
   }
 
@@ -73,7 +73,7 @@ body {
 }
 
 .quiz-information {
-  height: 130px;
+  height: 150px;
   width: 80%;
   max-width: 1100px;
 
@@ -121,7 +121,11 @@ body {
 
 .quiz-title {
   h3 {
-    margin-right: 10px;
+    max-width: 350px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 30px;
     color: #090c9b;
   }
 

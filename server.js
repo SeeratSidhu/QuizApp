@@ -30,7 +30,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(
   cookieSession({
     secret: "random string for now",
-    maxAge: 60 * 10 * 1000, //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
+    maxAge: 60 * 10 * 100000, //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
   })
 );
 

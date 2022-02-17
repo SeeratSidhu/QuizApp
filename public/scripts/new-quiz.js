@@ -7,7 +7,7 @@ $(()=>{
     event.preventDefault();
     
     //creates a question form
-    $(renderQuestion()).insertBefore(this);
+    $(renderQuestion()).insertBefore($(this).parent(".general-form-buttons"));
 
     //add delete functionality to the question upon generation
     $(".delete-question").on("click", function(event) {
@@ -16,6 +16,7 @@ $(()=>{
       $(this).parent(".question").remove();
    
     });
+
   });
   
   $(".new-quiz-form").on("submit", function(event) {
@@ -32,6 +33,8 @@ $(()=>{
     // creates quiz -> creates questions -> creates options
     createQuiz();
   });
+
+
   
   
   
@@ -45,7 +48,10 @@ const renderQuestion = () => {
   const $questionTemplate =
     `<div class=" form-group question ${randomBackground()}">
       <h3>Question</h3>
-      <button type="button" class="btn btn-danger delete-question">del</button>
+      <button type="button" class="delete-question">
+
+        <i class="fa-solid fa-delete-left"></i>
+      </button>
 
       <div class="question-holder">
         <input type="text" class="form-control question-name"  placeholder="Enter question" name="question" required>
@@ -90,7 +96,8 @@ const renderQuestion = () => {
             <label >Fill in for correct answer</label>
             <input type="checkbox" name="is_correct" class="is_correct">
           </div>
-        </div>
+        </div>        
+
       </div>
   </div>`;
 
