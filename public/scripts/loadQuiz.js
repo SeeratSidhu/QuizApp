@@ -69,6 +69,7 @@ const nextQuestion = () => {
 
 }
 
+//add classes and icons to buttons
 const revealAnswer = (element) => {
 
   $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check fa-2x icon"></i>`).prop("disabled", true);
@@ -105,6 +106,7 @@ const checkQuestion = function(event) {
   })
 }
 
+//give message on quiz completion
 const displayResults = () => {
 
   const quizName = $("header h1").text();
@@ -118,6 +120,7 @@ const displayResults = () => {
   $(".results").html(resultsELement);
 }
 
+//animate progress bar
 const pendingQuestions = (dataArray) => {
 
   const quizLength = dataArray.length;
@@ -127,6 +130,7 @@ const pendingQuestions = (dataArray) => {
   $("#inner-div").animate({"width": percentCompleted});
 }
 
+//update results on save
 const postResult = function(event){
   event.preventDefault();
 
