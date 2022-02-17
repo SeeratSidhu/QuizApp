@@ -4,7 +4,7 @@ $(()=>{
 
   start.then(()=>{
     //only attaches button  listeners if a quiz is rendered
-    if($(".quiz-template").length){
+    if(checkQuizzesExist()){
       $(".list-btn").on("click", unlistQuiz);
       $(".unlist-btn").on("click", listQuiz);
       $(".del-btn").on("click", deleteBtn);
@@ -149,12 +149,16 @@ const deleteBtn = function(event){
       url: `quizzes/${id}`,
       type: 'DELETE',
       success: () => {
-        // console.log('deleted')
         $quiz.remove();
+
+        //create quiz button is rendered when there no user made quizzes left
+        if(!checkQuizzesExist()){
+          let createQuizDiv = createNewQuizLink();
+          return $(createQuizDiv).insertBefore($(".library"));
+        }
       }
     })
   }
-
 
 }
 
@@ -175,6 +179,7 @@ const playBtn = function(event){
   const id = $(this).closest(".quiz-template").children(".quiz-information").children('.quiz-primary-nav').children(".quiz-title").children(".quiz-id").text();
   window.location.href = `http://localhost:8080/quizzes/${id}`;
 }
+
 
 //returns a random picture link
 const generatePicture = () => {
@@ -199,4 +204,10 @@ const createNewQuizLink = () => {
 </div>`;
 
   return $createNewQuiz;
+}
+
+
+//check if there are any quizzes on the dom
+const checkQuizzesExist = () => {
+  return $(".quiz-template").length > 0 ? true : false;
 }
