@@ -63,10 +63,10 @@ const nextQuestion = () => {
 }
 
 const revealAnswer = (element) => {
-  $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check fa-2x icon"></i>`);
+  $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check fa-3x icon"></i>`);
   score++;
   //disables all neighbouring buttons
-  $(element).siblings(".btn").addClass("wrong").prepend(`<i class="fa-solid fa-circle-xmark fa-2x icon"></i>`).prop("disabled", true);
+  $(element).siblings(".btn").addClass("wrong").prepend(`<i class="fa-solid fa-circle-xmark fa-3x icon"></i>`).prop("disabled", true);
 
   $("#next-btn").removeClass("hide");
 }
@@ -96,7 +96,7 @@ const displayResults = () => {
   let resultsELement = `
   <h1>${quizName}</h1>
   <div>You scored <span id="score">${score}</span>/${currentQuestion}</div>
-  <button id="save-result-button" class="btn">Save Result</button>
+  <button id="save-result-button" class="next-btn btn">Save</button>
  `;
   $("#next-btn").addClass("hide");
   $(".results").html(resultsELement);

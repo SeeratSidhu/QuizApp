@@ -5,7 +5,9 @@ $wrong-color: rgba(190, 32, 32, 0.877);
 *, *::before, *::after{
   box-sizing: border-box;
 }
-
+main {
+  padding: 30px;
+}
 body {
   padding: 0;
   margin: 0;
@@ -17,9 +19,12 @@ body {
   background-color: #00ebb0;
   background-image: url("https://www.transparenttextures.com/patterns/diagmonds.png");
 }
+header {
+  height: 200px;
+}
 
 .quiz-header {
-  margin-bottom: 20px;
+  height: 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -28,23 +33,24 @@ body {
 
 #outer-div {
   background-color: #EEEEEE;
-  height: 20px;
+  height: 22px;
   width: 99%;
   margin-right: 10px;
-  border-radius: 5px;
+  // border-radius: 5px;
   bottom: 0;
   position: absolute;
   #inner-div {
     background-color: rgb(0, 255, 42);
-    height: 19px;
+    height: 21px;
     width: 0%;
     color: white;
-    border-radius: 5px;
+    // border-radius: 5px;
   }
 }
 
 .question {
-  font-size: larger;
+  font-size: xx-large;
+  height: 50px;
   font-weight: bold;
   text-align: center;
 }
@@ -52,7 +58,10 @@ body {
   background-color: $primary-color;
   color: white;
   cursor: pointer;
+  height: 100px;
+  width: 400px;
   padding: 10px;
+  margin: 10px;
   border: 1px solid navy;
   border-radius: 4px;
 }
@@ -62,13 +71,15 @@ body {
 }
 
 .container {
-  width: 800px;
-  max-width: 80%;
+  width: 1000px;
+  max-width: 100%;
+  height: 60%;
   background-color: white;
   border: none;
   box-shadow: 0 0 10px 2px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .quiz-container {
@@ -76,10 +87,11 @@ body {
   flex-direction: column;
 }
 .btn-grid {
-  display: grid;
-  grid-template-columns: repeat(2);
+  display: inline-block;
   gap: 10px;
   margin: 20px 0;
+  text-align: center;
+  font-size: larger;
 }
 
 .btn.correct {
@@ -87,8 +99,8 @@ body {
   position: relative;
   .icon {
     position: absolute;
-    left: -6px;
-    top: -6px;
+    left: -8px;
+    top: -8px;
   }
 }
 
@@ -97,13 +109,14 @@ body {
   position: relative;
   .icon {
     position: absolute;
-    left: -6px;
-    top: -6px;
+    left: -8px;
+    top: -8px;
   }
 }
 
-.next-btn {
-  width: 100px;
+.next-btn, #save-result-button {
+  width: 120px;
+  height: 50px;
   background-color: lighten($primary-color, 20%);
 
 }
@@ -133,6 +146,9 @@ body {
   }
   button {
     font-size: larger;
+  }
+  p {
+    font-size: x-large;
   }
 }
 
