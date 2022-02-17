@@ -1,7 +1,6 @@
 $(() => {
   loadQuiz();
   getQuizName();
-  $("#next-btn").addClass("hide");
   $(".quiz-container").on("click", ".btn", checkQuestion)
   $("main").on("click", "#next-btn", nextQuestion);
   $(".results").on("click", "#save-result-button", postResult);
@@ -14,6 +13,7 @@ const loadQuiz = () => {
 
   getQuizData()
   .then(data => {
+    $("#next-btn").addClass("hide");
     renderQuestions(data, currentQuestion);
     pendingQuestions(data);
   });
