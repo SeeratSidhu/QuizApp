@@ -22,11 +22,11 @@
     referrerpolicy="no-referrer"
     />
 
-    <link rel="stylesheet" href="/styles/login.css" type="text/css" />
     <link rel="stylesheet" href="/styles/header.css" />
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-
+    <link rel="stylesheet" href="/styles/login.css" type="text/css" />
+    
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/login.js"></script>
@@ -35,7 +35,7 @@
     <%- include('partials/_header') %>
 
     <div class="login-form-container">
-      <h2>Login</h2>
+      <h2>Login Here</h2>
       <form class="login-form">
         <div class="form-group email-holder">
           <label for="email">Email address</label>
@@ -59,7 +59,8 @@
           <span class="login-error-message">Error</span>
         </div>
 
-        <button type="submit" class="btn btn-primary login-btn">Login</button>
+        <button type="submit" class="login-btn">Log In</button>
+        <a href="/register" class="sign-up-link">Sign up here!</a>
       </form>
     </div>
   </body>
