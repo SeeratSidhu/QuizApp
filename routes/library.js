@@ -23,7 +23,6 @@ module.exports = (db) => {
     ORDER BY created_at DESC, number_of_plays DESC;
     `, [sessionID])
       .then((result) => {
-        console.log(result.rows);
         return res.send(result.rows);
       })
       .catch(err => {

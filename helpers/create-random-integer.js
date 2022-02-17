@@ -1,4 +1,5 @@
 
+//generates random integer value
 const generateRandomInteger = () => {
   const value = Math.floor(Math.random() * 899999 + 100000);
   return value;
