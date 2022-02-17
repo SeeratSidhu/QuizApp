@@ -63,7 +63,7 @@ const nextQuestion = () => {
 }
 
 const revealAnswer = (element) => {
-  $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check fa-2x icon"></i>`);
+  $(element).addClass("correct").prepend(`<i class="fa-solid fa-circle-check fa-2x icon"></i>`).prop("disabled", true);
   //disables all neighbouring buttons
   $(element).siblings(".btn").addClass("wrong").prepend(`<i class="fa-solid fa-circle-xmark fa-2x icon"></i>`).prop("disabled", true);
 
