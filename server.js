@@ -95,7 +95,6 @@ app.get("/", (req, res) => {
      ` + userCondition
   )
     .then((result) => {
-      console.log(result.rows);
       res.render("index", {
         quizzes: result.rows.filter(quiz => !quiz.owner_id),
         myQuizzes: result.rows.filter((quiz) => {
