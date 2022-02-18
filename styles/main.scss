@@ -20,6 +20,8 @@ main {
 
 h1 {
   color: #32425a;
+  font-size: 45px;
+  font-weight: 500;
 }
 
 .quiz-list-item {
@@ -36,7 +38,10 @@ h1 {
 }
 
 .quiz-list-item span {
-  font-size: 27px;
+  font-size: 40px;
+  color: #32425a;
+  font-weight: 400;
+  letter-spacing: 2px;
 }
 
 .quiz-list-item button {
@@ -74,16 +79,43 @@ h1 {
 
 .picture {
   padding: 10px;
-  border-radius: 20px;
+  border-radius: 10px;
   overflow: hidden;
-  width: 100%;
+  max-width: 260px;
+  max-height: 170px;
   height: auto;
   background-color: lightgray;
 }
 
 .quiz-picture {
-  width: 20%;
+  // width: 20%;
   min-width: 220px;
   position: relative;
   background-color: lightgray;
+}
+
+//media queries
+
+@media only screen and (max-width: 1200px) {
+  .quiz-list-item {
+    height: 400px;
+    flex-direction: column;
+    width: 330px;
+    margin: 0 auto;
+    padding: 0;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .quiz-list-item button {
+    width: 260px;
+  }
+
+  .picture {
+    margin: auto 0;
+    display: block;
+    width: 700px;
+    height: 500px;
+    padding: 0;
+  }
 }
