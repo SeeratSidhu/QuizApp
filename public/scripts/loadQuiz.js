@@ -1,9 +1,12 @@
 $(() => {
+
   loadQuiz();
+
   getQuizName();
   $(".quiz-container").on("click", ".btn", checkQuestion)
   $("main").on("click", "#next-btn", nextQuestion);
   $(".results").on("click", "#save-result-button", postResult);
+
 });
 
 let currentQuestion = 0;
@@ -38,7 +41,7 @@ const renderQuestions = (quizArray, qNumber) => {
   if(qNumber >= quizArray.length) {;
 
     displayResults();
-    $(".on-complete").fadeTo(200, 0.2).fadeTo(200, 0.8);
+    $(".on-complete").fadeTo(200, 0.2).fadeTo(200, 0.8).fadeTo(200, 0.2).fadeTo(200, 0.8);
     return;
   }
 
@@ -59,6 +62,7 @@ const renderQuestions = (quizArray, qNumber) => {
 };
 
 
+//increment the question variable and load the next question
 const nextQuestion = () => {
 
   currentQuestion++;
@@ -81,6 +85,7 @@ const revealAnswer = (element) => {
 }
 
 
+// check if the selected option is correct
 const checkQuestion = function(event) {
 
   event.preventDefault();
@@ -111,7 +116,8 @@ const displayResults = () => {
 
   const quizName = $("header h1").text();
   let resultsELement = `
-  <h1 class="on-complete">${quizName} Completed!</h1>
+  <h1 class="on-complete">You win a 100 Million Dollars!!</h1>
+  <h2>${quizName}</h2>
   <div>Your score: <span id="score">${score}</span> / ${currentQuestion}</div>
   <button id="save-result-button" class="next-btn btn">Save</button>
  `;
