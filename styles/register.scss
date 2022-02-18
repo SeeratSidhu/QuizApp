@@ -82,3 +82,7 @@ body{
   border: 2px solid black;
   background-color: rgba(122, 219, 219, 0.856);
 }
+
+input:focus{
+  background-color: none;
+}

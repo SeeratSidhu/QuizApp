@@ -30,7 +30,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(
   cookieSession({
     secret: "random string for now",
-    maxAge: 60 * 10 * 100000, //10 minutes - testing purposes (will use 24*60*60*1000 afterwards)
+    maxAge: 24*60*60*1000
   })
 );
 
@@ -48,7 +48,6 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
 const addRoutes = require("./routes/create-quizzes");
 const generatingQuizRoutes = require("./routes/generating-quizzes");
 const quizzesRoutes = require("./routes/quizzes")
@@ -58,7 +57,6 @@ const library = require("./routes/library");
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
 app.use("/api/quizzes", generatingQuizRoutes(db));
 app.use("/api/library", library(db));
 app.use("/results", resultsRoutes(db));

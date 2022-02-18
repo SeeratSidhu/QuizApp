@@ -1,6 +1,8 @@
 
 $(()=>{
 
+  $(".quiz-title").focus();
+
   //event listener for add question button
   $(".add-question-btn").on("click", addQuestionButton);
 
@@ -23,7 +25,7 @@ const renderQuestion = () => {
       </button>
 
       <div class="question-holder">
-        <input type="text" class="form-control question-name"  placeholder="Enter question" name="question" required>
+        <input type="text" class="form-control shadow-none question-name"  placeholder="Enter question" name="question" required>
       </div>
 
       <div class="all-options">
@@ -177,6 +179,11 @@ const addQuestionButton = function(event){
  
   });
 
+  //focuses on the first input field in the newly generated question form
+  const $lastQuestionTitle = $(lastQuestion()).children(".question-holder").children(".question-name");
+  $($lastQuestionTitle).focus();
+  
+
 };
 
 
@@ -208,3 +215,10 @@ const randomBackground = () => {
 };
 
 
+//returns the last question div
+const lastQuestion = () => {
+  const lastQuestionIndex = $(".question").length - 1;
+  const $lastQuestionDiv = $(".question")[lastQuestionIndex];
+
+  return $lastQuestionDiv;
+}

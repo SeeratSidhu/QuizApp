@@ -18,6 +18,7 @@ module.exports = (db) => {
   });
   
 
+  //sets quiz to active or inactive
   router.put("/:id", (req, res) => {
     const sessionId = req.session.user_id;
     const quizId = req.params.id;
@@ -46,7 +47,8 @@ module.exports = (db) => {
       .catch(err => console.log(err))
   });
   
-  
+
+  //deletes specific quiz linked to the current logged in user
   router.delete("/:id", (req, res) => {
     const sessionId = req.session.user_id;
     const quizId = req.params.id;
