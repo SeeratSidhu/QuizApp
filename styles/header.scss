@@ -1,4 +1,4 @@
-// nav styles
+// hero styles
 
 .header {
   padding: 5%;
@@ -88,6 +88,20 @@
 .header button:hover {
   background-color: rgba(169, 245, 249, 0.5);
 }
+
+// hero media queries
+
+@media only screen and (max-width: 1400px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .header i {
+    font-size: 600px;
+  }
+}
+
+// nav styles
 
 nav div span {
   font-size: 50px;
