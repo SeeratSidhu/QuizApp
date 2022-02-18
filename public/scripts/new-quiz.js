@@ -181,7 +181,7 @@ const addQuestionButton = function(event){
 
   //focuses on the first input field in the newly generated question form
   const $lastQuestionTitle = $(lastQuestion()).children(".question-holder").children(".question-name");
-  $($lastQuestionTitle).focus()
+  $($lastQuestionTitle).focus();
   
 
 };
