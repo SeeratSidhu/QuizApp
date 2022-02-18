@@ -16,7 +16,7 @@ module.exports = (db) => {
   router.get("/:id", (req, res) => {
     db.query(`SELECT questions.value AS question_value, options.* FROM questions
     JOIN options ON options.question_id = questions.id
-    WHERE quiz_id = $1 GROUP BY question_id, questions.value, options.id;`, [req.params.id])
+    WHERE quiz_id = $1 GROUP BY options.question_id, questions.value, options.id ORDER BY options.question_id;`, [req.params.id])
     .then(data => {
       const dataArray = [];
       let index = 0;
