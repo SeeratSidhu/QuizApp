@@ -6,7 +6,7 @@ This app allows users to create, complete, and delete quizzes and supports deskt
 ---------------------------
 ### Contributors
 - [Jimmy Chuk](https://github.com/ryjcm1)
-- [Lea Ehar](https://github.com/leapehar)
+- [Lea Pehar](https://github.com/leapehar)
 - [Manseerat Kaur](https://github.com/SeeratSidhu)
 
 <img src="./docs/quiz-app.gif" style="margin: 1em; " alt="Quiz App">
